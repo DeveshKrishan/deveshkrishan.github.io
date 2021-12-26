@@ -1,0 +1,264 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.header{
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(black, rgb(80, 80, 80, .7), black), url(images/devesh_img2.jpg);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+.block{
+    position: absolute;
+    margin-top: -10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+
+
+@keyframes back{
+    100%{
+        background-position: 2000px 0;
+    }
+}
+
+nav{
+    display: flex;
+    padding: 2% 6%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav img{
+    width: 150px;
+
+}
+
+.nav-links{
+    flex: 1;
+    text-align: right;
+
+}
+
+.nav-links ul li{
+    list-style: none;
+    display: inline-block;
+    padding: 8px 12px;
+    position: relative;
+    
+}
+
+.nav-links ul li a{
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+
+}
+
+.nav-links ul li::after{
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #ffffff;
+    display: block;
+    margin:auto;
+    transition: 0.5s;
+
+}
+
+.nav-links ul li:hover::after{
+    width: 100%;
+
+}
+
+.text-box{
+    width: 90%;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+}
+
+.text-box h1{
+    font-size: 72px;
+    -webkit-animation: mainFadeIn 2s forwards;
+    -o-animation: mainFadeIn 2s forwards;
+    animation: mainFadeIn 2s forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+}
+
+@keyframes mainFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.text-box p{
+    margin: 10px 9 40px;
+    font-size: 19px;
+    color: rgb(255, 255, 255);
+    
+}
+
+nav .fa{
+    display: none;
+}
+
+@media(max-width: 700px){
+    .text-box h1{
+        font-size: 20px;
+    }
+    .nav-links ul li{
+        display: block;
+    }
+    .nav-links{
+        position: absolute;
+        background: whitesmoke;
+        height: 100vh;
+        width: 200px;
+        top: 0;
+        right: -200px;
+        text-align: left;
+        z-index: 2;
+        transition: 1s;
+    }
+    nav .fa{
+        display: block;
+        color: white;
+        margin: 10px;
+        font-size: 22px;
+        cursor: pointer;
+    }
+    .nav-links ul{
+        padding: 30px;
+
+    }
+}
+    
+
+
+h1{
+    font-size: 39px;
+    font-weight: 600;
+    color: white;
+}
+
+p{
+    color: white;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 22px;
+    padding: 10px;
+}
+
+.clout{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -900px;
+}
+
+.clout button{
+    color: rgb(225, 48, 108);
+    font-size: 1.043rem;
+    background-color: linear-gradient(#C13584, #E1306C, #F56040);
+    border: 1.5px solid white;
+    outline: none;
+    cursor: pointer;
+    width: 300px;
+    height: 75px;
+    margin-top: 15.5rem;
+    -webkit-animation: mainFadeIn 2s forwards;
+    -o-animation: mainFadeIn 2s forwards;
+    animation: mainFadeIn 2s forwards;
+    animation-delay: 1.5s;
+    opacity: 0;
+    transition: ease-out 0.3s;
+    box-shadow: inset 0 0 0 0 rgb(225, 48, 108);
+    outline: none;
+    border-radius: 4px;
+}
+.clout button:hover{
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    box-shadow: inset 300px 0 0 0 #C13584;
+    border: none;
+    font-weight: 700;
+
+}
+.clout button:active{
+    transform: translate(0, 0.3rem);
+    box-shadow: 0 0.1rem rgba(255,255,255, .7);
+    filter: brightness(110%);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    box-shadow: inset 300px 0 0 0 #C13584;
+    border: none;
+    background-color: white;
+
+}
+
+.snake{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -10%;
+}
+
+.snake button{
+    color: rgb(124, 243, 163);
+    font-size: 1.043rem;
+    background-color: rgb(243, 243, 243);
+    border: 1.5px solid white;
+    outline: none;
+    cursor: pointer;
+    width: 300px;
+    height: 75px;
+    margin-top: 20.5rem;
+    -webkit-animation: mainFadeIn 2s forwards;
+    -o-animation: mainFadeIn 2s forwards;
+    animation: mainFadeIn 2s forwards;
+    animation-delay: 1.5s;
+    opacity: 0;
+    transition: ease-out 0.3s;
+    box-shadow: inset 0 0 0 0 rgb(124, 243, 163);
+    outline: none;
+    border-radius: 4px;
+}
+.snake button:hover{
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    box-shadow: inset 300px 0 0 0 rgb(124, 243, 163);
+    border: none;
+    font-weight: 700;
+
+}
+.snake button:active{
+    transform: translate(0, 0.3rem);
+    box-shadow: 0 0.1rem rgba(255,255,255, .7);
+    filter: brightness(110%);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    box-shadow: inset 300px 0 0 0 rgb(124, 243, 163);
+    border: none;
+    background-color: white;
+
+}
+
