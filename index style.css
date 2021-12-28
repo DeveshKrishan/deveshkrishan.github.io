@@ -4,11 +4,19 @@
     font-family: 'Poppins', sans-serif;
 }
 
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    background-image: (black, rgb(80, 80, 80, .7), black);
+  }
 
 .header{
     min-height: 100vh;
     width: 100%;
-    background-image: linear-gradient(black, rgb(80, 80, 80), black);
+    background-image: linear-gradient(black, rgb(80, 80, 80, .7), black), url(images/devesh_bg_vid.mp4);
     background-position: center;
     background-size: cover;
     position: relative;
@@ -46,9 +54,8 @@ nav{
     align-items: center;
 }
 
-nav img{
-    width: 150px;
-
+.img{
+    position: relative;
 }
 
 .nav-links{
@@ -136,10 +143,22 @@ nav .fa{
 
 @media only screen and (max-width: 620px) {
     /* For mobile phones: */
-    .text-box, .nav-links, .nav .btn .button{
+    .text-box, .nav-links, .nav, .btn{
         width: 100%;
     }
-}
+    .btn{
+        padding-top: 500px;
+        margin-top: auto;
+    }
+} 
+
+@media only screen and (max-width: 1020px) {
+    /* For mobile phones: */
+    .btn{
+        padding-top: 500px;
+        margin-top: auto;
+    }
+} 
 
 h1{
     font-size: 39px;
@@ -159,9 +178,8 @@ p{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 450px;
+    padding-top: 25%;
     margin-top: auto;
-    position: relative;
 }
 
 button{
@@ -173,7 +191,6 @@ button{
     cursor: pointer;
     width: 300px;
     height: 75px;
-    margin-top: 20.5rem;
     -webkit-animation: mainFadeIn 2s forwards;
     -o-animation: mainFadeIn 2s forwards;
     animation: mainFadeIn 2s forwards;
