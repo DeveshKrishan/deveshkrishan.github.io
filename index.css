@@ -3,7 +3,14 @@ body {
     font-family: sans-serif;
     background-color: black;
     color: white;
+    animation: fadein 2s;
 
+}
+
+/* Animation for fading */
+@keyframes fadein {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
 .about {
@@ -14,7 +21,7 @@ body {
 }
 
 .intro_name {
-    padding: 20%;
+    padding: 3%;
     text-align: center;
 }
 
@@ -29,7 +36,6 @@ a {
 }
 
 .projects {
-    padding: 5%;
     text-align: center;
 }
 
@@ -62,6 +68,23 @@ a {
   clear: both;
 }
 
+.row2 {
+  margin: 0 -5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  padding-top: 2.5%;
+  
+}
+
+
+/* Clear floats after the columns */
+.row2:after {
+content: "";
+display: table;
+clear: both;
+}
+
 /* Style the counter cards */
 .card {
   box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
@@ -69,6 +92,8 @@ a {
   text-align: center;
   background-color: #101010;
 }
+
+
 
 .card_about {
     box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
@@ -84,12 +109,28 @@ a {
     background-image: linear-gradient(#C13584, #E1306C, #F56040);
   }
 
-  .card_xo {
+  .card_personal {
     box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
     padding: 16px;
     text-align: center;
-    background-image: linear-gradient(#000000, #ff3d3d, #b31d1d);
+    background-image: linear-gradient(#57ff6d, #000000, #000000);
   }
+
+
+  .card_halo5 {
+    box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-image: linear-gradient(#000000, #3360f0, #6ac1ff);
+  }
+
+
+.card_marvel {
+  box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+  padding: 16px;
+  text-align: center;
+  background-image: linear-gradient(#fa6161, #ff3d3d, #b31d1d);
+}
 
   .card_canvas {
     box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
@@ -119,6 +160,9 @@ a {
     background-image: linear-gradient(#fffc64, #74beff, #0c4297);
   }
 
+.ending{
+  padding: 4%;
+}
 
 /* Responsive columns - one column layout (vertical) on small screens */
 @media screen and (max-width: 600px) {
