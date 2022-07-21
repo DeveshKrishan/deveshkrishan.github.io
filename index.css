@@ -161,7 +161,11 @@ clear: both;
   }
 
 .ending{
-  padding: 4%;
+  padding-top: 4%;
+}
+
+.social_media{
+  padding-top: 1%;
 }
 
 /* Responsive columns - one column layout (vertical) on small screens */
