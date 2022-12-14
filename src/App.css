@@ -1,0 +1,95 @@
+body {
+    background-color: #EAEAEA;
+    font-family: 'Inter', sans-serif;
+  }
+
+.header{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+/* If link is clicked, the text remains the same with no changes. */
+.uni{
+    text-decoration: none;
+    color: black;
+}
+
+.logoDK{
+    font-size: 1.2vw;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 3rem;
+
+}
+
+.titlePic{
+    display: flex;
+}
+
+.homePanel{
+    position: relative;
+    left: 33vw;
+    top: 15vh;
+    transform: scale(1.2);
+
+}
+
+.homePanel h1{
+    width: 300px;
+}
+
+.homePanel p{
+    width: 300px;
+
+}
+
+.scrolldown{
+    width: 5vh;
+    cursor: pointer;
+}
+
+.profile{
+    /* position: relative;
+    left: 10vh;
+    width: 40vh;
+    height: auto; */
+
+    position: absolute;
+    left: 50vh;
+    width: 40vh;
+    height: auto;
+}
+
+nav{
+    flex: 1;
+    text-align: right;
+}
+
+
+nav ul li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 3rem;
+
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: rgb(111, 111, 111);
+    font-size: 1.2vw;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+
+nav ul li a:hover {
+    color: black;
+}
+
+/* changing viewports for different resolution*/
+@media only screen and (max-width: 1400px) {
+    .profile{
+        width: 30vh;
+        left: 28vh;
+    }
+  }
