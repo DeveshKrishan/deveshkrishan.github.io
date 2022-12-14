@@ -1,0 +1,178 @@
+body {
+    margin: auto;
+    font-family: sans-serif;
+    background-color: black;
+    color: white;
+    animation: fadein 2s;
+
+}
+
+/* Animation for fading */
+@keyframes fadein {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.about {
+    text-align: center;
+}
+.ending{
+    text-align: center;
+}
+
+.intro_name {
+    padding: 3%;
+    text-align: center;
+}
+
+.education {
+    text-align: center;
+
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.projects {
+    text-align: center;
+}
+
+/* Float four columns side by side */
+.column {
+    float: left;
+    width: 25%;
+    padding: 0 10px;
+  }
+
+  .column_about {
+    float: left;
+    width: 75%;
+    padding: 0 10px;
+  }
+
+/* Remove extra left and right margins, due to padding in columns */
+.row {
+    margin: 0 -5px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.row2 {
+  margin: 0 -5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  padding-top: 2.5%;
+  
+}
+
+
+/* Clear floats after the columns */
+.row2:after {
+content: "";
+display: table;
+clear: both;
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+  padding: 16px;
+  text-align: center;
+  background-color: #101010;
+}
+
+
+
+.card_about {
+    box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-color: hsl(236, 100%, 75%);
+  }
+
+.card_clout {
+    box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-image: linear-gradient(#C13584, #E1306C, #F56040);
+  }
+
+  .card_personal {
+    box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-image: linear-gradient(#57ff6d, #000000, #000000);
+  }
+
+
+  .card_halo5 {
+    box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-image: linear-gradient(#000000, #3360f0, #6ac1ff);
+  }
+
+
+.card_marvel {
+  box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+  padding: 16px;
+  text-align: center;
+  background-image: linear-gradient(#fa6161, #ff3d3d, #b31d1d);
+}
+
+  .card_canvas {
+    box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-image: linear-gradient(#54dca5, #64baae, #137653);
+  }
+
+  .card_hs {
+    box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-image: linear-gradient(#800000, #600111, #800000);
+  }
+
+  .card_cc {
+    box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-image: linear-gradient(#800000, #C41E3A, #800000);
+  }
+
+  .card_uci {
+    box-shadow: 0 4px 8px 0 rgba(131, 131, 131, 0.582); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-image: linear-gradient(#fffc64, #74beff, #0c4297);
+  }
+
+.ending{
+  padding-top: 4%;
+}
+
+.social_media{
+  padding-top: 1%;
+}
+
+/* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
