@@ -178,7 +178,7 @@ nav ul li a:hover {
     display: flex;
     position: relative;
     padding-left: 0rem;
-    width: 40vh;
+    width: 50%;
     height: auto;
 }
 
@@ -186,7 +186,7 @@ nav ul li a:hover {
     display: flex;
     position: relative;
     padding-left: 0rem;
-    width: 50vh;
+    width: 50%;
     height: auto;
 }
 
