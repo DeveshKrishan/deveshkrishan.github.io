@@ -1,12 +1,15 @@
 * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
+
 }
 
-html { 
+body { 
     background: url(./mainMenuBackground.png); 
     /* background: url(./mainMenuBackground.png) no-repeat center center fixed;  */
-
+    height: 100%;
+    width: 100%;
     filter: contrast(1.05);
     /* -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -54,8 +57,11 @@ html {
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 5fr 3fr 0.5fr;
+    grid-template-columns: 1fr 5fr 3fr 0.5fr ;
     grid-template-rows: 0.5fr 0.5fr 3fr 1fr 1fr 1fr;
+    grid-auto-rows: 0.2fr;
+    min-height: 0;  /* NEW */
+    min-width: 0;   /* NEW; needed for Firefox */
     width: 100vw;
     height: 100vh;
 }
@@ -64,7 +70,7 @@ html {
     font-family: 'conduit_itcbold';
     font-style: normal;
     font-weight: 700;
-    font-size: 150px;
+    font-size: 6vw;
     line-height: 88px;
     background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
     -webkit-background-clip: text;
@@ -217,7 +223,7 @@ ul li{
     font-family: 'conduit_itcregular';
     font-style: normal;
     font-weight: 300;
-    font-size: 45px;
+    font-size: 4vh;
     line-height: 29px;
     padding: 20px 0 20px 0;
     color: #C8C2C0;
@@ -229,4 +235,5 @@ ul li{
     width: 35vw;
     color: white;
 }
+
 

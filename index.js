@@ -1,7 +1,5 @@
 // Audio 
-$(document).ready(function() {
-    $("#my_audio").get(0).play();
-});
+$("#my_audio").get(0).play();
 
 $('#my_audio').prop("volume", 0.15);
 
