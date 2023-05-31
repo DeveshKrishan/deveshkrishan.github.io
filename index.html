@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-    <audio id="my_audio" src="./main_menu_music.mp3" loop="loop"></audio>
+    <!-- <audio id="my_audio" src="/main_menu_music.mp3" loop="loop" ></audio> -->
+
+    <audio autoplay preload='auto' loop id="myAudio">
+        <source src="/main_menu_music.mp3" type="audio/mpeg" >
+      </audio>
+      
+
     <div class="container">
         <div class="player">
             <p class="desc" id="myParty">MY PARTY</p>
@@ -25,7 +31,7 @@
 
         <div class="menu">
             <div class="mainLine">
-                <img src="./reachLogo.png">
+                <img src="./reachLogo.png" id="reachLogo">
                 <h1 class="main">MAIN MENU</h1>
             </div>
             

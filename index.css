@@ -51,6 +51,7 @@ body {
 
 }
 
+
 .playerRow{
     display: flex;
 }
@@ -58,10 +59,8 @@ body {
 .container {
     display: grid;
     grid-template-columns: 1fr 5fr 3fr 0.5fr ;
-    grid-template-rows: 0.5fr 0.5fr 3fr 1fr 1fr 1fr;
-    grid-auto-rows: 0.2fr;
-    min-height: 0;  /* NEW */
-    min-width: 0;   /* NEW; needed for Firefox */
+    grid-template-rows: 0.5fr 0.5fr 1fr 1fr 1fr 1fr;
+    overflow: auto;
     width: 100vw;
     height: 100vh;
 }
@@ -70,7 +69,7 @@ body {
     font-family: 'conduit_itcbold';
     font-style: normal;
     font-weight: 700;
-    font-size: 6vw;
+    font-size: 8vh;
     line-height: 88px;
     background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
     -webkit-background-clip: text;
@@ -85,8 +84,8 @@ body {
 
 }
 
-.mainLine img{
-    height: 120px;
+.mainLine > img{
+    height: 7vh;
     
 }
 
@@ -133,7 +132,7 @@ body {
     grid-area: 4 / 2 / 4 / 4;
     /* background-color: #5f5f5f; converted this to rgb to add opacity */
     background-color: rgba(95, 95, 95, 0.15);
-
+    min-height: 1fr;
     opacity: 100%;
     display: flex;
     justify-content: center;
@@ -171,7 +170,8 @@ body {
     grid-area: 3 / 2 / 4 / 3;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1vh;
+
 }
 
 .player{
@@ -189,7 +189,7 @@ body {
     font-family: 'conduit_itcregular';
     font-style: normal;
     font-weight: 300;
-    font-size: 45px;
+    font-size: 3vh;
     line-height: 29px;
 
     color: #C8C2C0;
@@ -197,11 +197,11 @@ body {
 }
 
 .lower{
-    margin-top: 30px;
+    margin-top: 1vh;
 }
 
 #partyOpen{
-    margin-bottom: 150px;
+    margin-bottom: 11vh;
 }
 
 .line{
@@ -223,7 +223,7 @@ ul li{
     font-family: 'conduit_itcregular';
     font-style: normal;
     font-weight: 300;
-    font-size: 4vh;
+    font-size: 3vh;
     line-height: 29px;
     padding: 20px 0 20px 0;
     color: #C8C2C0;

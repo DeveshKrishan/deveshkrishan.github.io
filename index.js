@@ -1,12 +1,12 @@
 // Audio 
-$("#my_audio").get(0).play();
+$("#myAudio").get(0).play();
 
-$('#my_audio').prop("volume", 0.15);
+$('#myAudio').prop("volume", 0.15);
 
 // Default case
 $("#aboutMe").addClass( "hover" );
-var textToReplace = $("#description").text();
-var newText = textToReplace.replace(textToReplace, "Take your party directly to About Me to learn more about ONI Base.");
+let textToReplace = $("#description").text();
+let newText = textToReplace.replace(textToReplace, "Take your party directly to About Me to learn more about ONI Base.");
 $("#description").text(newText);
 
 
@@ -16,28 +16,28 @@ $("li").hover(
         $("li").removeClass( "hover" );
         $( this ).addClass( "hover" );
          
-        var text = $(this).text();
-        var textToReplace = $("#description").text();
-        var hoverSound = new Audio("hover_sound.mp3");
+        let text = $(this).text();
+        let textToReplace = $("#description").text();
+        let hoverSound = new Audio("hover_sound.mp3");
         switch (text) {
             case "ABOUT ME":
                 hoverSound.play();
-                var newText = textToReplace.replace(textToReplace, "Take your party directly to About Me to learn more about ONI Base.");
+                newText = textToReplace.replace(textToReplace, "Take your party directly to About Me to learn more about ONI Base.");
                 $("#description").text(newText);
                 break;
             case "PROJECTS":
                 hoverSound.play();
-                var newText = textToReplace.replace(textToReplace, "Come learn about the history of the planet Reach and the events that took place.");
+                newText = textToReplace.replace(textToReplace, "Come learn about the history of the planet Reach and the events that took place.");
                 $("#description").text(newText);
                 break;
             case "GALLERY":
                 hoverSound.play();
-                var newText = textToReplace.replace(textToReplace, "View breath-taking video of Spartans in action.");
+                newText = textToReplace.replace(textToReplace, "View breath-taking video of Spartans in action.");
                 $("#description").text(newText);
                 break;
             case "CUSTOMIZATION":
                 hoverSound.play();
-                var newText = textToReplace.replace(textToReplace, "Customize your Spartan to uniquely identify yourself in the battlefield.");
+                newText = textToReplace.replace(textToReplace, "Customize your Spartan to uniquely identify yourself in the battlefield.");
                 $("#description").text(newText);
                 break;
             default:
@@ -53,6 +53,6 @@ $("li").hover(
 
 $("li").click(
     function() {
-        var clickSound = new Audio("select_sound.mp3");
+        let clickSound = new Audio("select_sound.mp3");
         clickSound.play();
     });
