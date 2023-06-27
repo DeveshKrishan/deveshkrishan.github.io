@@ -18,7 +18,8 @@
 }
 
 .p{
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
+    font-size: 1.8vh;
 }
 
 .pblack {
@@ -177,7 +178,7 @@
 
 .footer{
     display: grid;
-    grid-template-columns: 0.5fr 2fr 8fr 2fr 0.5fr;
+    grid-template-columns: 0.5fr 3fr 3fr 3fr 0.5fr;
     grid-template-rows: 1fr;
     padding-bottom: 1rem;
 }
@@ -186,6 +187,6 @@
     grid-area: 1 / 2 / 1 / 3;
 }
 
-#footer_p{
+.footer_p{
     grid-area: 1 / 4 / 1/ 5 ;
 }
