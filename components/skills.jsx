@@ -32,7 +32,7 @@ export default function Skills() {
                 <div className={styles.skills}>
                     <h2 className={styles.big} id={styles.about_title} style={{padding: "1rem 0"}}>Skills</h2>
                     <div className={styles.skills_content}>
-                        <h3 className={`${styles.lang_title} ${styles.skills_mini}`} style={{padding: "1rem 0"}} >Languages</h3>
+                        <h3 className={`${styles.lang_title} ${styles.skills_mini}`} >Languages</h3>
                         
                         <div className={`${styles.lang_list} ${styles.skill_lang_list} ${styles.p}`}>{languagesList}</div>
                         <h3 className={styles.skills_mini}>Frameworks</h3>
