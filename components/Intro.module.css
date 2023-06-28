@@ -17,9 +17,12 @@
     gap: 2rem
 }
 
+
 .p{
     /* font-size: 1.5rem; */
     font-size: 1.8vh;
+    line-height: 2rem;
+
 }
 
 .pblack {
@@ -132,7 +135,7 @@
     grid-area: 2 / 2 / 2 / 3;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 2rem;
 
 }
 
@@ -180,13 +183,18 @@
     display: grid;
     grid-template-columns: 0.5fr 3fr 3fr 3fr 0.5fr;
     grid-template-rows: 1fr;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
 }
 
-#footer_img{
+.footer_img{
     grid-area: 1 / 2 / 1 / 3;
 }
 
 .footer_p{
     grid-area: 1 / 4 / 1/ 5 ;
+}
+
+.a{
+    text-decoration: none;
+    color: white;
 }

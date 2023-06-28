@@ -13,6 +13,7 @@ export default function Skills() {
 
 
         const frameworks = [
+            {framework: "React.js", key: 5},
             {framework: "Node.js", key: 0},
             {framework: "Next.js", key: 1},
             {framework: "Flask", key: 2},

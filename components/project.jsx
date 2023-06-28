@@ -20,6 +20,6 @@ export default function Projects() {
         )
 
     return (
-        <div className={styles.project_wrapper}>{listProjects}</div>
+        <div className={styles.project_wrapper} id="project_link">{listProjects}</div>
     )
 }
