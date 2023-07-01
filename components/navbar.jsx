@@ -1,6 +1,6 @@
 "use client"
 
-    import styles from "./Intro.module.css"
+import styles from "./Intro.module.css"
 
 export default function Navbar() {
 

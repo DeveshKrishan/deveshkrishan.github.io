@@ -11,7 +11,7 @@ export default function Projects() {
     const code = "Code </>"
 
     const listProjects= projects.map(project => 
-        <div className={styles.projectbg}>
+        <div className={`${styles.projectbg}`}>
             <h3 className={`${styles.pblack} ${styles.p}`}>{project.title}</h3>
             <p className={`${styles.built} ${styles.little}`} style={{padding: "0.5rem 0"}}>{project.tools}</p>
             <p className={`${styles.pblack} ${styles.little} ${styles.project_desc}`} style={{padding: "1rem 0"}}>{project.desc}</p>
