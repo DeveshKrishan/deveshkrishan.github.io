@@ -14,7 +14,7 @@ export default function Footer(){
     // shout out this guy too
 
     return (
-        <div className={styles.footer}>
+        <div className={`${styles.footer} animate__animated animate__fadeInUp animate__delay-1s`}>
             <div className={styles.footer_img}>
                 <a href="https://www.linkedin.com/in/deveshkrishan/" target="_blank"><img src="https://www.freeiconspng.com/uploads/displaying-19-gallery-images-for-linkedin-logo-png-25.png" style={{height: "2rem" }}/></a>
             </div>

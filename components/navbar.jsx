@@ -1,6 +1,7 @@
 "use client"
 
 import styles from "./Intro.module.css"
+import 'animate.css';
 
 export default function Navbar() {
 
@@ -23,7 +24,7 @@ export default function Navbar() {
     // Shout this dude
 
     return (
-        <div className={`${styles["navbar"]} ${styles["p"]}`}>
+        <div className={`${styles["navbar"]} ${styles["p"]} animate__animated animate__fadeInDown animate__delay-1s`}>
             <p className={styles.logo}>DK</p>
             <ul className={styles.project_list}>
                 <li goto="project_link" onClick={onBtnClick} style={{cursor: "pointer"}}>Projects</li>

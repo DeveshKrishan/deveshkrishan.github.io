@@ -1,4 +1,5 @@
 import styles from "./Intro.module.css"
+import 'animate.css';
 
 export default function Skills() {
 
@@ -30,7 +31,7 @@ export default function Skills() {
                 )
 
             return (
-                <div className={styles.skills}>
+                <div className={`${styles.skills} animate__animated animate__fadeIn animate__delay-1s`}>
                     <h2 className={styles.big} id={styles.about_title} style={{padding: "1rem 0"}}>Skills</h2>
                     <div className={styles.skills_content}>
                         <h3 className={`${styles.lang_title} ${styles.skills_mini}`} >Languages</h3>

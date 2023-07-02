@@ -1,8 +1,9 @@
 import styles from "./Intro.module.css"
+import 'animate.css';
 
 export default function About() {
     return (
-        <div className={styles.about} id="about_link">
+        <div className={`${styles.about} animate__animated animate__fadeIn animate__delay-1s`} id="about_link">
             <h2 className={styles.big} id={styles.about_title} style={{padding: "1rem 0"}}>Learn who I am! 🤔</h2>
             <div className={styles.about_section}>
                 <img src="https://i.postimg.cc/F1tQ7VLd/image.png" alt="Picture of Devesh Krishan" id={styles.about_pic}/>
