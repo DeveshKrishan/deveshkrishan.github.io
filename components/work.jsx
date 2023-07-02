@@ -4,7 +4,7 @@ import 'animate.css';
 
 export default function Work() {
     return (
-        <div className={`${styles.work} animate__animated animate__fadeInDown animate__delay-0.5s`} >
+        <div className={`${styles.work} animate__animated animate__fadeInDown animate__delay-0.5s`} id="work_link" >
             <h2 className={styles.big} id={styles.checkwork}>Check out my work.</h2>
             <div id={styles.projectpos}>
                 <Projects/>
