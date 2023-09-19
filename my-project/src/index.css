@@ -40,7 +40,7 @@
 .intro{
   padding-top: 5rem;
   display: grid;
-  grid-template-columns: 0.75fr 2fr 1fr;
+  grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 0.2fr 1fr 0.2fr;
   gap: 2rem;
 }
@@ -65,7 +65,26 @@
 
 #quote{
   grid-area: 3 / 2 / 3 / 3;
-  font-size: 2rem;
-  font-weight: 400;
+  font-size: 1.5rem;
+  font-weight: 500;
   color: #616161;
+}
+
+#project_grid{
+  grid-area: 2 / 2 / 2 / 3;
+
+}
+
+#check{
+  font-size: 4rem;
+  font-weight: 600;
+  grid-area: 1 / 2 / 1 / 3;
+  align-self: center;
+
+}
+
+.work{
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 0.2fr 1fr ;
 }
