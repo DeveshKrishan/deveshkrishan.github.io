@@ -42,7 +42,7 @@
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 0.2fr 1fr 0.2fr;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .intro_spacing{
@@ -86,7 +86,7 @@
 .work{
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 0.2fr 1fr;
+  grid-template-rows: 0.1fr 1fr;
 }
 
 #skill{
@@ -104,4 +104,34 @@
 
 .skill-grid{
   grid-area: 2 / 2 / 2 / 3;
+}
+
+#know{
+  font-size: 3.5rem;
+  font-weight: 600;
+  grid-area: 1 / 2 / 1 / 3;
+  align-self: center;
+}
+
+.about{
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 0.2fr 1fr ;
+}
+
+.about-grid{
+  grid-area: 2 / 2 / 2 / 3;
+
+}
+
+.lang-list{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.main-layout{
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
 }

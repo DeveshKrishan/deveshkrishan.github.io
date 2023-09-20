@@ -12,6 +12,8 @@ import placeholder_image from "./assets/placeholder.png"
 
 ];
 
+
+
 function Projects(){
     return (
         <div className="work">

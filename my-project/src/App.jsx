@@ -3,14 +3,19 @@ import './App.css'
 import Navbar from './Navbar'
 import Projects from "./Projects"
 import Skills from "./Skills"
+import About from "./About"
+
 function App() {
 
   return (
     <>
       <Navbar/>
-      <Welcome/>
-      <Skills/>
-      <Projects/>
+      <div className="main-layout">
+        <Welcome/>
+        <Skills/>
+        <About/>
+        <Projects/>
+      </div>
     </>
   )
 }

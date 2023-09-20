@@ -1,4 +1,4 @@
-import { Grid, Card, Text, Metric, Flex, ProgressBar  } from "@tremor/react";
+import { Grid, Card, Text, Metric, Flex, ProgressBar, List, ListItem } from "@tremor/react";
 
 const skill = [
     {lang: "Python", 
@@ -19,7 +19,7 @@ const skill = [
 
     {lang: "C++/C", 
     metric: 45,
-    color: "teal"},
+    color: "slate"},
 
     {lang: "Java", 
     metric: 25,
@@ -27,7 +27,7 @@ const skill = [
 ]
 
 const framew = [
-    "React", "Node", "Vite", "Typescript", "Flask", "Express", "Google App Script"
+    "React", "Node", "Vite", "Typescript", "Microsoft Azure", "MongoDB" ,"Flask", "Express", "Google App Script"
 ]
 
 function Skills(){
@@ -37,6 +37,7 @@ function Skills(){
           <Grid numItems={1} numItemsSm={2} numItemsLg={2} className="gap-2 skill-grid">
             <Card>
             <Metric>Languages</Metric>
+            <div className="lang-list">
             {skill.map((item) => (
                 <>
                     <Flex>
@@ -45,9 +46,19 @@ function Skills(){
                     <ProgressBar value={item.metric} color={item.color} className="mt-3" />
                 </> 
                 ))}
+            </div>
             </Card>
+
+            
             <Card>
-            <Metric>Frameworks</Metric>
+            <Metric>Frameworks/Technologies</Metric>
+            <List>
+            {framew.map((item) => (
+                <ListItem key={item}>
+                    <span>{item}</span>
+                </ListItem>
+            ))}
+            </List>
             </Card>
             
         </Grid>
