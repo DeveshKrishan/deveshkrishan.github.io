@@ -4,6 +4,7 @@ import Navbar from './Navbar'
 import Projects from "./Projects"
 import Skills from "./Skills"
 import About from "./About"
+import Footer from "./Footer"
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Skills/>
         <About/>
         <Projects/>
+        <Footer/>
       </div>
     </>
   )
