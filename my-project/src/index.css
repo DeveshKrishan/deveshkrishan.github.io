@@ -76,7 +76,7 @@
 }
 
 #check{
-  font-size: 4rem;
+  font-size: 3.5rem;
   font-weight: 600;
   grid-area: 1 / 2 / 1 / 3;
   align-self: center;
@@ -87,4 +87,21 @@
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 0.2fr 1fr ;
+}
+
+#skill{
+  font-size: 3.5rem;
+  font-weight: 600;
+  grid-area: 1 / 2 / 1 / 3;
+  align-self: center;
+}
+
+.skill_section{
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 0.2fr 1fr ;
+}
+
+.skill-grid{
+  grid-area: 2 / 2 / 2 / 3;
 }

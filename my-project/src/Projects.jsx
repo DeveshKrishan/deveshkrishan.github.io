@@ -1,22 +1,8 @@
-import { Card, Grid, Metric, Text, Subtitle,Title,} from "@tremor/react";
+import { Card, Grid, Metric, Text,Title, Badge} from "@tremor/react";
 import cs_image from "./assets/cine_score_image.png"
 import pv_image from "./assets/poverty_map_image.png"
 import stu_image from "./assets/student_progress_report_image.png"
 import placeholder_image from "./assets/placeholder.png"
-const categories = [
-    {
-      title: "Sales",
-      metric: "$ 23,456",
-    },
-    {
-      title: "Profit",
-      metric: "$ 13,123",
-    },
-    {
-      title: "Customers",
-      metric: "456",
-    },
-  ];
 
   const work = [
     {title: "U.S. Poverty Map", tools: "Technology used: React, Node, Python, R, JSON, React Simple Maps, Recharts, React D3, Vercel, Figma, Git", link: "https://united-states-poverty-map.vercel.app/#",desc: "Led a team to develop a responsive web application that displays poverty rates and annual income from 1996 - 2020. Created an interactive map of the US with visual color indicators for poverty rates, as well as the ability to isolate one state and view line graphs for poverty rate history, annual income history, and number of people in poverty. The country map also supports filtering by year and has options to view multiple types of data including annual income data." , image: pv_image,key: 0},
@@ -33,7 +19,7 @@ function Projects(){
             <div id="project_grid">
                 <Grid numItemsSm={1} numItemsLg={2} className="gap-6">
                 {work.map((item) => (
-                    <Card key={item.title}>
+                    <Card key={item.title} className="">
                     <a href={item.link} target="_blank">
                         <img src={item.image}/>
                     </a>
