@@ -14,7 +14,7 @@ import placeholder_image from "./assets/placeholder.png"
 
 function Projects(){
     return (
-        <div className="work">
+        <div className="work" id="portfolio-link">
             <h2 id="check">Check out my work.</h2>
             <div id="project_grid">
                 <Grid numItemsSm={1} numItemsLg={2} className="gap-6">

@@ -32,7 +32,7 @@ const framew = [
 
 function Skills(){
     return (
-        <div className="skill_section">
+        <div className="skill_section" id="skill-link">
             <h2 id="skill">My Skills</h2>
           <Grid numItems={1} numItemsSm={2} numItemsLg={2} className="gap-2 skill-grid">
             <Card>

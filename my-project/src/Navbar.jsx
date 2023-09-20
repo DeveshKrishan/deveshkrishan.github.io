@@ -1,14 +1,17 @@
-import { Card, Subtitle, Metric, Text, Divider } from "@tremor/react";
 
 function Navbar(){
     return (
-        <div className="navbar">
+        <div className="navbar" id="navbar-link">
         <p className={"logo"}>DK</p>
         <ul className={"project_list"}>
-              <li>Home</li>
-              <li>Skills</li>
-              <li>About</li>
-              <li>Portfolio</li>
+            <a href="#navbar-link">
+              <li>Home</li></a>
+              <a href="#skill-link">
+              <li>Skills</li></a>
+              <a href="#about-link">
+              <li>About</li></a>
+              <a href="#portfolio-link">
+              <li>Portfolio</li></a>
         </ul>
     </div>
     )
