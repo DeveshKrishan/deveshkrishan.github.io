@@ -19,7 +19,7 @@ function Projects(){
             <div id="project_grid">
                 <Grid numItemsSm={1} numItemsLg={2} className="gap-6">
                 {work.map((item) => (
-                    <Card key={item.title} className="">
+                    <Card key={item.title} className="project-card">
                     <a href={item.link} target="_blank">
                         <img src={item.image}/>
                     </a>

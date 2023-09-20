@@ -89,6 +89,12 @@
   grid-template-rows: 0.1fr 1fr;
 }
 
+.project-card{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 #skill{
   font-size: 3.5rem;
   font-weight: 600;
@@ -122,6 +128,13 @@
 .about-grid{
   grid-area: 2 / 2 / 2 / 3;
 
+
+}
+
+.about-card{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .lang-list{
@@ -147,3 +160,11 @@
   grid-area: 1 / 4 / 1/ 5 ;
 }
 
+.icon{
+  width: 2rem;
+}
+
+.icon-list{
+  display: flex;
+  gap: 1rem;
+}
