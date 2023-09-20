@@ -24,9 +24,11 @@ const skill = [
     {lang: "Java", 
     metric: 25,
     color: "red"},
-    
 ]
 
+const framew = [
+    "React", "Node", "Vite", "Typescript", "Flask", "Express", "Google App Script"
+]
 
 function Skills(){
     return (
@@ -46,6 +48,7 @@ function Skills(){
             </Card>
             <Card>
             <Metric>Frameworks</Metric>
+            {framew.map((item))}
             </Card>
             
         </Grid>
