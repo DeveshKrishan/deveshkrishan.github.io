@@ -48,7 +48,6 @@ function Skills(){
             </Card>
             <Card>
             <Metric>Frameworks</Metric>
-            {framew.map((item))}
             </Card>
             
         </Grid>
