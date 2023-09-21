@@ -149,15 +149,9 @@
   gap: 4rem;
 }
 
-.footer{
-  display: grid;
-  grid-template-columns: 0.5fr 3fr 3fr 3fr 0.5fr;
-  grid-template-rows: 1fr;
-  padding-bottom: 2rem;
-}
-
 #footer_p{
-  grid-area: 1 / 4 / 1/ 5 ;
+  text-align: center;
+  padding-bottom: 1rem;
 }
 
 .icon{

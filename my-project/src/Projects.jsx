@@ -12,6 +12,23 @@ import placeholder_image from "./assets/placeholder.png"
 
 ];
 
+const badgeColor = 
+    {
+        "Python" : "pink",
+        "Typescript" : "blue",
+        "Vite": "purple",
+        "Git" : "red",
+        "Ionic" : "teal",
+        "Tailwind CSS" : "sky",
+        "Google App Scripts": "amber",
+        "Node": "yellow",
+        "Microsoft Azure SQL Database": "indigo",
+        "R": "emerald",
+        "React" : "cyan",
+        "MongoDB": "lime"
+    };
+
+
 function Projects(){
     return (
         <div className="work" id="portfolio-link">
@@ -26,7 +43,7 @@ function Projects(){
                     <Metric>{item.title}</Metric>
                     <div className="lang-diff">
                         {item.tools.map((lang) => (
-                            <Badge size="sm">{lang}</Badge>
+                            <Badge size="sm" color={lang in badgeColor ? badgeColor[lang] : "slate"}>{lang}</Badge>
                         ))}
                     </div>
                 <Title>{item.desc}</Title>
