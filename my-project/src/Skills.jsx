@@ -36,7 +36,7 @@ function Skills(){
             <h2 id="skill">My Skills</h2>
           <Grid numItems={1} numItemsSm={2} numItemsLg={2} className="gap-2 skill-grid">
             <Card>
-            <Metric>Languages</Metric>
+            <Metric id="lang">Languages</Metric>
             <div className="lang-list">
             {skill.map((item) => (
                 <>
@@ -51,7 +51,7 @@ function Skills(){
 
             
             <Card>
-            <Metric>Frameworks/Technologies</Metric>
+            <Metric id="tech">Frameworks/Technology</Metric>
             <List>
             {framew.map((item) => (
                 <ListItem key={item}>
