@@ -128,7 +128,6 @@
 .about-grid{
   grid-area: 2 / 2 / 2 / 3;
 
-
 }
 
 .about-card{
@@ -167,4 +166,38 @@
   text-decoration: none;
   color: white;
   cursor: "pointer"
+}
+
+/* High-DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Styles for high-DPI displays */
+  .intro{
+    padding-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 0.2fr 1fr 0.2fr;
+    gap: 1rem;
+  }
+
+  #name{
+    font-size: 2rem;
+  
+  }
+  #who{
+    font-size: 2.5rem;
+  }
+
+  #check{
+    font-size: 2.5rem;
+  
+  }
+
+  #skill{
+    font-size: 2.5rem;
+
+  }
+
+  #know{
+    font-size: 2.5rem;
+  }
 }

@@ -6,23 +6,23 @@ const skill = [
     color: "green"},
 
     {lang: "HTML/CSS", 
-    metric: 85,
+    metric: 88,
     color: "purple"},
 
     {lang: "SQL", 
-    metric: 75,
+    metric: 85,
     color: "blue"},
 
     {lang: "Javascript", 
-    metric: 75,
+    metric: 79,
     color: "yellow"},
 
     {lang: "C++/C", 
-    metric: 45,
+    metric: 75,
     color: "slate"},
 
     {lang: "Java", 
-    metric: 25,
+    metric: 65,
     color: "red"},
 ]
 
