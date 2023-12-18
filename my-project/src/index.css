@@ -60,7 +60,7 @@
 #who{
   grid-area: 2 / 2 / 2 / 3;
   font-size: 4rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 #quote{
@@ -247,10 +247,11 @@
     font-size: 4vw;
 
   }
+
 }
 
 /* Medium screens (e.g., tablets) */
-@media (min-width: 648px) and (max-width: 1023px) {
+@media (min-width: 640px) and (max-width: 1023px) {
   /* Styles for medium screens */
   #tech{
     font-size: 2vw;
