@@ -9,7 +9,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #7CB3D1;
+  background-color: #7cb3d1;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,7 +18,7 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.navbar{
+.navbar {
   display: grid;
   grid-template-columns: 2fr 0.5fr 8fr 0.5fr 2fr;
   grid-template-rows: 1fr;
@@ -26,18 +26,18 @@
   font-weight: 600;
 }
 
-.logo{
+.logo {
   grid-area: 1 / 2 / 2/ 3;
 }
 
-.project_list{
+.project_list {
   list-style: none;
   display: flex;
   grid-area: 1 / 4 / 2 / 5;
-  gap: 2rem
+  gap: 2rem;
 }
 
-.intro{
+.intro {
   padding-top: 5rem;
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
@@ -45,133 +45,128 @@
   gap: 1rem;
 }
 
-.intro_spacing{
+.intro_spacing {
   padding-top: 5rem;
-
 }
 
-#name{
+#name {
   grid-area: 1 / 2 / 1 / 3;
   font-size: 2.5rem;
   font-weight: 600;
-
 }
 
-#who{
+#who {
   grid-area: 2 / 2 / 2 / 3;
   font-size: 4rem;
   font-weight: 500;
 }
 
-#quote{
+#quote {
   grid-area: 3 / 2 / 3 / 3;
   font-size: 1.5rem;
   font-weight: 500;
   color: #616161;
 }
 
-#project_grid{
+#project_grid {
   grid-area: 2 / 2 / 2 / 3;
-
 }
 
-#check{
+#check {
   font-size: 3.5rem;
   font-weight: 600;
   grid-area: 1 / 2 / 1 / 3;
   align-self: center;
-
 }
 
-.work{
+.work {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 0.1fr 1fr;
 }
 
-.project-card{
+.project-card {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-#skill{
+#skill {
   font-size: 3.5rem;
   font-weight: 600;
   grid-area: 1 / 2 / 1 / 3;
   align-self: center;
 }
 
-.skill_section{
+.skill_section {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 0.2fr 1fr ;
+  grid-template-rows: 0.2fr 1fr;
 }
 
-.skill-grid{
+.skill-grid {
   grid-area: 2 / 2 / 2 / 3;
 }
 
-#know{
+#know {
   font-size: 3.5rem;
   font-weight: 600;
   grid-area: 1 / 2 / 1 / 3;
   align-self: center;
 }
 
-.about{
+.about {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 0.2fr 1fr ;
+  grid-template-rows: 0.2fr 1fr;
 }
 
-.about-grid{
+.about-grid {
   grid-area: 2 / 2 / 2 / 3;
-
 }
 
-.about-card{
+.about-card {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.lang-list{
+.lang-list {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.main-layout{
+.main-layout {
   display: flex;
   flex-direction: column;
   gap: 4rem;
 }
 
-#footer_p{
+#footer_p {
   text-align: center;
   padding-bottom: 1rem;
 }
 
-.icon{
+.icon {
   width: 2rem;
 }
 
-.icon-list{
+.icon-list {
   display: flex;
   gap: 1rem;
 }
 
-.a{
+.a {
   text-decoration: none;
   color: white;
-  cursor: "pointer"
+  cursor: 'pointer';
 }
 
 /* High-DPI displays */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   /* Styles for high-DPI displays */
-  .intro{
+  .intro {
     padding-top: 1rem;
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
@@ -179,34 +174,30 @@
     gap: 1rem;
   }
 
-  #name{
+  #name {
     font-size: 2rem;
-  
   }
-  #who{
+  #who {
     font-size: 2.5rem;
   }
 
-  #check{
+  #check {
     font-size: 2.5rem;
-  
   }
 
-  #skill{
+  #skill {
     font-size: 2.5rem;
-
   }
 
-  #know{
+  #know {
     font-size: 2.5rem;
   }
 }
 
-
 /* Small screens (e.g., mobile phones) */
 @media (max-width: 767px) {
   /* Styles for small screens */
-  .intro{
+  .intro {
     padding-top: 1rem;
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
@@ -214,62 +205,54 @@
     gap: 1rem;
   }
 
-  #name{
+  #name {
     font-size: 1.5rem;
-  
   }
-  #who{
+  #who {
     font-size: 1.2rem;
   }
 
-  #check{
-    font-size: 2rem;
-  
-  }
-
-  #skill{
-    font-size: 2rem;
-
-  }
-
-  #know{
+  #check {
     font-size: 2rem;
   }
 
-  #quote{
+  #skill {
+    font-size: 2rem;
+  }
+
+  #know {
+    font-size: 2rem;
+  }
+
+  #quote {
     font-size: 1rem;
-
   }
-  #tech{
+  #tech {
     font-size: 4vw;
   }
-  #lang{
+  #lang {
     font-size: 4vw;
-
   }
-
 }
 
 /* Medium screens (e.g., tablets) */
 @media (min-width: 640px) and (max-width: 1023px) {
   /* Styles for medium screens */
-  #tech{
+  #tech {
     font-size: 2vw;
   }
-  #lang{
+  #lang {
     font-size: 2vw;
-
   }
 }
 
 /* Large screens (e.g., laptops and desktops) */
 @media (min-width: 1024px) {
   /* Styles for large screens */
-  #tech{
+  #tech {
     font-size: 2vw;
   }
-  #lang{
+  #lang {
     font-size: 2vw;
-
   }
 }
