@@ -13,8 +13,7 @@
     "version-packages": "changeset version",
     "cs:prepare": "changeset",
     "cs:version": "changeset version",
-    "commitlint": "commitlint --edit",
-    "prepare": "husky install"
+    "commitlint": "commitlint --edit"
   },
   "dependencies": {
     "@heroicons/react": "^1.0.6",
