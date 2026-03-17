@@ -1,7 +1,7 @@
 function Navbar() {
   return (
     <div className="navbar" id="navbar-link">
-      <p className={'logo'}>© vibe coded by devesh</p>
+      <p className={'logo'}>© coded by devesh</p>
       <ul className={'project_list'}>
         <a href="#navbar-link">
           <li>home</li>
