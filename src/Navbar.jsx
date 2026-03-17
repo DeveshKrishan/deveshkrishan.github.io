@@ -6,12 +6,6 @@ function Navbar() {
         <a href="#navbar-link">
           <li>home</li>
         </a>
-        <a href="#about-link">
-          <li>about</li>
-        </a>
-        <a href="#portfolio-link">
-          <li>portfolio</li>
-        </a>
       </ul>
     </div>
   );

@@ -2,7 +2,6 @@ import Welcome from './Welcome';
 import './App.css';
 import Navbar from './Navbar';
 import Activity from './Activity';
-import Projects from './Projects';
 import Footer from './Footer';
 
 function App() {
@@ -12,7 +11,9 @@ function App() {
       <div className="main-layout">
         <Welcome />
         <Activity />
-        <Projects />
+        <section className="coming-soon">
+          <p>more coming soon..</p>
+        </section>
         <Footer />
       </div>
     </>

@@ -1,5 +1,11 @@
 # my-project
 
+## 0.1.1
+
+### Patch Changes
+
+- remove projects
+
 ## 0.1.0
 
 ### Minor Changes
