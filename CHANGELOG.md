@@ -1,5 +1,11 @@
 # my-project
 
+## 0.1.0
+
+### Minor Changes
+
+- add spotify integration for seeing most recent songs played
+
 ## 0.0.2
 
 ### Patch Changes
