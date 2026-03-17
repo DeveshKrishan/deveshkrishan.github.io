@@ -20,11 +20,7 @@ function About() {
             to expand my knowledge and skills as a Software Engineer.
           </Text>
           <div className="icon-list">
-            <a
-              href="https://www.linkedin.com/in/deveshkrishan/"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href="https://www.linkedin.com/in/deveshkrishan/" target="_blank" rel="noreferrer">
               <img src={linkedin} className="icon" />
             </a>
             <a href="https://github.com/DeveshKrishan" target="_blank" rel="noreferrer">

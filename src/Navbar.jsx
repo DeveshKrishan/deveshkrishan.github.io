@@ -1,19 +1,16 @@
 function Navbar() {
   return (
     <div className="navbar" id="navbar-link">
-      <p className={'logo'}>DK</p>
+      <p className={'logo'}>© vibe coded by devesh</p>
       <ul className={'project_list'}>
         <a href="#navbar-link">
-          <li>Home</li>
-        </a>
-        <a href="#skill-link">
-          <li>Skills</li>
+          <li>home</li>
         </a>
         <a href="#about-link">
-          <li>About</li>
+          <li>about</li>
         </a>
         <a href="#portfolio-link">
-          <li>Portfolio</li>
+          <li>portfolio</li>
         </a>
       </ul>
     </div>
