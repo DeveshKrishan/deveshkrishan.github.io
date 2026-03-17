@@ -9,7 +9,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #7cb3d1;
+  background-color: #15191b;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -28,6 +28,7 @@
 
 .logo {
   grid-area: 1 / 2 / 2/ 3;
+  white-space: nowrap;
 }
 
 .project_list {
@@ -37,12 +38,42 @@
   gap: 2rem;
 }
 
+.project_list a {
+  font-weight: bold;
+}
+
 .intro {
   padding-top: 5rem;
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 0.2fr 1fr 0.2fr;
-  gap: 1rem;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.intro-photo {
+  width: 200px;
+  min-width: 200px;
+  height: 200px;
+  min-height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.intro-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+.intro-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .intro_spacing {
@@ -50,22 +81,20 @@
 }
 
 #name {
-  grid-area: 1 / 2 / 1 / 3;
   font-size: 2.5rem;
   font-weight: 600;
+  margin: 0;
 }
 
 #who {
-  grid-area: 2 / 2 / 2 / 3;
-  font-size: 4rem;
+  font-size: 1.75rem;
   font-weight: 500;
+  margin: 0;
+  line-height: 1.4;
 }
 
-#quote {
-  grid-area: 3 / 2 / 3 / 3;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #616161;
+.intro-geico {
+  color: #0d7d2e;
 }
 
 #project_grid {
@@ -168,17 +197,18 @@
   /* Styles for high-DPI displays */
   .intro {
     padding-top: 1rem;
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: 0.2fr 1fr 0.2fr;
-    gap: 1rem;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
   }
-
+  .intro-photo {
+    width: 160px;
+    height: 160px;
+  }
   #name {
     font-size: 2rem;
   }
   #who {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
   }
 
   #check {
@@ -199,12 +229,14 @@
   /* Styles for small screens */
   .intro {
     padding-top: 1rem;
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: 0.2fr 1fr 0.2fr;
-    gap: 1rem;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
   }
-
+  .intro-photo {
+    width: 140px;
+    height: 140px;
+  }
   #name {
     font-size: 1.5rem;
   }
@@ -224,9 +256,6 @@
     font-size: 2rem;
   }
 
-  #quote {
-    font-size: 1rem;
-  }
   #tech {
     font-size: 4vw;
   }
