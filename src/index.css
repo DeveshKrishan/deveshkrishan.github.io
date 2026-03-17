@@ -172,6 +172,12 @@
   gap: 4rem;
 }
 
+.coming-soon {
+  text-align: center;
+  font-size: 1rem;
+  color: #a0a0a0;
+}
+
 .activity-section {
   max-width: 900px;
   margin: 0 auto;
@@ -254,6 +260,8 @@
 #footer_p {
   text-align: center;
   padding-bottom: 1rem;
+  font-size: 0.875rem;
+  color: #888;
 }
 
 .icon {
