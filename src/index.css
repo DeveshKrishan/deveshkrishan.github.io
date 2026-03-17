@@ -211,6 +211,46 @@
   color: #a0a0a0;
 }
 
+.activity-error {
+  color: #ff6b6b;
+  margin: 0 0 0.75rem;
+}
+
+.activity-loading {
+  color: #a0a0a0;
+  margin: 0 0 0.75rem;
+}
+
+.activity-attribution {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.activity-attribution a {
+  color: #1db954;
+  text-decoration: none;
+}
+
+.activity-attribution a:hover {
+  text-decoration: underline;
+}
+
+.activity-attribution-github {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.activity-attribution-github a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.activity-attribution-github a:hover {
+  text-decoration: underline;
+}
+
 #footer_p {
   text-align: center;
   padding-bottom: 1rem;
