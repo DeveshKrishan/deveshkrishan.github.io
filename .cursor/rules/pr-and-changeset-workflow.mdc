@@ -1,0 +1,50 @@
+---
+description: Ensure PRs include an appropriate Changeset and follow the repo’s GitHub PR workflow
+alwaysApply: true
+---
+
+# GitHub PR + Changeset Workflow
+
+When asked to create a commit and/or open a GitHub PR in this repo, always follow this workflow:
+
+1. **Before committing / opening a PR**
+   - Check for an existing `.changeset/*.md` file that clearly corresponds to the current work.
+   - If none exists for the current feature/fix, create **one new Changeset** rather than reusing/overloading old ones.
+   - Use the package name from `package.json` (`devesh-portfolio`) in the changeset frontmatter.
+   - Choose bump type based on impact:
+     - `patch` for small fixes or refactors with no behavior change.
+     - `minor` for new user‑visible features (e.g. new UI sections, API integrations).
+     - `major` only when there are breaking changes.
+   - Write a **concise, human‑readable summary** line that would make sense in a changelog (e.g. “Add Spotify and GitHub activity widgets to the homepage.”).
+
+2. **Changeset file conventions**
+   - Place the file in `.changeset/` with a short, kebab‑cased name that hints at the work (e.g. `activity-widgets.md`, `fix-spotify-auth.md`).
+   - Use this structure:
+
+     ```markdown
+     ---
+     "devesh-portfolio": <bump-type>
+     ---
+
+     <one or two short sentences describing the change>
+     ```
+
+3. **Committing and pushing**
+   - Include the new or updated `.changeset/*.md` file in the same commit series as the feature/fix (either the main feature commit or a follow‑up `chore: add changeset for …` commit).
+   - Ensure the final branch state has **no untracked or uncommitted changes** before creating the PR.
+
+4. **Creating the PR**
+   - Make sure the branch is pushed and tracks its remote.
+   - Use the `gh` CLI to create PRs when available:
+     - Base branch should be `main` (unless the user explicitly requests another base).
+     - Title should match the main feature commit (e.g. `feat: add activity widgets`).
+     - PR body should include:
+       - A short **Summary** bullet list of key changes.
+       - Any relevant **Notes** (e.g. auth flows used, external APIs, or migration considerations).
+   - If `gh` is not available, provide the user with the exact `gh pr create` command or clear instructions to open the PR via the GitHub UI.
+
+5. **Idempotency and safety**
+   - Never modify git config.
+   - Do not force‑push branches unless the user explicitly requests it (and warn about the implications).
+   - Do not create multiple overlapping Changesets for the exact same change in a single PR; prefer updating the existing one for that PR if needed.
+
