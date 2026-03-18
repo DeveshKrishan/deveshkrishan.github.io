@@ -1,5 +1,15 @@
 # my-project
 
+## 0.2.0
+
+### Minor Changes
+
+- 947ad5c: Add Spotify and GitHub activity widgets to the homepage activity section.
+
+### Patch Changes
+
+- fdc0042: Small navigation, layout, and intro section fixes for the home and about sections.
+
 ## 0.1.1
 
 ### Patch Changes
