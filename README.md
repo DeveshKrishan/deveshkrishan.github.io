@@ -1,22 +1,36 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a Vite + React personal site with a Spotify-powered activity section.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Using pnpm
-
-From the `my-project` directory:
+From the project root:
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-This will install dependencies and start the Vite dev server (usually at `http://localhost:5173/`).
+This starts the Vite dev server, usually at `http://localhost:5173/`.
+
+## Run with Spotify API routes
+
+The Spotify activity section calls a serverless API route at `/api/spotify/recently-played`.
+To test that locally, use the Vercel dev server:
+
+```bash
+pnpm run dev:full
+```
+
+This expects the following env vars in `.env` or `.env.local`:
+
+```bash
+SPOTIFY_CLIENT_ID=...
+SPOTIFY_CLIENT_SECRET=...
+SPOTIFY_REFRESH_TOKEN=...
+```
+
+If you only run `pnpm dev`, the UI will still load, but the Spotify API route will not be available locally.
 
 ## Changesets workflow
 
