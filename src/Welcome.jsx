@@ -17,7 +17,7 @@ function Welcome() {
         </div>
         <div className="intro-details">
           <p className="intro-name" id="name">
-            what&apos;s up, i&apos;m devesh!
+            what&apos;s up, i&apos;m devesh (duh-vesh)!
           </p>
           <h2 className="intro-title" id="who">
             video editor turned software engineer. i&apos;m {age} years old, currently work at{' '}
