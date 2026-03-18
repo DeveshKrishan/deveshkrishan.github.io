@@ -13,10 +13,10 @@ pnpm dev
 
 This starts the Vite dev server, usually at `http://localhost:5173/`.
 
-## Run with Spotify API routes
+## Run with API routes
 
-The Spotify activity section calls a serverless API route at `/api/spotify/recently-played`.
-To test that locally, use the Vercel dev server:
+The activity section calls serverless API routes for both Spotify and GitHub.
+To test those locally, use the Vercel dev server:
 
 ```bash
 pnpm run dev:full
@@ -28,9 +28,12 @@ This expects the following env vars in `.env` or `.env.local`:
 SPOTIFY_CLIENT_ID=...
 SPOTIFY_CLIENT_SECRET=...
 SPOTIFY_REFRESH_TOKEN=...
+GITHUB_USERNAME=DeveshKrishan
+# Optional, helps with GitHub rate limits:
+GITHUB_TOKEN=...
 ```
 
-If you only run `pnpm dev`, the UI will still load, but the Spotify API route will not be available locally.
+If you only run `pnpm dev`, the UI will still load, but the API routes will not be available locally.
 
 ## Changesets workflow
 
