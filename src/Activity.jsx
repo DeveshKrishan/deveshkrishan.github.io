@@ -93,7 +93,7 @@ function Activity() {
   }, []);
 
   return (
-    <section className="activity-section">
+    <section className="activity-section" id="about">
       <h2 className="activity-heading">what i&apos;ve been up to</h2>
       <div className="activity-grid">
         <div className="activity-column">
