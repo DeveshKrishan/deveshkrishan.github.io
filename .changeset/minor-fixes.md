@@ -2,5 +2,5 @@
 "devesh-portfolio": patch
 ---
 
-Small navigation and layout fixes for the home and about sections.
+Small navigation, layout, and intro section fixes for the home and about sections.
 
