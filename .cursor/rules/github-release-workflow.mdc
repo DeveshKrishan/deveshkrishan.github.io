@@ -1,0 +1,42 @@
+---
+description: Cut GitHub releases aligned with Changesets version and auto-generated release notes
+alwaysApply: false
+---
+
+# GitHub release (Changesets + `gh`)
+
+When asked to **ship a release** or **publish a version** after features are merged to `main`:
+
+## 1. Version from Changesets
+
+- On `main`, ensure all intended PRs are merged.
+- Run **`pnpm run version-packages`** (same as `changeset version`).
+- This updates **`package.json`** `version`, **`CHANGELOG.md`**, and removes consumed files under **`.changeset/*.md`**.
+- Commit with a message like **`chore: release vX.Y.Z`** (use the new version from `package.json`).
+- Push to **`origin main`**.
+
+## 2. Tag matching `package.json`
+
+- Tag name must be **`v` + semver** from `package.json` (e.g. `0.2.0` → **`v0.2.0`**).
+- Point the tag at the **release commit** (the one that bumped the version):
+
+  ```bash
+  git tag vX.Y.Z <release-commit-sha>
+  git push origin vX.Y.Z
+  ```
+
+## 3. GitHub Release with auto-generated notes
+
+- Use the GitHub CLI so notes match the **“Generate release notes”** behavior in the UI:
+
+  ```bash
+  gh release create vX.Y.Z --title "vX.Y.Z" --generate-notes
+  ```
+
+- Optional: **`--latest`** if this should be marked latest; omit for pre-releases.
+- Do **not** hand-write long notes unless the user asks; **`--generate-notes`** summarizes merged PRs/commits since the previous tag.
+
+## 4. Preconditions
+
+- **`gh`** authenticated (`gh auth login`).
+- No duplicate tag or release for the same `vX.Y.Z`.
