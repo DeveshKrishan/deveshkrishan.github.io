@@ -11,6 +11,7 @@ const age = Math.round(ageDate.getUTCFullYear() - 1970);
 function Welcome() {
   return (
     <div className="intro_spacing">
+      <h2 className="intro-heading">my introduction</h2>
       <div className="intro">
         <div className="intro-photo">
           <img src={profilePhoto} alt="Devesh Krishan" />

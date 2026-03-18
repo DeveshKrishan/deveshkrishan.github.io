@@ -48,8 +48,7 @@
   grid-template-columns: auto 1fr;
   gap: 2rem;
   align-items: center;
-  max-width: 900px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .intro-photo {
@@ -78,6 +77,13 @@
 
 .intro_spacing {
   padding-top: 5rem;
+  width: 100%;
+}
+
+.intro-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
 }
 
 #name {
@@ -169,18 +175,22 @@
 .main-layout {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 4rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .coming-soon {
+  width: 100%;
   text-align: center;
   font-size: 1rem;
   color: #a0a0a0;
 }
 
 .activity-section {
-  max-width: 900px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .activity-heading {
@@ -255,6 +265,10 @@
 
 .activity-attribution-github a:hover {
   text-decoration: underline;
+}
+
+.footer {
+  width: 100%;
 }
 
 #footer_p {
