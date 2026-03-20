@@ -47,41 +47,30 @@ body {
   font-weight: bold;
 }
 
-@keyframes navShake {
+@keyframes navBounce {
   0% {
     transform: translate3d(0, 0, 0);
   }
-  15% {
-    transform: translate3d(-4px, 0, 0) rotate(-1deg);
-  }
   30% {
-    transform: translate3d(4px, 0, 0) rotate(1deg);
+    transform: translate3d(0, -6px, 0);
   }
   45% {
-    transform: translate3d(-4px, 0, 0) rotate(-1deg);
+    transform: translate3d(0, 0, 0);
   }
-  60% {
-    transform: translate3d(4px, 0, 0) rotate(1deg);
-  }
-  75% {
-    transform: translate3d(-2px, 0, 0) rotate(-0.5deg);
+  70% {
+    transform: translate3d(0, -3px, 0);
   }
   100% {
     transform: translate3d(0, 0, 0);
   }
 }
 
-/* Hover shake: transform-only to avoid layout shift */
-.navbar:hover .logo {
-  animation: navShake 0.55s ease-in-out both;
-  will-change: transform;
-}
-
+/* Hover bounce: transform-only to avoid layout shift */
 .logo:hover,
 .project_list a[href="/"]:hover,
 .project_list a[href="#skills"]:hover,
 .project_list a[href="#about"]:hover {
-  animation: navShake 0.55s ease-in-out both;
+  animation: navBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   will-change: transform;
 }
 
@@ -93,7 +82,6 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .navbar:hover .logo,
   .logo:hover,
   .project_list a[href="/"]:hover,
   .project_list a[href="#skills"]:hover,

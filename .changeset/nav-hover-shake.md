@@ -2,5 +2,5 @@
 "devesh-portfolio": minor
 ---
 
-Add a subtle shake animation to the navbar and logo on hover.
+Add a subtle bounce animation to the navbar links (home/skills/about) and the logo text on hover.
 
