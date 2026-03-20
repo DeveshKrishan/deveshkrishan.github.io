@@ -78,17 +78,25 @@ body {
   will-change: transform;
 }
 
+.navbar:hover .logo {
+  animation: navShake 0.55s ease-in-out both;
+  will-change: transform;
+}
+
 .logo:hover,
-.project_list a:hover {
+.project_list a[href="/"]:hover,
+.project_list a[href="#skills"]:hover,
+.project_list a[href="#about"]:hover {
   animation: navShake 0.55s ease-in-out both;
   will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .navbar:hover .logo,
-  .navbar:hover .project_list a,
   .logo:hover,
-  .project_list a:hover {
+  .project_list a[href="/"]:hover,
+  .project_list a[href="#skills"]:hover,
+  .project_list a[href="#about"]:hover {
     animation: none !important;
     will-change: auto;
   }
