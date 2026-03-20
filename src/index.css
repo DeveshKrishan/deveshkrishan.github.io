@@ -387,6 +387,16 @@
 /* Small screens (e.g., mobile phones) */
 @media (max-width: 767px) {
   /* Styles for small screens */
+  .navbar {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .main-layout {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
   .intro {
     padding-top: 1rem;
     grid-template-columns: 1fr;
