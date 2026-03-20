@@ -125,11 +125,11 @@ body {
 
 .skills-group-title {
   margin: 0 0 0.65rem;
-  font-size: 0.7rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #8a8f94;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .skills-group-list {
