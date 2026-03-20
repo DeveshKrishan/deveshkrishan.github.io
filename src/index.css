@@ -52,19 +52,19 @@ body {
     transform: translate3d(0, 0, 0);
   }
   15% {
-    transform: translate3d(-2px, 0, 0);
+    transform: translate3d(-4px, 0, 0) rotate(-1deg);
   }
   30% {
-    transform: translate3d(2px, 0, 0);
+    transform: translate3d(4px, 0, 0) rotate(1deg);
   }
   45% {
-    transform: translate3d(-2px, 0, 0);
+    transform: translate3d(-4px, 0, 0) rotate(-1deg);
   }
   60% {
-    transform: translate3d(2px, 0, 0);
+    transform: translate3d(4px, 0, 0) rotate(1deg);
   }
   75% {
-    transform: translate3d(-1px, 0, 0);
+    transform: translate3d(-2px, 0, 0) rotate(-0.5deg);
   }
   100% {
     transform: translate3d(0, 0, 0);
@@ -72,12 +72,6 @@ body {
 }
 
 /* Hover shake: transform-only to avoid layout shift */
-.navbar:hover .logo,
-.navbar:hover .project_list a {
-  animation: navShake 0.55s ease-in-out both;
-  will-change: transform;
-}
-
 .navbar:hover .logo {
   animation: navShake 0.55s ease-in-out both;
   will-change: transform;
@@ -89,6 +83,13 @@ body {
 .project_list a[href="#about"]:hover {
   animation: navShake 0.55s ease-in-out both;
   will-change: transform;
+}
+
+/* Ensure transforms apply cleanly to inline links */
+.project_list a[href="/"],
+.project_list a[href="#skills"],
+.project_list a[href="#about"] {
+  display: inline-block;
 }
 
 @media (prefers-reduced-motion: reduce) {
