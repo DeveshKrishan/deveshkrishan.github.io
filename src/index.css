@@ -18,6 +18,11 @@
   -webkit-text-size-adjust: 100%;
 }
 
+html,
+body {
+  font-family: inherit;
+}
+
 .navbar {
   display: grid;
   grid-template-columns: 2fr 0.5fr 8fr 0.5fr 2fr;
@@ -43,7 +48,7 @@
 }
 
 .intro {
-  padding-top: 5rem;
+  padding-top: 0;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 2rem;
@@ -84,6 +89,65 @@
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
+}
+
+/* Skills — simple grouped list (classic portfolio) */
+.skills-section {
+  width: 100%;
+}
+
+.skills-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem;
+}
+
+.skills-lede {
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+  color: #a0a0a0;
+  line-height: 1.5;
+  max-width: 42rem;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+}
+
+.skills-group {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 1rem 1.15rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.skills-group-title {
+  margin: 0 0 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8a8f94;
+}
+
+.skills-group-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  line-height: 1.65;
+}
+
+.skills-group-list li {
+  display: inline;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.skills-group-list li:not(:last-child)::after {
+  content: ' · ';
+  color: #5c6369;
 }
 
 #name {
@@ -297,7 +361,7 @@
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   /* Styles for high-DPI displays */
   .intro {
-    padding-top: 1rem;
+    padding-top: 0;
     grid-template-columns: auto 1fr;
     gap: 1.5rem;
   }
@@ -328,8 +392,18 @@
 /* Small screens (e.g., mobile phones) */
 @media (max-width: 767px) {
   /* Styles for small screens */
+  .navbar {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .main-layout {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
   .intro {
-    padding-top: 1rem;
+    padding-top: 0;
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
@@ -362,6 +436,10 @@
   }
   #lang {
     font-size: 4vw;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
   }
 }
 
