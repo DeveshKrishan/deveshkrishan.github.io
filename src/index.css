@@ -48,7 +48,7 @@ body {
 }
 
 .intro {
-  padding-top: 5rem;
+  padding-top: 0;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 2rem;
@@ -99,7 +99,7 @@ body {
 .skills-heading {
   font-size: 2rem;
   font-weight: 600;
-  margin: 0 0 0.5rem;
+  margin: 0 0 1.5rem;
 }
 
 .skills-lede {
@@ -361,7 +361,7 @@ body {
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   /* Styles for high-DPI displays */
   .intro {
-    padding-top: 1rem;
+    padding-top: 0;
     grid-template-columns: auto 1fr;
     gap: 1.5rem;
   }
@@ -403,7 +403,7 @@ body {
   }
 
   .intro {
-    padding-top: 1rem;
+    padding-top: 0;
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
