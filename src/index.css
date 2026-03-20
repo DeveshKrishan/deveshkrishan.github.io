@@ -47,6 +47,53 @@ body {
   font-weight: bold;
 }
 
+@keyframes navShake {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  15% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  30% {
+    transform: translate3d(2px, 0, 0);
+  }
+  45% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  60% {
+    transform: translate3d(2px, 0, 0);
+  }
+  75% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Hover shake: transform-only to avoid layout shift */
+.navbar:hover .logo,
+.navbar:hover .project_list a {
+  animation: navShake 0.55s ease-in-out both;
+  will-change: transform;
+}
+
+.logo:hover,
+.project_list a:hover {
+  animation: navShake 0.55s ease-in-out both;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar:hover .logo,
+  .navbar:hover .project_list a,
+  .logo:hover,
+  .project_list a:hover {
+    animation: none !important;
+    will-change: auto;
+  }
+}
+
 .intro {
   padding-top: 0;
   display: grid;
