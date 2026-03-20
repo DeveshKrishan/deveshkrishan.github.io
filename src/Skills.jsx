@@ -4,19 +4,19 @@
 const SKILL_GROUPS = [
   {
     title: 'Languages',
-    items: ['TypeScript', 'JavaScript', 'Python', 'Java', 'SQL'],
+    items: ['Go', 'TypeScript', 'Python', 'SQL'],
   },
   {
     title: 'Frontend',
-    items: ['React', 'HTML & CSS', 'Tailwind CSS', 'Vite', 'Web accessibility'],
+    items: ['React', 'Vite', 'Vitest', 'Accessibility'],
   },
   {
-    title: 'Backend & APIs',
-    items: ['REST APIs', 'Node.js', 'Integration testing', 'Observability basics'],
+    title: 'APIs & data',
+    items: ['GraphQL', 'REST APIs', 'PostgreSQL'],
   },
   {
-    title: 'Tools & delivery',
-    items: ['Git', 'GitHub', 'CI/CD', 'Docker', 'Agile / Scrum'],
+    title: 'Platform & observability',
+    items: ['Docker', 'Kubernetes', 'CI/CD', 'Grafana'],
   },
 ];
 
@@ -26,9 +26,7 @@ function Skills() {
       <h2 className="skills-heading" id="skills-heading">
         skills
       </h2>
-      <p className="skills-lede">
-        A concise snapshot of technologies and practices I use day to day.
-      </p>
+      <p className="skills-lede">stuff my ai minions and i work on.</p>
       <div className="skills-grid">
         {SKILL_GROUPS.map((group) => (
           <div className="skills-group" key={group.title}>

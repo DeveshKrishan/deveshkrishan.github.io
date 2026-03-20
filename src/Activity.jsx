@@ -95,6 +95,7 @@ function Activity() {
   return (
     <section className="activity-section" id="about">
       <h2 className="activity-heading">what i&apos;ve been up to</h2>
+      <p className="skills-lede">what&apos;s he doing now</p>
       <div className="activity-grid">
         <div className="activity-column">
           <h3>recent songs listened to</h3>
