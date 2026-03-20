@@ -3,19 +3,19 @@
  */
 const SKILL_GROUPS = [
   {
-    title: 'Languages',
+    title: 'languages',
     items: ['Go', 'TypeScript', 'Python', 'SQL'],
   },
   {
-    title: 'Frontend',
+    title: 'frontend',
     items: ['React', 'Vite', 'Vitest', 'Accessibility'],
   },
   {
-    title: 'APIs & data',
+    title: 'apis & data',
     items: ['GraphQL', 'REST APIs', 'PostgreSQL'],
   },
   {
-    title: 'Platform & observability',
+    title: 'platform & observability',
     items: ['Docker', 'Kubernetes', 'CI/CD', 'Grafana'],
   },
 ];
