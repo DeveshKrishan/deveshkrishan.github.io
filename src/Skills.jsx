@@ -26,7 +26,6 @@ function Skills() {
       <h2 className="skills-heading" id="skills-heading">
         skills
       </h2>
-      <p className="skills-lede">stuff my ai minions and i work on.</p>
       <div className="skills-grid">
         {SKILL_GROUPS.map((group) => (
           <div className="skills-group" key={group.title}>

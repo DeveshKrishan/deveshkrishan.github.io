@@ -12,7 +12,6 @@ function Welcome() {
   return (
     <div className="intro_spacing">
       <h2 className="intro-heading">my introduction</h2>
-      <p className="skills-lede">who is this guy?</p>
       <div className="intro">
         <div className="intro-photo">
           <img src={profilePhoto} alt="Devesh Krishan" />
