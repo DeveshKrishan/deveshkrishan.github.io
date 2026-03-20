@@ -13,9 +13,6 @@ function App() {
         <Welcome />
         <Skills />
         <Activity />
-        <section className="coming-soon">
-          <p>more coming soon..</p>
-        </section>
         <Footer />
       </div>
     </>

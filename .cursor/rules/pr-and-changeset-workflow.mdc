@@ -31,6 +31,8 @@ When asked to create a commit and/or open a GitHub PR in this repo, always follo
 
 3. **Committing and pushing**
    - Include the new or updated `.changeset/*.md` file in the same commit series as the feature/fix (either the main feature commit or a follow‑up `chore: add changeset for …` commit).
+   - After the changeset file exists, always run `pnpm run cs:version` (equivalent to `changeset version`) so `package.json` version and `CHANGELOG.md` are updated on the PR branch.
+     - Note: `cs:version` consumes the changeset(s) and may remove files under `.changeset/`; that is expected.
    - Ensure the final branch state has **no untracked or uncommitted changes** before creating the PR.
 
 4. **Creating the PR**
