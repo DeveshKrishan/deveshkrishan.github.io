@@ -1,5 +1,11 @@
 # my-project
 
+## 0.3.1
+
+### Patch Changes
+
+- Make the navbar and “coded by devesh” logo bounce on hover (scale, larger then smaller).
+
 ## 0.3.0
 
 ### Minor Changes
