@@ -18,6 +18,11 @@
   -webkit-text-size-adjust: 100%;
 }
 
+html,
+body {
+  font-family: inherit;
+}
+
 .navbar {
   display: grid;
   grid-template-columns: 2fr 0.5fr 8fr 0.5fr 2fr;
