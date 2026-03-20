@@ -1,5 +1,15 @@
 # my-project
 
+## 0.3.0
+
+### Minor Changes
+
+- ca570e5: Add a grouped skills section below the introduction with classic portfolio styling, plus mobile/layout polish (consistent font inheritance and normalized header-to-content spacing).
+
+### Patch Changes
+
+- 3137b39: Add Cursor rule documenting GitHub release workflow with Changesets and auto-generated release notes.
+
 ## 0.2.0
 
 ### Minor Changes
