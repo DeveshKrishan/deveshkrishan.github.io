@@ -1,7 +1,7 @@
 import linkedin from './assets/linkedin.png';
 import github from './assets/github.png';
 
-const profilePhoto = new URL('./assets/100_3406.JPG', import.meta.url).href;
+const profilePhoto = new URL('./assets/profile-photo.jpg', import.meta.url).href;
 
 const birthDate = new Date(2003, 1, 1); // February 2003
 const ageMs = Date.now() - birthDate.getTime();
