@@ -1,5 +1,11 @@
 # my-project
 
+## 0.6.4
+
+### Patch Changes
+
+- 09f6275: Add spacing between activity section columns and prevent long commit messages from overflowing into adjacent columns.
+
 ## 0.6.3
 
 ### Patch Changes
