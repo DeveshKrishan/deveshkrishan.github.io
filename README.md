@@ -1,6 +1,6 @@
 # React + Vite
 
-This project is a Vite + React personal site with a Spotify-powered activity section.
+This project is a Vite + React personal site with Spotify, GitHub, and Steam activity widgets.
 
 ## Run locally
 
@@ -15,7 +15,7 @@ This starts the Vite dev server, usually at `http://localhost:5173/`.
 
 ## Run with API routes
 
-The activity section calls serverless API routes for both Spotify and GitHub.
+The activity section calls serverless API routes for Spotify, GitHub, and Steam.
 To test those locally, use the Vercel dev server:
 
 ```bash
@@ -31,9 +31,23 @@ SPOTIFY_REFRESH_TOKEN=...
 GITHUB_USERNAME=DeveshKrishan
 # Optional, helps with GitHub rate limits:
 GITHUB_TOKEN=...
+STEAM_WEB_API_KEY=...
+STEAM_ID=76561198...
+# Optional alternative to STEAM_ID:
+# STEAM_VANITY_URL=yourname
 ```
 
 If you only run `pnpm dev`, the UI will still load, but the API routes will not be available locally.
+
+## Steam setup
+
+See [`scripts/steam-resolve-id.md`](scripts/steam-resolve-id.md) for full steps. In short:
+
+1. Get a Web API key at [steamcommunity.com/dev/apikey](https://steamcommunity.com/dev/apikey).
+2. Find your SteamID64 (from your profile URL or via vanity URL resolution).
+3. Set **Game details** to **Public** in [Steam privacy settings](https://steamcommunity.com/my/edit/settings).
+
+The Steam widget shows games played in the **last 2 weeks** only.
 
 ## Changesets workflow
 

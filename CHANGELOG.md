@@ -1,5 +1,11 @@
 # my-project
 
+## 0.4.0
+
+### Minor Changes
+
+- Add Steam recent games widget with game icons to the activity section.
+
 ## 0.3.1
 
 ### Patch Changes
