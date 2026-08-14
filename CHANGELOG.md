@@ -1,5 +1,11 @@
 # my-project
 
+## 0.6.1
+
+### Patch Changes
+
+- e5ed9d2: Add API Checks CI workflow and Vitest unit tests for GitHub, Steam, and Spotify backend mappers.
+
 ## 0.6.0
 
 ### Minor Changes
