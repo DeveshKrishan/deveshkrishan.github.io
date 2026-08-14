@@ -1,5 +1,11 @@
 # my-project
 
+## 0.6.3
+
+### Patch Changes
+
+- f8dd118: Hide the resume link in the navbar behind a feature flag.
+
 ## 0.6.2
 
 ### Patch Changes
