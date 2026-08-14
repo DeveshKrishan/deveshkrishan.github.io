@@ -1,5 +1,11 @@
 # my-project
 
+## 0.6.5
+
+### Patch Changes
+
+- ce7a420: Update the homepage profile photo and improve circular crop positioning for the new image.
+
 ## 0.6.4
 
 ### Patch Changes
