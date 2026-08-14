@@ -1,4 +1,4 @@
-import { RESUME_URL } from './constants';
+import { RESUME_URL, SHOW_RESUME } from './constants';
 
 function Navbar() {
   return (
@@ -14,11 +14,13 @@ function Navbar() {
         <li>
           <a href="#about">about</a>
         </li>
-        <li>
-          <a href={RESUME_URL} target="_blank" rel="noopener noreferrer">
-            resume
-          </a>
-        </li>
+        {SHOW_RESUME ? (
+          <li>
+            <a href={RESUME_URL} target="_blank" rel="noopener noreferrer">
+              resume
+            </a>
+          </li>
+        ) : null}
       </ul>
     </div>
   );
