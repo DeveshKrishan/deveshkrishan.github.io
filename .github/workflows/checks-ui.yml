@@ -2,9 +2,25 @@ name: UI Checks
 
 on:
   pull_request:
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'index.html'
+      - 'tailwind.config.js'
+      - 'postcss.config.js'
+      - '.eslintrc.cjs'
+      - '.github/workflows/checks-ui.yml'
   push:
     branches:
       - main
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'index.html'
+      - 'tailwind.config.js'
+      - 'postcss.config.js'
+      - '.eslintrc.cjs'
+      - '.github/workflows/checks-ui.yml'
 
 permissions:
   contents: read
