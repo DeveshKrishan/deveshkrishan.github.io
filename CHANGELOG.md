@@ -1,5 +1,11 @@
 # my-project
 
+## 0.5.0
+
+### Minor Changes
+
+- a4baadb: Enhance Spotify recently played tracks with album art, deduplicated entries, play times, and links to songs and artists. Add Vitest UI tests and a UI checks CI workflow.
+
 ## 0.4.1
 
 ### Patch Changes

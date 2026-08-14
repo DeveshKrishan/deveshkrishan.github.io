@@ -379,6 +379,43 @@ body {
   text-decoration: underline;
 }
 
+.activity-song-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.activity-song-title-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.activity-song-title-row a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.activity-song-title-row a:hover .activity-main {
+  text-decoration: underline;
+}
+
+.activity-song-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.activity-song-row .activity-sub a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.activity-song-row .activity-sub a:hover {
+  text-decoration: underline;
+}
+
 .activity-game-row {
   display: flex;
   flex-direction: column;
@@ -554,7 +591,8 @@ body {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .activity-game-icon {
+  .activity-game-icon,
+  .activity-song-icon {
     width: 36px;
     height: 36px;
   }

@@ -15,6 +15,11 @@
  * ToS: minimal caching (60s); attribute Spotify in the UI.
  */
 
+import {
+  getRecentlyPlayedFetchLimit,
+  mapRecentlyPlayedItems,
+} from './map-recently-played.js';
+
 const SPOTIFY_API_BASE = 'https://api.spotify.com/v1';
 const SPOTIFY_ACCOUNTS_BASE = 'https://accounts.spotify.com';
 
@@ -102,8 +107,9 @@ export default async function handler(req, res) {
     }
 
     // GET /v1/me/player/recently-played – limit 1–50; optional after, before (Unix ms)
-    const limit = Math.min(Math.max(Number(req.query?.limit) || 3, 1), 50);
-    const params = new URLSearchParams({ limit: String(limit) });
+    const outputLimit = Math.min(Math.max(Number(req.query?.limit) || 3, 1), 50);
+    const fetchLimit = getRecentlyPlayedFetchLimit(outputLimit);
+    const params = new URLSearchParams({ limit: String(fetchLimit) });
     if (req.query?.after) params.set('after', String(req.query.after));
     if (req.query?.before) params.set('before', String(req.query.before));
 
@@ -126,24 +132,7 @@ export default async function handler(req, res) {
 
     const recentJson = JSON.parse(recentText);
     const items = Array.isArray(recentJson?.items) ? recentJson.items : [];
-    const songs = items
-      .map((item) => {
-        const track = item?.track;
-        if (!track) return null;
-
-        const title = track?.name ?? '';
-        const artist = Array.isArray(track?.artists)
-          ? track.artists.map((a) => a?.name).filter(Boolean).join(', ')
-          : '';
-
-        return {
-          title,
-          artist,
-          url: track?.external_urls?.spotify ?? null,
-          playedAt: item?.played_at ?? null,
-        };
-      })
-      .filter(Boolean);
+    const songs = mapRecentlyPlayedItems(items, outputLimit);
 
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
     return res.status(200).json({ songs });
