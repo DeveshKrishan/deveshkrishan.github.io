@@ -8,11 +8,8 @@ on:
       - 'index.html'
       - 'tailwind.config.js'
       - 'postcss.config.js'
-      - 'vite.config.js'
       - '.eslintrc.cjs'
       - '.github/workflows/checks-ui.yml'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
   push:
     branches:
       - main
@@ -22,11 +19,8 @@ on:
       - 'index.html'
       - 'tailwind.config.js'
       - 'postcss.config.js'
-      - 'vite.config.js'
       - '.eslintrc.cjs'
       - '.github/workflows/checks-ui.yml'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
 
 permissions:
   contents: read
