@@ -168,10 +168,52 @@ function Activity() {
           ) : null}
           {songsToShow.length > 0 ? (
             <ul>
-              {songsToShow.map((song, index) => (
-                <li key={index}>
-                  <span className="activity-main">{song.title}</span>
-                  <span className="activity-sub"> by {song.artist}</span>
+              {songsToShow.map((song) => (
+                <li key={song.id || `${song.title}-${song.playedAt}`} className="activity-song-row">
+                  <div className="activity-song-title-row">
+                    {song.imageUrl ? (
+                      <img
+                        src={song.imageUrl}
+                        alt=""
+                        className="activity-song-icon"
+                        width={32}
+                        height={32}
+                        loading="lazy"
+                        onError={(event) => {
+                          event.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    ) : null}
+                    {song.url ? (
+                      <a href={song.url} target="_blank" rel="noreferrer noopener">
+                        <span className="activity-main">{song.title}</span>
+                      </a>
+                    ) : (
+                      <span className="activity-main">{song.title}</span>
+                    )}
+                  </div>
+                  {Array.isArray(song.artists) && song.artists.length > 0 ? (
+                    <div className="activity-sub">
+                      by{' '}
+                      {song.artists.map((artist, index) => (
+                        <span key={artist.url || artist.name}>
+                          {index > 0 ? ', ' : null}
+                          {artist.url ? (
+                            <a href={artist.url} target="_blank" rel="noreferrer noopener">
+                              {artist.name}
+                            </a>
+                          ) : (
+                            artist.name
+                          )}
+                        </span>
+                      ))}
+                    </div>
+                  ) : song.artist ? (
+                    <div className="activity-sub">by {song.artist}</div>
+                  ) : null}
+                  {formatCommitDate(song.playedAt) ? (
+                    <div className="activity-sub">played {formatCommitDate(song.playedAt)}</div>
+                  ) : null}
                 </li>
               ))}
             </ul>
