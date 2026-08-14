@@ -1,5 +1,11 @@
 # my-project
 
+## 0.4.1
+
+### Patch Changes
+
+- 12cd6f4: Add a GitHub Actions workflow that runs Commitlint on pull request commits.
+
 ## 0.4.0
 
 ### Minor Changes
