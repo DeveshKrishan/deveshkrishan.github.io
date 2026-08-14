@@ -1,5 +1,11 @@
 # my-project
 
+## 0.6.0
+
+### Minor Changes
+
+- 915d626: Add a resume link to the navbar that opens the hosted PDF in a new tab.
+
 ## 0.5.0
 
 ### Minor Changes
