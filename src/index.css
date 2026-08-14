@@ -67,9 +67,7 @@ body {
 
 /* Hover bounce: transform-only to avoid layout shift */
 .logo:hover,
-.project_list a[href="/"]:hover,
-.project_list a[href="#skills"]:hover,
-.project_list a[href="#about"]:hover {
+.project_list a:hover {
   animation: navBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   will-change: transform;
   transform-origin: center;
@@ -78,17 +76,13 @@ body {
 }
 
 /* Ensure transforms apply cleanly to inline links */
-.project_list a[href="/"],
-.project_list a[href="#skills"],
-.project_list a[href="#about"] {
+.project_list a {
   display: inline-block;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .logo:hover,
-  .project_list a[href="/"]:hover,
-  .project_list a[href="#skills"]:hover,
-  .project_list a[href="#about"]:hover {
+  .project_list a:hover {
     animation: none !important;
     will-change: auto;
     transform: translate3d(0, 0, 0) scale(1.03);

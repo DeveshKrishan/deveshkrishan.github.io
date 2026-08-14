@@ -1,3 +1,5 @@
+import { RESUME_URL } from './constants';
+
 function Navbar() {
   return (
     <div className="navbar" id="navbar-link">
@@ -11,6 +13,11 @@ function Navbar() {
         </li>
         <li>
           <a href="#about">about</a>
+        </li>
+        <li>
+          <a href={RESUME_URL} target="_blank" rel="noopener noreferrer">
+            resume
+          </a>
         </li>
       </ul>
     </div>
