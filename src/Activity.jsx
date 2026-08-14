@@ -8,6 +8,10 @@ function Activity() {
   const [commitsError, setCommitsError] = useState(null);
   const [commitsNote, setCommitsNote] = useState(null);
   const [isCommitsLoading, setIsCommitsLoading] = useState(true);
+  const [games, setGames] = useState([]);
+  const [gamesError, setGamesError] = useState(null);
+  const [gamesNote, setGamesNote] = useState(null);
+  const [isGamesLoading, setIsGamesLoading] = useState(true);
 
   useEffect(() => {
     let isActive = true;
@@ -42,6 +46,28 @@ function Activity() {
 
   const songsToShow = useMemo(() => songs.slice(0, 3), [songs]);
   const commitsToShow = useMemo(() => commits.slice(0, 3), [commits]);
+  const gamesToShow = useMemo(() => games.slice(0, 3), [games]);
+
+  const formatPlaytime = (minutes) => {
+    if (!minutes || minutes <= 0) return null;
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    if (hours === 0) return `${mins}m in past 2 weeks`;
+    if (mins === 0) return `${hours}h in past 2 weeks`;
+    return `${hours}h ${mins}m in past 2 weeks`;
+  };
+
+  const formatGameLastPlayed = (value) => {
+    if (!value) return null;
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return null;
+
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+    }).format(date);
+  };
+
   const formatCommitDate = (value) => {
     if (!value) return null;
     const date = new Date(value);
@@ -87,6 +113,43 @@ function Activity() {
     }
 
     loadCommits();
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadGames() {
+      try {
+        setIsGamesLoading(true);
+        setGamesError(null);
+        setGamesNote(null);
+
+        const res = await fetch('/api/steam/recent-games?limit=3');
+        const data = await res.json().catch(() => null);
+
+        if (!res.ok) {
+          const message = data?.error || `Request failed (${res.status})`;
+          throw new Error(message);
+        }
+
+        const nextGames = Array.isArray(data?.games) ? data.games : [];
+        if (isActive) {
+          setGames(nextGames);
+          setGamesNote(typeof data?.note === 'string' ? data.note : null);
+        }
+      } catch (err) {
+        if (isActive) {
+          setGamesError(err instanceof Error ? err.message : 'Failed to load games');
+        }
+      } finally {
+        if (isActive) setIsGamesLoading(false);
+      }
+    }
+
+    loadGames();
     return () => {
       isActive = false;
     };
@@ -173,6 +236,60 @@ function Activity() {
               aria-label="GitHub"
             >
               GitHub
+            </a>
+          </p>
+        </div>
+        <div className="activity-column">
+          <h3>recent games played (past 2 weeks)</h3>
+          {gamesError ? <p className="activity-error">steam error: {gamesError}</p> : null}
+          {isGamesLoading ? <p className="activity-loading">loading…</p> : null}
+          {!isGamesLoading && gamesNote ? <p className="activity-loading">{gamesNote}</p> : null}
+          {!isGamesLoading && !gamesError && gamesToShow.length === 0 ? (
+            <p className="activity-loading">no recent games yet.</p>
+          ) : null}
+          {gamesToShow.length > 0 ? (
+            <ul>
+              {gamesToShow.map((game, index) => (
+                <li key={`${game.name}-${index}`} className="activity-game-row">
+                  <a href={game.storeUrl} target="_blank" rel="noreferrer noopener">
+                    {game.iconUrl ? (
+                      <img
+                        src={game.iconUrl}
+                        alt=""
+                        className="activity-game-icon"
+                        width={32}
+                        height={32}
+                        loading="lazy"
+                        onError={(event) => {
+                          event.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    ) : null}
+                    <span className="activity-main">{game.name}</span>
+                  </a>
+                  {formatGameLastPlayed(game.lastPlayedAt) ? (
+                    <div className="activity-sub">
+                      last played {formatGameLastPlayed(game.lastPlayedAt)}
+                      {formatPlaytime(game.playtimeMinutes)
+                        ? ` · ${formatPlaytime(game.playtimeMinutes)}`
+                        : null}
+                    </div>
+                  ) : formatPlaytime(game.playtimeMinutes) ? (
+                    <div className="activity-sub">{formatPlaytime(game.playtimeMinutes)}</div>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          <p className="activity-attribution-steam">
+            Games played in the past 2 weeks from{' '}
+            <a
+              href="https://store.steampowered.com"
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Steam"
+            >
+              Steam
             </a>
           </p>
         </div>
