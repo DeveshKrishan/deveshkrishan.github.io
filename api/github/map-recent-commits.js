@@ -1,3 +1,8 @@
+export function formatCommitMessage(message) {
+  const subject = String(message ?? '').split('\n')[0]?.trim();
+  return subject || '';
+}
+
 export function mapCommitFromPushEvent(event, commitJson) {
   if (event?.type !== 'PushEvent') return null;
 
@@ -6,7 +11,7 @@ export function mapCommitFromPushEvent(event, commitJson) {
   if (!repoName || !headSha) return null;
 
   const repoUrl = `https://github.com/${repoName}`;
-  const message = commitJson?.commit?.message ?? '';
+  const message = formatCommitMessage(commitJson?.commit?.message);
   const htmlUrl = commitJson?.html_url ?? `${repoUrl}/commit/${headSha}`;
   const createdAt =
     event?.created_at ??
