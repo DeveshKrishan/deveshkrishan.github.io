@@ -13,6 +13,13 @@
  * Env: STEAM_WEB_API_KEY, STEAM_ID (or STEAM_VANITY_URL).
  */
 
+import {
+  clampRequestLimit,
+  getRecentGamesFromOwned,
+  getSteamGamesNote,
+  mapSteamGame,
+} from './map-recent-games.js';
+
 const STEAM_API_BASE = 'https://api.steampowered.com';
 const MAX_RETRIES = 3;
 const DEFAULT_BACKOFF_MS = 1000;
@@ -44,30 +51,6 @@ async function fetchWithRetry(url, options, retriesLeft = MAX_RETRIES) {
   }
 
   return res;
-}
-
-function buildSteamIconUrl(appid, imgIconUrl) {
-  if (!appid || !imgIconUrl) return null;
-  return `https://media.steampowered.com/steamcommunity/public/images/apps/${appid}/${imgIconUrl}.jpg`;
-}
-
-function mapGame(game) {
-  const appid = game?.appid;
-  const name = game?.name ?? '';
-  if (!appid || !name) return null;
-
-  const lastPlayedAt =
-    typeof game?.rtime_last_played === 'number' && game.rtime_last_played > 0
-      ? new Date(game.rtime_last_played * 1000).toISOString()
-      : null;
-
-  return {
-    name,
-    playtimeMinutes: game?.playtime_2weeks ?? 0,
-    lastPlayedAt,
-    storeUrl: `https://store.steampowered.com/app/${appid}`,
-    iconUrl: buildSteamIconUrl(appid, game?.img_icon_url),
-  };
 }
 
 async function resolveSteamId(apiKey, vanityUrl) {
@@ -139,19 +122,6 @@ async function fetchRecentlyPlayedGames(apiKey, steamId, limit) {
   return Array.isArray(data?.response?.games) ? data.response.games : [];
 }
 
-function getRecentGamesFromOwned(ownedGames, limit) {
-  const recent = ownedGames.filter((game) => (game?.playtime_2weeks ?? 0) > 0);
-  const hasLastPlayed = recent.some((game) => (game?.rtime_last_played ?? 0) > 0);
-
-  if (hasLastPlayed) {
-    recent.sort((a, b) => (b?.rtime_last_played ?? 0) - (a?.rtime_last_played ?? 0));
-  } else {
-    recent.sort((a, b) => (b?.playtime_2weeks ?? 0) - (a?.playtime_2weeks ?? 0));
-  }
-
-  return recent.slice(0, limit).map(mapGame).filter(Boolean);
-}
-
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
@@ -174,7 +144,7 @@ export default async function handler(req, res) {
     });
   }
 
-  const limit = Math.min(Math.max(Number(req.query?.limit) || 3, 1), 50);
+  const limit = clampRequestLimit(req.query?.limit);
 
   try {
     if (!steamId) {
@@ -192,13 +162,10 @@ export default async function handler(req, res) {
 
     if (games.length === 0) {
       const recentGames = await fetchRecentlyPlayedGames(apiKey, steamId, limit);
-      games = recentGames.map(mapGame).filter(Boolean);
+      games = recentGames.map(mapSteamGame).filter(Boolean);
     }
 
-    const note =
-      games.length === 0
-        ? 'No games played in the last 2 weeks. Make sure Game details is set to Public on your Steam profile.'
-        : null;
+    const note = getSteamGamesNote(games);
 
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
     return res.status(200).json({ games, note });

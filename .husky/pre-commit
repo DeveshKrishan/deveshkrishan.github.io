@@ -1,2 +1,3 @@
 pnpm lint
 pnpm test:ui
+pnpm test:api

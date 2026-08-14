@@ -8,6 +8,12 @@
  * line-diff counts.
  */
 
+import {
+  clampRequestLimit,
+  getGitHubCommitsNote,
+  mapCommitFromPushEvent,
+} from './map-recent-commits.js';
+
 const GITHUB_API_BASE = 'https://api.github.com';
 const MAX_RETRIES = 3;
 const DEFAULT_BACKOFF_MS = 1000;
@@ -51,36 +57,23 @@ async function buildRecentCommits(events, limit, headers) {
     const headSha = event?.payload?.head ?? null;
     if (!repoName || !headSha) continue;
 
-    const repoUrl = `https://github.com/${repoName}`;
     const commitApiUrl = `${GITHUB_API_BASE}/repos/${repoName}/commits/${headSha}`;
 
     try {
       const commitRes = await fetchWithRetry(commitApiUrl, { headers });
       const commitText = await commitRes.text();
       if (!commitRes.ok) {
-        // Skip this event if we can't read its commit details
         continue;
       }
 
       const commitJson = JSON.parse(commitText);
-      const message = commitJson?.commit?.message ?? '';
-      const htmlUrl = commitJson?.html_url ?? `${repoUrl}/commit/${headSha}`;
-      const createdAt =
-        event?.created_at ?? commitJson?.commit?.author?.date ?? commitJson?.commit?.committer?.date ?? null;
+      const commit = mapCommitFromPushEvent(event, commitJson);
+      if (!commit) continue;
 
-      commits.push({
-        repo: repoName,
-        repoUrl,
-        message,
-        sha: headSha,
-        commitUrl: htmlUrl,
-        createdAt,
-        ref: event?.payload?.ref ?? event?.ref ?? null,
-      });
+      commits.push(commit);
 
       if (commits.length >= limit) break;
     } catch {
-      // Ignore individual commit failures and keep going
       continue;
     }
   }
@@ -96,7 +89,7 @@ export default async function handler(req, res) {
 
   const username = process.env.GITHUB_USERNAME || 'DeveshKrishan';
   const token = process.env.GITHUB_TOKEN;
-  const limit = Math.min(Math.max(Number(req.query?.limit) || 3, 1), 50);
+  const limit = clampRequestLimit(req.query?.limit);
 
   const headers = {
     Accept: 'application/vnd.github+json',
@@ -125,12 +118,7 @@ export default async function handler(req, res) {
 
     const events = JSON.parse(eventsText);
     const commits = await buildRecentCommits(Array.isArray(events) ? events : [], limit, headers);
-    const note =
-      commits.length === 0
-        ? token
-          ? 'No recent PushEvents found yet.'
-          : 'No public PushEvents found. Set GITHUB_TOKEN to include authenticated activity.'
-        : null;
+    const note = getGitHubCommitsNote(commits, Boolean(token));
 
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
     return res.status(200).json({ commits, note });
