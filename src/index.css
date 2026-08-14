@@ -308,7 +308,16 @@ body {
 .activity-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+  row-gap: 2rem;
+  column-gap: 0;
+}
+
+.activity-column {
+  min-width: 0;
+}
+
+.activity-column li {
+  overflow-wrap: break-word;
 }
 
 .activity-column h3 {
@@ -566,6 +575,7 @@ body {
 @media (min-width: 640px) {
   .activity-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2.5rem;
   }
 }
 
@@ -583,6 +593,7 @@ body {
 @media (min-width: 1024px) {
   .activity-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 3rem;
   }
 
   .activity-game-icon,
