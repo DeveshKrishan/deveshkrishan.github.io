@@ -2,9 +2,25 @@ name: API Checks
 
 on:
   pull_request:
+    paths:
+      - 'api/**'
+      - 'backend/**'
+      - 'scripts/**'
+      - '.github/workflows/checks-api.yml'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'vite.config.js'
   push:
     branches:
       - main
+    paths:
+      - 'api/**'
+      - 'backend/**'
+      - 'scripts/**'
+      - '.github/workflows/checks-api.yml'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'vite.config.js'
 
 permissions:
   contents: read
