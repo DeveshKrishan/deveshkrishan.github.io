@@ -1,9 +1,29 @@
 import { describe, expect, it } from 'vitest';
 import {
   clampRequestLimit,
+  formatCommitMessage,
   getGitHubCommitsNote,
   mapCommitFromPushEvent,
 } from './map-recent-commits.js';
+
+describe('formatCommitMessage', () => {
+  it('returns only the first line of a multi-line commit message', () => {
+    const message = [
+      'ci: stop triggering checks on dependency and vite config changes',
+      '',
+      'Co-authored-by: Cursor <cursoragent@cursor.com>',
+    ].join('\n');
+
+    expect(formatCommitMessage(message)).toBe(
+      'ci: stop triggering checks on dependency and vite config changes',
+    );
+  });
+
+  it('trims whitespace and handles empty input', () => {
+    expect(formatCommitMessage('  feat: add tests  \n\nbody')).toBe('feat: add tests');
+    expect(formatCommitMessage('')).toBe('');
+  });
+});
 
 describe('mapCommitFromPushEvent', () => {
   it('maps a PushEvent and commit payload into commit metadata', () => {

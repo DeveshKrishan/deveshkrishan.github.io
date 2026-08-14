@@ -1,5 +1,11 @@
 # my-project
 
+## 0.6.2
+
+### Patch Changes
+
+- 875fb11: Show only the commit subject line in the recent commits activity widget.
+
 ## 0.6.1
 
 ### Patch Changes
