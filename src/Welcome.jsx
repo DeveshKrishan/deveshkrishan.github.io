@@ -1,5 +1,7 @@
 import linkedin from './assets/linkedin.png';
 import github from './assets/github.png';
+import email from './assets/email.png';
+import { CONTACT_EMAIL } from './constants';
 
 const profilePhoto = new URL('./assets/profile-photo.jpg', import.meta.url).href;
 
@@ -31,6 +33,9 @@ function Welcome() {
             </a>
             <a href="https://github.com/DeveshKrishan" target="_blank" rel="noreferrer">
               <img src={github} className="icon" alt="GitHub" />
+            </a>
+            <a href={`mailto:${CONTACT_EMAIL}`}>
+              <img src={email} className="icon" alt="Email" />
             </a>
           </div>
         </div>
