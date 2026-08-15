@@ -1,5 +1,11 @@
 # my-project
 
+## 0.7.0
+
+### Minor Changes
+
+- 8964639: Add an email contact icon to the homepage introduction section with a mailto link.
+
 ## 0.6.5
 
 ### Patch Changes
