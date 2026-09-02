@@ -3,6 +3,9 @@ import {
   clampRequestLimit,
   formatCommitMessage,
   getGitHubCommitsNote,
+  getGitHubEventsPath,
+  isPublicGitHubRepo,
+  isPublicPushEvent,
   mapCommitFromPushEvent,
 } from './map-recent-commits.js';
 
@@ -52,22 +55,67 @@ describe('mapCommitFromPushEvent', () => {
     });
   });
 
-  it('returns null for non-push events or missing repo/sha', () => {
+  it('returns null for non-push events, private events, or missing repo/sha', () => {
     expect(mapCommitFromPushEvent({ type: 'WatchEvent' }, {})).toBeNull();
     expect(mapCommitFromPushEvent({ type: 'PushEvent', repo: { name: 'org/repo' } }, {})).toBeNull();
+    expect(
+      mapCommitFromPushEvent(
+        {
+          type: 'PushEvent',
+          public: false,
+          repo: { name: 'org/private-repo' },
+          payload: { head: 'abc123' },
+        },
+        { commit: { message: 'secret work' } },
+      ),
+    ).toBeNull();
+  });
+});
+
+describe('getGitHubEventsPath', () => {
+  it('always uses the public events endpoint', () => {
+    expect(getGitHubEventsPath('DeveshKrishan')).toBe(
+      '/users/DeveshKrishan/events/public?per_page=100',
+    );
+  });
+});
+
+describe('isPublicGitHubRepo', () => {
+  it('only treats repos that are explicitly public as public', () => {
+    expect(isPublicGitHubRepo({ private: false })).toBe(true);
+    expect(isPublicGitHubRepo({ private: true })).toBe(false);
+    expect(isPublicGitHubRepo({})).toBe(false);
+    expect(isPublicGitHubRepo(null)).toBe(false);
+  });
+});
+
+describe('isPublicPushEvent', () => {
+  const publicPushEvent = {
+    type: 'PushEvent',
+    public: true,
+    repo: { name: 'DeveshKrishan/deveshkrishan.github.io' },
+    payload: { head: 'abc123' },
+  };
+
+  it('accepts public PushEvents with a repo and head sha', () => {
+    expect(isPublicPushEvent(publicPushEvent)).toBe(true);
+    expect(isPublicPushEvent({ ...publicPushEvent, public: undefined })).toBe(true);
+  });
+
+  it('rejects private or incomplete events', () => {
+    expect(isPublicPushEvent({ ...publicPushEvent, public: false })).toBe(false);
+    expect(isPublicPushEvent({ ...publicPushEvent, type: 'WatchEvent' })).toBe(false);
+    expect(isPublicPushEvent({ ...publicPushEvent, payload: {} })).toBe(false);
   });
 });
 
 describe('getGitHubCommitsNote', () => {
   it('returns null when commits exist', () => {
-    expect(getGitHubCommitsNote([{ repo: 'org/repo' }], false)).toBeNull();
+    expect(getGitHubCommitsNote([{ repo: 'org/repo' }])).toBeNull();
   });
 
-  it('returns token-aware empty-state notes', () => {
-    expect(getGitHubCommitsNote([], true)).toBe('No recent PushEvents found yet.');
-    expect(getGitHubCommitsNote([], false)).toBe(
-      'No public PushEvents found. Set GITHUB_TOKEN to include authenticated activity.',
-    );
+  it('returns a public-only empty-state note', () => {
+    expect(getGitHubCommitsNote([])).toBe('No public PushEvents found.');
   });
 });
 
