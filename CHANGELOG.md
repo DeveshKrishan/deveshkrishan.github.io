@@ -1,5 +1,11 @@
 # my-project
 
+## 0.7.1
+
+### Patch Changes
+
+- b54e7f8: Show only public GitHub commits in the homepage activity widget.
+
 ## 0.7.0
 
 ### Minor Changes
