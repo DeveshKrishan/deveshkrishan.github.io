@@ -5,8 +5,9 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
 
-    // Path to the Tremor module
+    // Path to the Tremor module (workspace-hoisted or package-local)
     "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
+    "../node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     transparent: "transparent",

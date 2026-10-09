@@ -34,7 +34,7 @@ jobs:
 
       - name: Commit updated visits
         run: |
-          git add src/data/beli-visits.json
+          git add ui/src/data/beli-visits.json
           if git diff --cached --quiet; then
             echo "No visit changes to commit."
             exit 0

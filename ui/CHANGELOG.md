@@ -1,5 +1,11 @@
 # my-project
 
+## 0.10.1
+
+### Patch Changes
+
+- Split the Vite app into `ui/` and keep Node API routes at `api/` in a pnpm workspace, with one Vercel project serving both.
+
 ## 0.10.0
 
 ### Minor Changes

@@ -11,7 +11,7 @@
  * and the site cannot break when Beli changes an endpoint.
  *
  * Usage:
- *   node scripts/beli-fetch-visits.js            # refresh src/data/beli-visits.json
+ *   node scripts/beli-fetch-visits.js            # refresh ui/src/data/beli-visits.json
  *   node scripts/beli-fetch-visits.js --raw      # print the raw feed response instead
  *   node scripts/beli-fetch-visits.js --limit 5
  *
@@ -24,11 +24,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { loadEnv } from './load-env.js';
-import { mapBeliFeedItems } from '../src/data/map-beli-visits.js';
+import { mapBeliFeedItems } from '../ui/src/data/map-beli-visits.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const OUTPUT_PATH = path.join(ROOT, 'src/data/beli-visits.json');
+const OUTPUT_PATH = path.join(ROOT, 'ui/src/data/beli-visits.json');
 
 const ONBOARD_HOST = 'https://backoffice-service-onboarding-t57o3dxfca-nn.a.run.app';
 const API_HOST = 'https://backoffice-service-t57o3dxfca-nn.a.run.app';

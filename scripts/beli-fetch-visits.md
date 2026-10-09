@@ -1,6 +1,6 @@
 # Refreshing the Beli restaurants widget
 
-The "recent restaurants visited" column reads `src/data/beli-visits.json`, which is
+The "recent restaurants visited" column reads `ui/src/data/beli-visits.json`, which is
 **committed to the repo**. Nothing fetches Beli at runtime, so the deployed site holds
 no Beli credentials and cannot break when Beli changes an endpoint.
 
@@ -38,7 +38,7 @@ node scripts/beli-fetch-visits.js
 ```
 
 It logs in, resolves your user id, reads your profile feed, keeps the most recent
-rating events, and rewrites `src/data/beli-visits.json`. It refuses to write an empty
+rating events, and rewrites `ui/src/data/beli-visits.json`. It refuses to write an empty
 file, so a bad run leaves the previous data intact.
 
 Options:
@@ -51,7 +51,7 @@ node scripts/beli-fetch-visits.js --raw       # print the raw feed instead of wr
 ## Step 3: Commit the result (local refresh)
 
 ```bash
-git add src/data/beli-visits.json
+git add ui/src/data/beli-visits.json
 git commit -m "chore: refresh beli visits"
 ```
 
@@ -80,6 +80,6 @@ deployed site still only reads the committed JSON.
 - **401 on login** — wrong credentials, or Beli throttled repeated logins. Wait and retry.
 - **"No rating events found"** — the feed returned only bookmarks or other event types.
   Run with `--raw` to inspect what came back.
-- **Fields come back empty** — the mapper in `src/data/map-beli-visits.js` expects
+- **Fields come back empty** — the mapper in `ui/src/data/map-beli-visits.js` expects
   `business_full`, `score`, `sent_dt`, and `event_type`. These are observed field names,
   not a published contract, so they can change. Use `--raw` and adjust the mapper.
