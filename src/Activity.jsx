@@ -14,6 +14,7 @@ function Activity() {
   const [gamesError, setGamesError] = useState(null);
   const [gamesNote, setGamesNote] = useState(null);
   const [isGamesLoading, setIsGamesLoading] = useState(true);
+  const [visitPhotos, setVisitPhotos] = useState({});
 
   useEffect(() => {
     let isActive = true;
@@ -163,6 +164,38 @@ function Activity() {
       isActive = false;
     };
   }, []);
+
+  const visitPlaceIds = useMemo(
+    () => visitsToShow.map((visit) => visit.placeId).filter(Boolean),
+    [visitsToShow],
+  );
+
+  useEffect(() => {
+    if (visitPlaceIds.length === 0) return undefined;
+
+    let isActive = true;
+
+    async function loadVisitPhotos() {
+      try {
+        const params = new URLSearchParams({
+          placeIds: visitPlaceIds.join(','),
+          maxWidth: '96',
+        });
+        const res = await fetch(`/api/places/photos?${params.toString()}`);
+        if (!res.ok) return;
+
+        const data = await res.json().catch(() => null);
+        if (isActive && data?.photos) setVisitPhotos(data.photos);
+      } catch {
+        // The column reads fine without photos, so a failure here stays silent.
+      }
+    }
+
+    loadVisitPhotos();
+    return () => {
+      isActive = false;
+    };
+  }, [visitPlaceIds]);
 
   return (
     <section className="activity-section" id="about">
@@ -350,26 +383,64 @@ function Activity() {
             <p className="activity-loading">no recent visits yet.</p>
           ) : (
             <ul>
-              {visitsToShow.map((visit) => (
-                <li key={visit.id}>
-                  {visit.url ? (
-                    <a href={visit.url} target="_blank" rel="noreferrer noopener">
-                      <span className="activity-main">{visit.name}</span>
-                    </a>
-                  ) : (
-                    <span className="activity-main">{visit.name}</span>
-                  )}
-                  {visit.score == null ? null : (
-                    <span className="activity-sub"> — {visit.score}/10</span>
-                  )}
-                  {formatVisitDetail(visit) ? (
-                    <div className="activity-sub">{formatVisitDetail(visit)}</div>
-                  ) : null}
-                  {formatShortDate(visit.visitedAt) ? (
-                    <div className="activity-sub">visited {formatShortDate(visit.visitedAt)}</div>
-                  ) : null}
-                </li>
-              ))}
+              {visitsToShow.map((visit) => {
+                const photo = visit.placeId ? visitPhotos[visit.placeId] : null;
+
+                return (
+                  <li key={visit.id} className="activity-visit-row">
+                    <div className="activity-visit-title-row">
+                      {photo?.url ? (
+                        <img
+                          src={photo.url}
+                          alt=""
+                          className="activity-visit-icon"
+                          width={32}
+                          height={32}
+                          loading="lazy"
+                          onError={(event) => {
+                            event.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      ) : null}
+                      <span>
+                        {visit.url ? (
+                          <a href={visit.url} target="_blank" rel="noreferrer noopener">
+                            <span className="activity-main">{visit.name}</span>
+                          </a>
+                        ) : (
+                          <span className="activity-main">{visit.name}</span>
+                        )}
+                        {visit.score == null ? null : (
+                          <span className="activity-sub"> — {visit.score}/10</span>
+                        )}
+                      </span>
+                    </div>
+                    {formatVisitDetail(visit) ? (
+                      <div className="activity-sub">{formatVisitDetail(visit)}</div>
+                    ) : null}
+                    {formatShortDate(visit.visitedAt) ? (
+                      <div className="activity-sub">visited {formatShortDate(visit.visitedAt)}</div>
+                    ) : null}
+                    {photo?.attributions?.length ? (
+                      <div className="activity-sub">
+                        photo by{' '}
+                        {photo.attributions.map((attribution, index) => (
+                          <span key={attribution.url || attribution.name}>
+                            {index > 0 ? ', ' : null}
+                            {attribution.url ? (
+                              <a href={attribution.url} target="_blank" rel="noreferrer noopener">
+                                {attribution.name}
+                              </a>
+                            ) : (
+                              attribution.name
+                            )}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
+                  </li>
+                );
+              })}
             </ul>
           )}
           <p className="activity-attribution-beli">
@@ -381,6 +452,15 @@ function Activity() {
               aria-label="Beli"
             >
               Beli
+            </a>
+            , photos from{' '}
+            <a
+              href="https://developers.google.com/maps/documentation/places/web-service"
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Google Places"
+            >
+              Google Places
             </a>
           </p>
         </div>

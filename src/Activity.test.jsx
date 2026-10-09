@@ -1,6 +1,9 @@
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Activity from './Activity';
+import beliVisitsData from './data/beli-visits.json';
+
+const [firstVisit] = beliVisitsData.visits ?? [];
 
 function mockJsonResponse(data) {
   return {
@@ -45,6 +48,21 @@ describe('Activity', () => {
           return Promise.resolve(mockJsonResponse({ games: [] }));
         }
 
+        if (String(url).includes('/api/places/photos')) {
+          return Promise.resolve(
+            mockJsonResponse({
+              photos: {
+                [firstVisit?.placeId]: {
+                  url: 'https://lh3.googleusercontent.com/test-photo',
+                  attributions: [
+                    { name: 'Photo Author', url: 'https://maps.google.com/maps/contrib/1' },
+                  ],
+                },
+              },
+            }),
+          );
+        }
+
         return Promise.reject(new Error(`Unexpected fetch: ${url}`));
       }),
     );
@@ -71,7 +89,10 @@ describe('Activity', () => {
       'href',
       'https://open.spotify.com/artist/test-artist',
     );
-    expect(screen.getByAltText('')).toHaveAttribute('src', 'https://i.scdn.co/image/test.jpg');
+    const albumArt = screen
+      .getAllByAltText('')
+      .find((img) => img.classList.contains('activity-song-icon'));
+    expect(albumArt).toHaveAttribute('src', 'https://i.scdn.co/image/test.jpg');
     expect(screen.getByText(/played Aug 13/i)).toBeInTheDocument();
   });
 
@@ -82,6 +103,26 @@ describe('Activity', () => {
     expect(screen.getByRole('link', { name: 'Beli' })).toHaveAttribute(
       'href',
       'https://beliapp.com',
+    );
+  });
+
+  it('renders a places photo and its required author attribution', async () => {
+    expect(firstVisit?.placeId).toBeTruthy();
+
+    render(<Activity />);
+
+    const photo = await waitFor(() => {
+      const img = screen
+        .getAllByAltText('')
+        .find((candidate) => candidate.classList.contains('activity-visit-icon'));
+      expect(img).toBeTruthy();
+      return img;
+    });
+
+    expect(photo).toHaveAttribute('src', 'https://lh3.googleusercontent.com/test-photo');
+    expect(screen.getByRole('link', { name: 'Photo Author' })).toHaveAttribute(
+      'href',
+      'https://maps.google.com/maps/contrib/1',
     );
   });
 });

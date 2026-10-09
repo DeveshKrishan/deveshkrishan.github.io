@@ -62,6 +62,9 @@ git commit -m "chore: refresh beli visits"
 - **401 on login** — wrong credentials, or Beli throttled repeated logins. Wait and retry.
 - **"No rating events found"** — the feed returned only bookmarks or other event types.
   Run with `--raw` to inspect what came back.
+- **Photos are missing** — thumbnails come from Google Places at request time, keyed by the
+  `placeId` in the generated JSON, not from Beli. The feed carries no photo urls at all.
+  Check `GOOGLE_PLACES_API_KEY` and `/api/places/photos`.
 - **Fields come back empty** — the mapper in `src/data/map-beli-visits.js` expects
   `business_full`, `score`, `sent_dt`, and `event_type`. These are observed field names,
   not a published contract, so they can change. Use `--raw` and adjust the mapper.

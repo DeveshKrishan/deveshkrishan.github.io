@@ -64,6 +64,9 @@ export function mapBeliFeedItems(items, outputLimit = 3) {
       score: toNumericScore(item.score),
       category: getCategoryLabel(item.category ?? business.default_category),
       visitedAt: item.sent_dt ?? null,
+      // Place ids may be stored indefinitely; photo names may not, so the photo
+      // lookup happens at request time from this id rather than being baked in.
+      placeId: business.place_id ?? null,
       url: getPlaceUrl(business.place_id),
     });
 
