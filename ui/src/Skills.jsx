@@ -4,7 +4,7 @@
 const SKILL_GROUPS = [
   {
     title: 'languages',
-    items: ['Go', 'TypeScript', 'Python', 'SQL'],
+    items: ['Go', 'TypeScript', 'Python', 'SQL', 'C++'],
   },
   {
     title: 'frontend',
@@ -12,7 +12,7 @@ const SKILL_GROUPS = [
   },
   {
     title: 'apis & data',
-    items: ['GraphQL', 'REST APIs', 'PostgreSQL'],
+    items: ['GraphQL', 'REST APIs', 'PostgreSQL', 'Kafka'],
   },
   {
     title: 'platform & observability',
