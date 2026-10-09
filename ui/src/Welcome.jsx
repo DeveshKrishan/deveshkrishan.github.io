@@ -14,34 +14,36 @@ const age = Math.round(ageDate.getUTCFullYear() - 1970);
 function Welcome() {
   return (
     <div className="intro_spacing">
-      <p className="hero-wordmark">Devesh</p>
+      <p className="hero-wordmark">Devesh Krishan</p>
       <div className="intro">
         <div className="intro-photo">
           <img src={profilePhoto} alt="Devesh Krishan" />
         </div>
         <div className="intro-details">
-          <h2 className="intro-heading">my introduction</h2>
-          <p className="intro-name" id="name">
-            what&apos;s up, i&apos;m devesh (duh-vesh)!
-          </p>
-          <h2 className="intro-title" id="who">
-            video editor turned software engineer. i&apos;m {age} years old, currently work at{' '}
-            <span className="intro-geico">GEICO</span> as a swe 2, and am located in san jose,
-            california.
-          </h2>
-          <div className="icon-list">
-            <a href="https://www.linkedin.com/in/deveshkrishan/" target="_blank" rel="noreferrer">
-              <FaLinkedin className="icon" aria-hidden="true" focusable="false" />
-              LinkedIn →
-            </a>
-            <a href="https://github.com/DeveshKrishan" target="_blank" rel="noreferrer">
-              <FaGithub className="icon" aria-hidden="true" focusable="false" />
-              GitHub →
-            </a>
-            <a href={`mailto:${CONTACT_EMAIL}`}>
-              <HiOutlineMail className="icon" aria-hidden="true" focusable="false" />
-              Email →
-            </a>
+          <div className="intro-copy">
+            <h2 className="intro-heading">my introduction</h2>
+            <p className="intro-name" id="name">
+              what&apos;s up, i&apos;m devesh (duh-vesh)!
+            </p>
+            <h2 className="intro-title" id="who">
+              video editor turned software engineer. i&apos;m {age} years old, currently work at{' '}
+              <span className="intro-geico">GEICO</span> as a swe 2, and am located in san jose,
+              california.
+            </h2>
+            <div className="icon-list">
+              <a href="https://www.linkedin.com/in/deveshkrishan/" target="_blank" rel="noreferrer">
+                <FaLinkedin className="icon" aria-hidden="true" focusable="false" />
+                LinkedIn →
+              </a>
+              <a href="https://github.com/DeveshKrishan" target="_blank" rel="noreferrer">
+                <FaGithub className="icon" aria-hidden="true" focusable="false" />
+                GitHub →
+              </a>
+              <a href={`mailto:${CONTACT_EMAIL}`}>
+                <HiOutlineMail className="icon" aria-hidden="true" focusable="false" />
+                Email →
+              </a>
+            </div>
           </div>
           <Skills />
         </div>

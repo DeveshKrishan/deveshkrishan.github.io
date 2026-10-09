@@ -1,5 +1,11 @@
 # my-project
 
+## 0.11.0
+
+### Minor Changes
+
+- Stretch the homepage wordmark across both names and fill leftover intro space with skills beside the photo.
+
 ## 0.10.1
 
 ### Patch Changes
