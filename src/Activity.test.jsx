@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Activity from './Activity';
 
@@ -51,6 +51,8 @@ describe('Activity', () => {
   });
 
   afterEach(() => {
+    // Vitest runs without `globals`, so Testing Library's auto-cleanup never registers.
+    cleanup();
     vi.unstubAllGlobals();
   });
 
@@ -71,5 +73,15 @@ describe('Activity', () => {
     );
     expect(screen.getByAltText('')).toHaveAttribute('src', 'https://i.scdn.co/image/test.jpg');
     expect(screen.getByText(/played Aug 13/i)).toBeInTheDocument();
+  });
+
+  it('renders the beli column from the committed visit data', async () => {
+    render(<Activity />);
+
+    expect(await screen.findByText('recent restaurants visited')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Beli' })).toHaveAttribute(
+      'href',
+      'https://beliapp.com',
+    );
   });
 });

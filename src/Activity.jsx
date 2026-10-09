@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import beliVisitsData from './data/beli-visits.json';
+
 function Activity() {
   const [songs, setSongs] = useState([]);
   const [songsError, setSongsError] = useState(null);
@@ -47,6 +49,7 @@ function Activity() {
   const songsToShow = useMemo(() => songs.slice(0, 3), [songs]);
   const commitsToShow = useMemo(() => commits.slice(0, 3), [commits]);
   const gamesToShow = useMemo(() => games.slice(0, 3), [games]);
+  const visitsToShow = useMemo(() => (beliVisitsData.visits ?? []).slice(0, 3), []);
 
   const formatPlaytime = (minutes) => {
     if (!minutes || minutes <= 0) return null;
@@ -57,7 +60,7 @@ function Activity() {
     return `${hours}h ${mins}m in past 2 weeks`;
   };
 
-  const formatGameLastPlayed = (value) => {
+  const formatShortDate = (value) => {
     if (!value) return null;
     const date = new Date(value);
     if (Number.isNaN(date.getTime())) return null;
@@ -66,6 +69,12 @@ function Activity() {
       month: 'short',
       day: 'numeric',
     }).format(date);
+  };
+
+  const formatVisitDetail = (visit) => {
+    const place = [visit.neighborhood, visit.city].filter(Boolean).join(', ');
+    const cuisines = Array.isArray(visit.cuisines) ? visit.cuisines.join(', ') : '';
+    return [cuisines, place].filter(Boolean).join(' · ') || null;
   };
 
   const formatCommitDate = (value) => {
@@ -309,9 +318,9 @@ function Activity() {
                     ) : null}
                     <span className="activity-main">{game.name}</span>
                   </a>
-                  {formatGameLastPlayed(game.lastPlayedAt) ? (
+                  {formatShortDate(game.lastPlayedAt) ? (
                     <div className="activity-sub">
-                      last played {formatGameLastPlayed(game.lastPlayedAt)}
+                      last played {formatShortDate(game.lastPlayedAt)}
                       {formatPlaytime(game.playtimeMinutes)
                         ? ` · ${formatPlaytime(game.playtimeMinutes)}`
                         : null}
@@ -332,6 +341,46 @@ function Activity() {
               aria-label="Steam"
             >
               Steam
+            </a>
+          </p>
+        </div>
+        <div className="activity-column">
+          <h3>recent restaurants visited</h3>
+          {visitsToShow.length === 0 ? (
+            <p className="activity-loading">no recent visits yet.</p>
+          ) : (
+            <ul>
+              {visitsToShow.map((visit) => (
+                <li key={visit.id}>
+                  {visit.url ? (
+                    <a href={visit.url} target="_blank" rel="noreferrer noopener">
+                      <span className="activity-main">{visit.name}</span>
+                    </a>
+                  ) : (
+                    <span className="activity-main">{visit.name}</span>
+                  )}
+                  {visit.score == null ? null : (
+                    <span className="activity-sub"> — {visit.score}/10</span>
+                  )}
+                  {formatVisitDetail(visit) ? (
+                    <div className="activity-sub">{formatVisitDetail(visit)}</div>
+                  ) : null}
+                  {formatShortDate(visit.visitedAt) ? (
+                    <div className="activity-sub">visited {formatShortDate(visit.visitedAt)}</div>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          )}
+          <p className="activity-attribution-beli">
+            Recent restaurants from{' '}
+            <a
+              href="https://beliapp.com"
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Beli"
+            >
+              Beli
             </a>
           </p>
         </div>
