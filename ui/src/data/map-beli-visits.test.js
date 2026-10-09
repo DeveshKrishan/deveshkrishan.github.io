@@ -33,6 +33,7 @@ describe('mapBeliFeedItems', () => {
       score: 8.6,
       category: 'restaurant',
       visitedAt: '2026-10-01T18:30:00Z',
+      placeId: 'ChIJtest',
       url: 'https://www.google.com/maps/place/?q=place_id:ChIJtest',
     });
   });
@@ -75,6 +76,7 @@ describe('mapBeliFeedItems', () => {
 
     expect(visit.cuisines).toEqual(['Cafe']);
     expect(visit.score).toBeNull();
+    expect(visit.placeId).toBeNull();
     expect(visit.url).toBeNull();
   });
 

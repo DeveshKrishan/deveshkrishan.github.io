@@ -1,0 +1,6 @@
+{
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm --filter ./ui build",
+  "outputDirectory": "ui/dist",
+  "devCommand": "pnpm --filter ./ui exec vite --port $PORT"
+}

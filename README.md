@@ -1,6 +1,13 @@
 # React + Vite
 
-This project is a Vite + React personal site with Spotify, GitHub, and Steam activity widgets.
+This project is a Vite + React personal site with Spotify, GitHub, Steam, and Beli activity widgets.
+
+The repo is a pnpm workspace:
+
+- `ui/` — Vite + React frontend (the versioned `devesh-portfolio` package)
+- `api/` — Vercel Node functions at the git root so the UI can call same-origin `/api/*`
+
+Do not set Vercel’s Root Directory to `ui/`; keep it at the repository root so `/api` stays on the same project.
 
 ## Run locally
 
@@ -11,7 +18,7 @@ pnpm install
 pnpm dev
 ```
 
-This starts the Vite dev server, usually at `http://localhost:5173/`.
+This starts the Vite dev server for `ui/`, usually at `http://localhost:5173/`.
 
 ## Run with API routes
 
@@ -51,7 +58,7 @@ The Steam widget shows games played in the **last 2 weeks** only.
 
 ## Changesets workflow
 
-This project uses [Changesets](https://github.com/changesets/changesets) to track changes and manage versions.
+This project uses [Changesets](https://github.com/changesets/changesets) to track changes and manage versions of `ui/` (`devesh-portfolio`).
 
 ### Create a changeset
 
@@ -61,7 +68,7 @@ After making changes you want to release:
 pnpm run cs:prepare
 ```
 
-Follow the prompts to select the release type and add a summary.  
+Follow the prompts to select the release type and add a summary.
 This creates a file in the `.changeset` directory describing the change.
 
 ### Apply versions and update changelog
@@ -74,8 +81,8 @@ pnpm run cs:version
 
 This will:
 
-- Bump the version in `package.json`
-- Generate or update `CHANGELOG.md`
+- Bump the version in `ui/package.json`
+- Generate or update `ui/CHANGELOG.md`
 
 Then commit and push the changes:
 
@@ -91,18 +98,18 @@ This project uses [Husky](https://typicode.github.io/husky) and [Commitlint](htt
 
 ### Setup (one time)
 
-From the `my-project` directory:
+From the repository root:
 
 ```bash
 pnpm install
 ```
 
-This runs `husky install` via the `prepare` script and sets up Git hooks.
+This runs `husky` via the `prepare` script and sets up Git hooks.
 
 ### Hooks
 
-- **pre-commit**: runs `pnpm lint`
-  - Prevents commits if ESLint fails.
+- **pre-commit**: runs `pnpm lint`, `pnpm test:ui`, and `pnpm test:api`
+  - Prevents commits if ESLint or tests fail.
 - **commit-msg**: runs Commitlint with the conventional config
   - Ensures commit messages follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard.
 

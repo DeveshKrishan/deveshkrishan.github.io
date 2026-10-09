@@ -1,7 +1,8 @@
-import linkedin from './assets/linkedin.png';
-import github from './assets/github.png';
-import email from './assets/email.png';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { HiOutlineMail } from 'react-icons/hi';
+
 import { CONTACT_EMAIL } from './constants';
+import Skills from './Skills';
 
 const profilePhoto = new URL('./assets/profile-photo.jpg', import.meta.url).href;
 
@@ -13,12 +14,13 @@ const age = Math.round(ageDate.getUTCFullYear() - 1970);
 function Welcome() {
   return (
     <div className="intro_spacing">
-      <h2 className="intro-heading">my introduction</h2>
+      <p className="hero-wordmark">Devesh</p>
       <div className="intro">
         <div className="intro-photo">
           <img src={profilePhoto} alt="Devesh Krishan" />
         </div>
         <div className="intro-details">
+          <h2 className="intro-heading">my introduction</h2>
           <p className="intro-name" id="name">
             what&apos;s up, i&apos;m devesh (duh-vesh)!
           </p>
@@ -29,15 +31,19 @@ function Welcome() {
           </h2>
           <div className="icon-list">
             <a href="https://www.linkedin.com/in/deveshkrishan/" target="_blank" rel="noreferrer">
-              <img src={linkedin} className="icon" alt="LinkedIn" />
+              <FaLinkedin className="icon" aria-hidden="true" focusable="false" />
+              LinkedIn →
             </a>
             <a href="https://github.com/DeveshKrishan" target="_blank" rel="noreferrer">
-              <img src={github} className="icon" alt="GitHub" />
+              <FaGithub className="icon" aria-hidden="true" focusable="false" />
+              GitHub →
             </a>
             <a href={`mailto:${CONTACT_EMAIL}`}>
-              <img src={email} className="icon" alt="Email" />
+              <HiOutlineMail className="icon" aria-hidden="true" focusable="false" />
+              Email →
             </a>
           </div>
+          <Skills />
         </div>
       </div>
     </div>

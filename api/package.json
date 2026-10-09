@@ -1,0 +1,12 @@
+{
+  "name": "api",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run --environment node"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

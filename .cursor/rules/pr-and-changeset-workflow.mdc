@@ -10,7 +10,7 @@ When asked to create a commit and/or open a GitHub PR in this repo, always follo
 1. **Before committing / opening a PR**
    - Check for an existing `.changeset/*.md` file that clearly corresponds to the current work.
    - If none exists for the current feature/fix, create **one new Changeset** rather than reusing/overloading old ones.
-   - Use the package name from `package.json` (`devesh-portfolio`) in the changeset frontmatter.
+   - Use the package name from `ui/package.json` (`devesh-portfolio`) in the changeset frontmatter.
    - Choose bump type based on impact:
      - `patch` for small fixes or refactors with no behavior change.
      - `minor` for new user‑visible features (e.g. new UI sections, API integrations).
@@ -31,7 +31,7 @@ When asked to create a commit and/or open a GitHub PR in this repo, always follo
 
 3. **Committing and pushing**
    - Include the new or updated `.changeset/*.md` file in the same commit series as the feature/fix (either the main feature commit or a follow‑up `chore: add changeset for …` commit).
-   - After the changeset file exists, always run `pnpm run cs:version` (equivalent to `changeset version`) so `package.json` version and `CHANGELOG.md` are updated on the PR branch.
+   - After the changeset file exists, always run `pnpm run cs:version` (equivalent to `changeset version`) so `ui/package.json` version and `ui/CHANGELOG.md` are updated on the PR branch.
      - Note: `cs:version` consumes the changeset(s) and may remove files under `.changeset/`; that is expected.
    - Ensure the final branch state has **no untracked or uncommitted changes** before creating the PR.
 

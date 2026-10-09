@@ -1,5 +1,23 @@
 # my-project
 
+## 0.10.1
+
+### Patch Changes
+
+- Split the Vite app into `ui/` and keep Node API routes at `api/` in a pnpm workspace, with one Vercel project serving both.
+
+## 0.10.0
+
+### Minor Changes
+
+- Restyle the site after Squarespace Reseda Fluid, fold skills into the intro, and hide the GitHub commits column.
+
+## 0.9.0
+
+### Minor Changes
+
+- Refresh Beli restaurant visits, show cuisine chips and the Beli logo, and add a daily GitHub Action to update the committed visit list.
+
 ## 0.8.0
 
 ### Minor Changes

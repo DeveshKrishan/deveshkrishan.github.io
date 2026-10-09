@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
+import { SiGithub, SiSpotify, SiSteam } from 'react-icons/si';
 
+import beliLogo from './assets/beli_logo.webp';
 import beliVisitsData from './data/beli-visits.json';
+
+const SHOW_RECENT_COMMITS = false;
 
 function Activity() {
   const [songs, setSongs] = useState([]);
@@ -71,11 +75,8 @@ function Activity() {
     }).format(date);
   };
 
-  const formatVisitDetail = (visit) => {
-    const place = [visit.neighborhood, visit.city].filter(Boolean).join(', ');
-    const cuisines = Array.isArray(visit.cuisines) ? visit.cuisines.join(', ') : '';
-    return [cuisines, place].filter(Boolean).join(' · ') || null;
-  };
+  const formatVisitPlace = (visit) =>
+    [visit.neighborhood, visit.city].filter(Boolean).join(', ') || null;
 
   const formatCommitDate = (value) => {
     if (!value) return null;
@@ -91,6 +92,8 @@ function Activity() {
   };
 
   useEffect(() => {
+    if (!SHOW_RECENT_COMMITS) return undefined;
+
     let isActive = true;
 
     async function loadCommits() {
@@ -167,7 +170,7 @@ function Activity() {
   return (
     <section className="activity-section" id="about">
       <h2 className="activity-heading">what i&apos;ve been up to</h2>
-      <div className="activity-grid">
+      <div className={SHOW_RECENT_COMMITS ? 'activity-grid' : 'activity-grid activity-grid--three'}>
         <div className="activity-column">
           <h3>recent songs listened to</h3>
           {songsError ? <p className="activity-error">spotify error: {songsError}</p> : null}
@@ -228,68 +231,54 @@ function Activity() {
             </ul>
           ) : null}
           <p className="activity-attribution">
-            Recent tracks from{' '}
-            <a
-              href="https://www.spotify.com"
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="Spotify"
-            >
-              Spotify
-            </a>
+            {renderSourceCredit('spotify')}
           </p>
         </div>
-        <div className="activity-column">
-          <h3>recent commits pushed</h3>
-          {commitsError ? <p className="activity-error">github error: {commitsError}</p> : null}
-          {isCommitsLoading ? <p className="activity-loading">loading…</p> : null}
-          {!isCommitsLoading && commitsNote ? <p className="activity-loading">{commitsNote}</p> : null}
-          {!isCommitsLoading && !commitsError && commitsToShow.length === 0 ? (
-            <p className="activity-loading">no recent commits yet.</p>
-          ) : null}
-          {commitsToShow.length > 0 ? (
-            <ul>
-              {commitsToShow.map((commit, index) => (
-                <li key={`${commit.sha || commit.message}-${index}`}>
-                  <span className="activity-main">
-                    {commit.repoUrl ? (
-                      <a href={commit.repoUrl} target="_blank" rel="noreferrer noopener">
-                        {commit.repo}
+        {SHOW_RECENT_COMMITS ? (
+          <div className="activity-column">
+            <h3>recent commits pushed</h3>
+            {commitsError ? <p className="activity-error">github error: {commitsError}</p> : null}
+            {isCommitsLoading ? <p className="activity-loading">loading…</p> : null}
+            {!isCommitsLoading && commitsNote ? <p className="activity-loading">{commitsNote}</p> : null}
+            {!isCommitsLoading && !commitsError && commitsToShow.length === 0 ? (
+              <p className="activity-loading">no recent commits yet.</p>
+            ) : null}
+            {commitsToShow.length > 0 ? (
+              <ul>
+                {commitsToShow.map((commit, index) => (
+                  <li key={`${commit.sha || commit.message}-${index}`}>
+                    <span className="activity-main">
+                      {commit.repoUrl ? (
+                        <a href={commit.repoUrl} target="_blank" rel="noreferrer noopener">
+                          {commit.repo}
+                        </a>
+                      ) : (
+                        commit.repo
+                      )}
+                    </span>
+                    <span className="activity-sub"> — </span>
+                    {commit.commitUrl ? (
+                      <a href={commit.commitUrl} target="_blank" rel="noreferrer noopener">
+                        {commit.message}
                       </a>
                     ) : (
-                      commit.repo
+                      <span className="activity-sub">{commit.message}</span>
                     )}
-                  </span>
-                  <span className="activity-sub"> — </span>
-                  {commit.commitUrl ? (
-                    <a href={commit.commitUrl} target="_blank" rel="noreferrer noopener">
-                      {commit.message}
-                    </a>
-                  ) : (
-                    <span className="activity-sub">{commit.message}</span>
-                  )}
-                  {commit.sha ? (
-                    <span className="activity-sub"> ({commit.sha.slice(0, 7)})</span>
-                  ) : null}
-                  {formatCommitDate(commit.createdAt) ? (
-                    <div className="activity-sub">{formatCommitDate(commit.createdAt)}</div>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-          <p className="activity-attribution-github">
-            Recent commits from{' '}
-            <a
-              href="https://github.com/DeveshKrishan"
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="GitHub"
-            >
-              GitHub
-            </a>
-          </p>
-        </div>
+                    {commit.sha ? (
+                      <span className="activity-sub"> ({commit.sha.slice(0, 7)})</span>
+                    ) : null}
+                    {formatCommitDate(commit.createdAt) ? (
+                      <div className="activity-sub">{formatCommitDate(commit.createdAt)}</div>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            <p className="activity-attribution">
+              {renderSourceCredit('github')}
+            </p>
+          </div>
+        ) : null}
         <div className="activity-column">
           <h3>recent games played (past 2 weeks)</h3>
           {gamesError ? <p className="activity-error">steam error: {gamesError}</p> : null}
@@ -332,16 +321,8 @@ function Activity() {
               ))}
             </ul>
           ) : null}
-          <p className="activity-attribution-steam">
-            Games played in the past 2 weeks from{' '}
-            <a
-              href="https://store.steampowered.com"
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="Steam"
-            >
-              Steam
-            </a>
+          <p className="activity-attribution">
+            {renderSourceCredit('steam')}
           </p>
         </div>
         <div className="activity-column">
@@ -351,19 +332,32 @@ function Activity() {
           ) : (
             <ul>
               {visitsToShow.map((visit) => (
-                <li key={visit.id}>
-                  {visit.url ? (
-                    <a href={visit.url} target="_blank" rel="noreferrer noopener">
-                      <span className="activity-main">{visit.name}</span>
-                    </a>
-                  ) : (
-                    <span className="activity-main">{visit.name}</span>
-                  )}
-                  {visit.score == null ? null : (
-                    <span className="activity-sub"> — {visit.score}/10</span>
-                  )}
-                  {formatVisitDetail(visit) ? (
-                    <div className="activity-sub">{formatVisitDetail(visit)}</div>
+                <li key={visit.id} className="activity-visit-row">
+                  <div className="activity-visit-title-row">
+                    <span>
+                      {visit.url ? (
+                        <a href={visit.url} target="_blank" rel="noreferrer noopener">
+                          <span className="activity-main">{visit.name}</span>
+                        </a>
+                      ) : (
+                        <span className="activity-main">{visit.name}</span>
+                      )}
+                      {visit.score == null ? null : (
+                        <span className="activity-sub"> — {visit.score}/10</span>
+                      )}
+                    </span>
+                  </div>
+                  {Array.isArray(visit.cuisines) && visit.cuisines.length > 0 ? (
+                    <ul className="activity-cuisine-chips">
+                      {visit.cuisines.map((cuisine) => (
+                        <li key={cuisine} className="activity-cuisine-chip">
+                          {cuisine}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {formatVisitPlace(visit) ? (
+                    <div className="activity-sub">{formatVisitPlace(visit)}</div>
                   ) : null}
                   {formatShortDate(visit.visitedAt) ? (
                     <div className="activity-sub">visited {formatShortDate(visit.visitedAt)}</div>
@@ -372,20 +366,76 @@ function Activity() {
               ))}
             </ul>
           )}
-          <p className="activity-attribution-beli">
-            Recent restaurants from{' '}
-            <a
-              href="https://beliapp.com"
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="Beli"
-            >
-              Beli
-            </a>
+          <p className="activity-attribution">
+            {renderSourceCredit('beli')}
           </p>
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Brand colours follow each service's own guidelines. GitHub's mark may only be
+ * black or white; black reads on this light page.
+ */
+const ACTIVITY_SOURCES = {
+  spotify: {
+    name: 'Spotify',
+    href: 'https://www.spotify.com',
+    color: '#1db954',
+    Icon: SiSpotify,
+  },
+  github: {
+    name: 'GitHub',
+    href: 'https://github.com/DeveshKrishan',
+    color: '#111111',
+    Icon: SiGithub,
+  },
+  steam: {
+    name: 'Steam',
+    href: 'https://store.steampowered.com',
+    color: '#66c0f4',
+    Icon: SiSteam,
+  },
+  beli: {
+    name: 'Beli',
+    href: 'https://beliapp.com',
+    color: '#ff5252',
+    iconSrc: beliLogo,
+  },
+};
+
+function renderSourceCredit(sourceKey) {
+  const source = ACTIVITY_SOURCES[sourceKey];
+  if (!source) return null;
+
+  const { name, href, color, Icon, iconSrc } = source;
+
+  return (
+    <a
+      className="activity-source"
+      style={{ '--source-color': color }}
+      href={href}
+      target="_blank"
+      rel="noreferrer noopener"
+    >
+      {Icon ? (
+        <Icon className="activity-source-icon" aria-hidden="true" focusable="false" />
+      ) : (
+        <img
+          src={iconSrc}
+          alt=""
+          className="activity-source-icon"
+          width={16}
+          height={16}
+          onError={(event) => {
+            event.currentTarget.style.display = 'none';
+          }}
+        />
+      )}
+      {name}
+    </a>
   );
 }
 
