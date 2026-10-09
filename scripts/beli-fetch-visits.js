@@ -16,7 +16,7 @@
  *   node scripts/beli-fetch-visits.js --limit 5
  *
  * Requires SPOTIFY-style credentials in .env (gitignored):
- *   BELI_EMAIL, BELI_PASSWORD
+ *   BELI_EMAIL (or BELI_USERNAME), BELI_PASSWORD
  */
 
 import fs from 'node:fs';
@@ -88,11 +88,17 @@ async function main() {
   const { isRaw, limit } = parseArgs(process.argv.slice(2));
   const env = { ...loadEnv(ROOT), ...process.env };
 
-  const email = env.BELI_EMAIL;
+  const email = env.BELI_EMAIL || env.BELI_USERNAME;
   const password = env.BELI_PASSWORD;
 
   if (!email || !password) {
-    console.error('Missing BELI_EMAIL or BELI_PASSWORD. Add them to .env (gitignored).');
+    console.error('Missing BELI_EMAIL (or BELI_USERNAME) and BELI_PASSWORD. Add them to .env (gitignored).');
+    process.exit(1);
+  }
+
+  // Beli's login serializer only accepts `email` or `phone_no`, never a display name.
+  if (!email.includes('@')) {
+    console.error('Beli logs in with an email address, but the configured value is not one.');
     process.exit(1);
   }
 
