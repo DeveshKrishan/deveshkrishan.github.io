@@ -1,4 +1,48 @@
 {
-  "generatedAt": null,
-  "visits": []
+  "generatedAt": "2026-10-09T04:58:34.377Z",
+  "visits": [
+    {
+      "id": 8325,
+      "name": "Adel's Famous Halal Food",
+      "city": "New York, NY",
+      "neighborhood": "Theater District",
+      "cuisines": [
+        "Middle Eastern",
+        "Halal",
+        "Food Truck"
+      ],
+      "score": 8.4,
+      "category": "restaurant",
+      "visitedAt": "2026-10-07T04:44:11.530902Z",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJNRe1Mf9YwokRvxBdos5UEY4"
+    },
+    {
+      "id": 766387,
+      "name": "Sing Cha Chaan Teng",
+      "city": "New York, NY",
+      "neighborhood": "South Village",
+      "cuisines": [
+        "Cantonese",
+        "Hong Kong Style Cafe"
+      ],
+      "score": 6.8,
+      "category": "restaurant",
+      "visitedAt": "2026-10-07T04:33:57.934565Z",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJB067ZZxZwokRmuAHA3uMd68"
+    },
+    {
+      "id": 710697,
+      "name": "L’industrie Pizzeria - West Village",
+      "city": "New York, NY",
+      "neighborhood": "West Village",
+      "cuisines": [
+        "Pizza",
+        "Italian"
+      ],
+      "score": 9.4,
+      "category": "restaurant",
+      "visitedAt": "2026-10-07T04:24:19.974793Z",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ92OsaJVZwokRsC54kf-J-3g"
+    }
+  ]
 }

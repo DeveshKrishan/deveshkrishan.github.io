@@ -1,5 +1,11 @@
 # my-project
 
+## 0.8.1
+
+### Patch Changes
+
+- Populate the recent restaurants column with real Beli visit data.
+
 ## 0.8.0
 
 ### Minor Changes
