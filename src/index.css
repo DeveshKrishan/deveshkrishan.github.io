@@ -460,6 +460,21 @@ body {
   text-decoration: underline;
 }
 
+.activity-attribution-beli {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.activity-attribution-beli a {
+  color: #ff5252;
+  text-decoration: none;
+}
+
+.activity-attribution-beli a:hover {
+  text-decoration: underline;
+}
+
 .footer {
   width: 100%;
 }
@@ -580,6 +595,14 @@ body {
   }
 }
 
+/* Four activity columns only fit side by side on wide screens. */
+@media (min-width: 1280px) {
+  .activity-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 3rem;
+  }
+}
+
 @media (min-width: 640px) and (max-width: 1023px) {
   /* Styles for medium screens */
   #tech {
@@ -592,11 +615,6 @@ body {
 
 /* Large screens (e.g., laptops and desktops) */
 @media (min-width: 1024px) {
-  .activity-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 3rem;
-  }
-
   .activity-game-icon,
   .activity-song-icon {
     width: 36px;
