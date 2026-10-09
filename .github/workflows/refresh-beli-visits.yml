@@ -1,0 +1,45 @@
+name: Refresh Beli visits
+
+on:
+  schedule:
+    # 8:00 AM Pacific during PDT (7:00 AM during PST)
+    - cron: '0 15 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-beli-visits
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    name: Fetch and commit visits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch Beli visits
+        env:
+          BELI_EMAIL: ${{ secrets.BELI_EMAIL }}
+          BELI_PASSWORD: ${{ secrets.BELI_PASSWORD }}
+        run: node scripts/beli-fetch-visits.js
+
+      - name: Commit updated visits
+        run: |
+          git add src/data/beli-visits.json
+          if git diff --cached --quiet; then
+            echo "No visit changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: refresh beli visits"
+          git push

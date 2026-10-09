@@ -1,7 +1,7 @@
 {
   "name": "devesh-portfolio",
   "private": true,
-  "version": "0.8.0",
+  "version": "0.9.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,6 +14,7 @@
     "test:watch": "vitest",
     "format:fix": "prettier \"src/**/*.{ts,tsx,js,jsx,css,md}\" --write",
     "preview": "vite preview",
+    "beli:refresh": "node scripts/beli-fetch-visits.js",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "cs:prepare": "changeset",

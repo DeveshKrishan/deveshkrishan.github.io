@@ -1,6 +1,9 @@
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Activity from './Activity';
+import beliVisitsData from './data/beli-visits.json';
+
+const [firstVisit] = beliVisitsData.visits ?? [];
 
 function mockJsonResponse(data) {
   return {
@@ -71,7 +74,10 @@ describe('Activity', () => {
       'href',
       'https://open.spotify.com/artist/test-artist',
     );
-    expect(screen.getByAltText('')).toHaveAttribute('src', 'https://i.scdn.co/image/test.jpg');
+    const albumArt = screen
+      .getAllByAltText('')
+      .find((img) => img.classList.contains('activity-song-icon'));
+    expect(albumArt).toHaveAttribute('src', 'https://i.scdn.co/image/test.jpg');
     expect(screen.getByText(/played Aug 13/i)).toBeInTheDocument();
   });
 
@@ -83,5 +89,8 @@ describe('Activity', () => {
       'href',
       'https://beliapp.com',
     );
+    expect(firstVisit?.cuisines?.[0]).toBeTruthy();
+    const cuisineChip = screen.getByText(firstVisit.cuisines[0]);
+    expect(cuisineChip).toHaveClass('activity-cuisine-chip');
   });
 });

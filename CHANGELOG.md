@@ -1,5 +1,11 @@
 # my-project
 
+## 0.9.0
+
+### Minor Changes
+
+- Refresh Beli restaurant visits, show cuisine chips and the Beli logo, and add a daily GitHub Action to update the committed visit list.
+
 ## 0.8.0
 
 ### Minor Changes

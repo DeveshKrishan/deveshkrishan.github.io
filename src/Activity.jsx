@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import beliLogo from './assets/beli_logo.webp';
 import beliVisitsData from './data/beli-visits.json';
 
 function Activity() {
@@ -71,11 +72,8 @@ function Activity() {
     }).format(date);
   };
 
-  const formatVisitDetail = (visit) => {
-    const place = [visit.neighborhood, visit.city].filter(Boolean).join(', ');
-    const cuisines = Array.isArray(visit.cuisines) ? visit.cuisines.join(', ') : '';
-    return [cuisines, place].filter(Boolean).join(' · ') || null;
-  };
+  const formatVisitPlace = (visit) =>
+    [visit.neighborhood, visit.city].filter(Boolean).join(', ') || null;
 
   const formatCommitDate = (value) => {
     if (!value) return null;
@@ -351,19 +349,30 @@ function Activity() {
           ) : (
             <ul>
               {visitsToShow.map((visit) => (
-                <li key={visit.id}>
-                  {visit.url ? (
-                    <a href={visit.url} target="_blank" rel="noreferrer noopener">
+                <li key={visit.id} className="activity-visit-row">
+                  <div>
+                    {visit.url ? (
+                      <a href={visit.url} target="_blank" rel="noreferrer noopener">
+                        <span className="activity-main">{visit.name}</span>
+                      </a>
+                    ) : (
                       <span className="activity-main">{visit.name}</span>
-                    </a>
-                  ) : (
-                    <span className="activity-main">{visit.name}</span>
-                  )}
-                  {visit.score == null ? null : (
-                    <span className="activity-sub"> — {visit.score}/10</span>
-                  )}
-                  {formatVisitDetail(visit) ? (
-                    <div className="activity-sub">{formatVisitDetail(visit)}</div>
+                    )}
+                    {visit.score == null ? null : (
+                      <span className="activity-sub"> — {visit.score}/10</span>
+                    )}
+                  </div>
+                  {Array.isArray(visit.cuisines) && visit.cuisines.length > 0 ? (
+                    <ul className="activity-cuisine-chips">
+                      {visit.cuisines.map((cuisine) => (
+                        <li key={cuisine} className="activity-cuisine-chip">
+                          {cuisine}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {formatVisitPlace(visit) ? (
+                    <div className="activity-sub">{formatVisitPlace(visit)}</div>
                   ) : null}
                   {formatShortDate(visit.visitedAt) ? (
                     <div className="activity-sub">visited {formatShortDate(visit.visitedAt)}</div>
@@ -378,8 +387,14 @@ function Activity() {
               href="https://beliapp.com"
               target="_blank"
               rel="noreferrer noopener"
-              aria-label="Beli"
             >
+              <img
+                src={beliLogo}
+                alt=""
+                className="activity-beli-logo"
+                width={16}
+                height={16}
+              />
               Beli
             </a>
           </p>

@@ -6,9 +6,9 @@
  * following the community contract at https://github.com/ProjectBarks/beli-api.
  * It is unofficial and can break without notice.
  *
- * Run it locally and commit the generated JSON. The deployed site reads only that
- * file, so no Beli credentials ever reach Vercel and the site cannot break when
- * Beli changes an endpoint.
+ * Run it locally (or via the daily GitHub Action) and commit the generated JSON.
+ * The deployed site reads only that file, so no Beli credentials ever reach Vercel
+ * and the site cannot break when Beli changes an endpoint.
  *
  * Usage:
  *   node scripts/beli-fetch-visits.js            # refresh src/data/beli-visits.json
@@ -49,6 +49,17 @@ function parseArgs(argv) {
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function visitsUnchanged(nextVisits) {
+  if (!fs.existsSync(OUTPUT_PATH)) return false;
+
+  try {
+    const previous = JSON.parse(fs.readFileSync(OUTPUT_PATH, 'utf8'));
+    return JSON.stringify(previous.visits) === JSON.stringify(nextVisits);
+  } catch {
+    return false;
+  }
 }
 
 async function request(url, { token, method = 'GET', body } = {}) {
@@ -126,6 +137,11 @@ async function main() {
   const visits = mapBeliFeedItems(toResults(feed), limit);
   if (visits.length === 0) {
     throw new Error('No rating events found in the profile feed; refusing to write an empty file.');
+  }
+
+  if (visitsUnchanged(visits)) {
+    console.log('Visits unchanged; leaving existing file in place.');
+    return;
   }
 
   const payload = { generatedAt: new Date().toISOString(), visits };
