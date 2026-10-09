@@ -14,13 +14,15 @@ const age = Math.round(ageDate.getUTCFullYear() - 1970);
 function Welcome() {
   return (
     <div className="intro_spacing">
-      <p className="hero-wordmark">Devesh Krishan</p>
+      <p className="hero-wordmark" data-reveal>
+        Devesh Krishan
+      </p>
       <div className="intro">
-        <div className="intro-photo">
+        <div className="intro-photo" data-reveal data-reveal-delay="1">
           <img src={profilePhoto} alt="Devesh Krishan" />
         </div>
         <div className="intro-details">
-          <div className="intro-copy">
+          <div className="intro-copy" data-reveal data-reveal-delay="2">
             <h2 className="intro-heading">my introduction</h2>
             <p className="intro-name" id="name">
               what&apos;s up, i&apos;m devesh (duh-vesh)!

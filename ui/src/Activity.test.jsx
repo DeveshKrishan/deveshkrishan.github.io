@@ -81,6 +81,18 @@ describe('Activity', () => {
     expect(screen.getByText(/played Aug 13/i)).toBeInTheDocument();
   });
 
+  it('shows skeletons while spotify and steam are loading', () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => new Promise(() => {})),
+    );
+
+    render(<Activity />);
+
+    expect(screen.getAllByRole('status', { name: 'loading' })).toHaveLength(2);
+    expect(document.querySelectorAll('.activity-skeleton-row')).toHaveLength(6);
+  });
+
   it('renders the beli column from the committed visit data', async () => {
     render(<Activity />);
 

@@ -22,7 +22,13 @@ const SKILL_GROUPS = [
 
 function Skills() {
   return (
-    <section className="intro-skills" id="skills" aria-labelledby="skills-heading">
+    <section
+      className="intro-skills"
+      id="skills"
+      aria-labelledby="skills-heading"
+      data-reveal
+      data-reveal-delay="3"
+    >
       <h2 className="intro-skills-heading" id="skills-heading">
         skills
       </h2>
