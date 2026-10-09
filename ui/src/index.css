@@ -124,22 +124,31 @@ img {
   margin: 0;
   padding: 3rem 5vw 5rem;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
 }
 
 .intro_spacing {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   container-type: inline-size;
 }
 
 .hero-wordmark {
   display: block;
   width: 100%;
-  margin: 0 0 1.75rem;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0 0 1.5rem;
+  overflow: hidden;
   font-family: var(--display);
   font-weight: 700;
-  font-size: 20.4cqi;
-  line-height: 0.76;
-  letter-spacing: -0.045em;
+  font-size: 11vw;
+  font-size: 12.1cqi;
+  line-height: 0.82;
+  letter-spacing: -0.055em;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -148,13 +157,14 @@ img {
   display: grid;
   grid-template-columns: minmax(7.5rem, 38%) minmax(0, 1fr);
   gap: 1.25rem;
-  align-items: start;
+  align-items: stretch;
   width: 100%;
 }
 
 .intro-photo {
   width: 100%;
   overflow: hidden;
+  align-self: start;
   background: var(--rule);
 }
 
@@ -171,6 +181,13 @@ img {
   flex-direction: column;
   gap: 1rem;
   min-width: 0;
+}
+
+.intro-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 0 0 auto;
 }
 
 .intro-heading,
@@ -261,15 +278,16 @@ img {
 }
 
 .intro-skills-groups {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1.5rem;
 }
 
 .intro-skills-group {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  min-width: 0;
 }
 
 .intro-skills-group-title {
@@ -479,7 +497,7 @@ img {
   .intro {
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
     gap: 3.5rem;
-    align-items: start;
+    align-items: stretch;
   }
 
   .activity-grid {
@@ -489,6 +507,24 @@ img {
 }
 
 @media (min-width: 1100px) {
+  .intro-details {
+    /* Match the photo column; leftover height is used by skills. */
+    height: 0;
+    min-height: 100%;
+  }
+
+  .intro-skills {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .intro-skills-groups {
+    flex: 1 1 auto;
+    min-height: 0;
+    grid-auto-rows: 1fr;
+    align-content: stretch;
+  }
+
   .activity-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: 2.5rem;
@@ -501,7 +537,8 @@ img {
 
 @media (max-width: 767px) {
   .hero-wordmark {
-    font-size: 16.6vw;
+    font-size: 9.4vw;
+    font-size: 10.4cqi;
   }
 
   .intro {
@@ -511,6 +548,10 @@ img {
 
   .intro-photo {
     max-width: 16rem;
+  }
+
+  .intro-skills-groups {
+    grid-template-columns: 1fr;
   }
 
   .intro-heading {
