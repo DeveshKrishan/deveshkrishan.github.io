@@ -1,5 +1,11 @@
 # my-project
 
+## 0.12.1
+
+### Patch Changes
+
+- b948c16: Add C++ and Kafka to the homepage skills chips.
+
 ## 0.12.0
 
 ### Minor Changes
