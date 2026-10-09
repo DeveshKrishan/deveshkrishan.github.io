@@ -1,5 +1,11 @@
 # my-project
 
+## 0.10.0
+
+### Minor Changes
+
+- Restyle the site after Squarespace Reseda Fluid, fold skills into the intro, and hide the GitHub commits column.
+
 ## 0.9.0
 
 ### Minor Changes

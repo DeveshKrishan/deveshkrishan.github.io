@@ -92,5 +92,10 @@ describe('Activity', () => {
     expect(firstVisit?.cuisines?.[0]).toBeTruthy();
     const cuisineChip = screen.getByText(firstVisit.cuisines[0]);
     expect(cuisineChip).toHaveClass('activity-cuisine-chip');
+    expect(screen.queryByRole('link', { name: 'Google Places' })).not.toBeInTheDocument();
+    expect(
+      screen.queryAllByAltText('').some((img) => img.classList.contains('activity-visit-icon')),
+    ).toBe(false);
+    expect(screen.queryByText('recent commits pushed')).not.toBeInTheDocument();
   });
 });

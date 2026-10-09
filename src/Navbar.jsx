@@ -2,9 +2,14 @@ import { RESUME_URL, SHOW_RESUME } from './constants';
 
 function Navbar() {
   return (
-    <div className="navbar" id="navbar-link">
-      <p className={'logo'}>© coded by devesh</p>
-      <ul className={'project_list'}>
+    <header className="navbar" id="navbar-link">
+      <p className="logo">
+        <span className="logo-mark" aria-hidden="true">
+          ©
+        </span>
+        coded by devesh
+      </p>
+      <ul className="project_list">
         <li>
           <a href="/">home</a>
         </li>
@@ -22,7 +27,7 @@ function Navbar() {
           </li>
         ) : null}
       </ul>
-    </div>
+    </header>
   );
 }
 

@@ -22,17 +22,19 @@ const SKILL_GROUPS = [
 
 function Skills() {
   return (
-    <section className="skills-section" id="skills" aria-labelledby="skills-heading">
-      <h2 className="skills-heading" id="skills-heading">
+    <section className="intro-skills" id="skills" aria-labelledby="skills-heading">
+      <h2 className="intro-skills-heading" id="skills-heading">
         skills
       </h2>
-      <div className="skills-grid">
+      <div className="intro-skills-groups">
         {SKILL_GROUPS.map((group) => (
-          <div className="skills-group" key={group.title}>
-            <h3 className="skills-group-title">{group.title}</h3>
-            <ul className="skills-group-list">
+          <div className="intro-skills-group" key={group.title}>
+            <h3 className="intro-skills-group-title">{group.title}</h3>
+            <ul className="intro-skills-chips">
               {group.items.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item} className="intro-skills-chip">
+                  {item}
+                </li>
               ))}
             </ul>
           </div>

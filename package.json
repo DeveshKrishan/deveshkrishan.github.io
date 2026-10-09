@@ -1,7 +1,7 @@
 {
   "name": "devesh-portfolio",
   "private": true,
-  "version": "0.9.0",
+  "version": "0.10.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -26,9 +26,15 @@
     "@heroicons/react": "^1.0.6",
     "@tremor/react": "^3.7.9",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.7.0"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.30.0",
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
@@ -37,17 +43,12 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "postcss": "^8.4.30",
-    "tailwindcss": "^3.3.3",
-    "vite": "^4.4.5",
-    "@changesets/cli": "^2.30.0",
-    "@commitlint/cli": "^19.0.0",
-    "@commitlint/config-conventional": "^19.0.0",
     "husky": "^9.0.0",
     "jsdom": "^26.1.0",
+    "postcss": "^8.4.30",
     "prettier": "^3.8.1",
-    "@testing-library/jest-dom": "^6.8.0",
-    "@testing-library/react": "^16.3.0",
+    "tailwindcss": "^3.3.3",
+    "vite": "^4.4.5",
     "vitest": "^3.2.4"
   }
 }
