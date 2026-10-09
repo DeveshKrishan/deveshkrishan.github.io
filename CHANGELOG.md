@@ -1,5 +1,11 @@
 # my-project
 
+## 0.8.0
+
+### Minor Changes
+
+- 02b76e5: Add a "recent restaurants visited" column to the homepage activity section, rendered from a committed JSON file that is refreshed locally by `scripts/beli-fetch-visits.js`.
+
 ## 0.7.0
 
 ### Minor Changes
