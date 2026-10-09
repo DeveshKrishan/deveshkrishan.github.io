@@ -1,5 +1,11 @@
 # my-project
 
+## 0.12.0
+
+### Minor Changes
+
+- b61d9a6: Add scroll fade-in, photo hover, and skeleton loaders for Spotify and Steam.
+
 ## 0.11.1
 
 ### Patch Changes
