@@ -1,5 +1,11 @@
 # my-project
 
+## 0.11.1
+
+### Patch Changes
+
+- Update the intro bio with UCI alumni and SF Bay Area copy, and shrink the profile photo.
+
 ## 0.11.0
 
 ### Minor Changes

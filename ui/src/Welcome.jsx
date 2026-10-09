@@ -26,9 +26,9 @@ function Welcome() {
               what&apos;s up, i&apos;m devesh (duh-vesh)!
             </p>
             <h2 className="intro-title" id="who">
-              video editor turned software engineer. i&apos;m {age} years old, currently work at{' '}
-              <span className="intro-geico">GEICO</span> as a swe 2, and am located in san jose,
-              california.
+              video editor turned software engineer. i&apos;m {age} years old and work at{' '}
+              <span className="intro-geico">GEICO</span> as a swe 2. i&apos;m located in the san
+              francisco bay area and am an alumni from the university of california, irvine.
             </h2>
             <div className="icon-list">
               <a href="https://www.linkedin.com/in/deveshkrishan/" target="_blank" rel="noreferrer">
