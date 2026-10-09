@@ -2,7 +2,7 @@ import { RESUME_URL, SHOW_RESUME } from './constants';
 
 function Navbar() {
   return (
-    <header className="navbar" id="navbar-link">
+    <header className="navbar" id="navbar-link" data-reveal>
       <p className="logo">
         <span className="logo-mark" aria-hidden="true">
           ©

@@ -5,6 +5,24 @@ import beliLogo from './assets/beli_logo.webp';
 import beliVisitsData from './data/beli-visits.json';
 
 const SHOW_RECENT_COMMITS = false;
+const ACTIVITY_SKELETON_ROWS = 3;
+
+function ActivitySkeleton() {
+  return (
+    <ul className="activity-skeleton" role="status" aria-busy="true" aria-label="loading">
+      {Array.from({ length: ACTIVITY_SKELETON_ROWS }, (_, index) => (
+        <li key={index} className="activity-skeleton-row" aria-hidden="true">
+          <span className="activity-skeleton-icon" />
+          <span className="activity-skeleton-lines">
+            <span className="activity-skeleton-line activity-skeleton-line--title" />
+            <span className="activity-skeleton-line activity-skeleton-line--sub" />
+            <span className="activity-skeleton-line activity-skeleton-line--meta" />
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 function Activity() {
   const [songs, setSongs] = useState([]);
@@ -168,13 +186,13 @@ function Activity() {
   }, []);
 
   return (
-    <section className="activity-section" id="about">
+    <section className="activity-section" id="about" data-reveal>
       <h2 className="activity-heading">what i&apos;ve been up to</h2>
       <div className={SHOW_RECENT_COMMITS ? 'activity-grid' : 'activity-grid activity-grid--three'}>
         <div className="activity-column">
           <h3>recent songs listened to</h3>
           {songsError ? <p className="activity-error">spotify error: {songsError}</p> : null}
-          {isSongsLoading ? <p className="activity-loading">loading…</p> : null}
+          {isSongsLoading ? <ActivitySkeleton /> : null}
           {!isSongsLoading && !songsError && songsToShow.length === 0 ? (
             <p className="activity-loading">no recent songs yet.</p>
           ) : null}
@@ -282,7 +300,7 @@ function Activity() {
         <div className="activity-column">
           <h3>recent games played (past 2 weeks)</h3>
           {gamesError ? <p className="activity-error">steam error: {gamesError}</p> : null}
-          {isGamesLoading ? <p className="activity-loading">loading…</p> : null}
+          {isGamesLoading ? <ActivitySkeleton /> : null}
           {!isGamesLoading && gamesNote ? <p className="activity-loading">{gamesNote}</p> : null}
           {!isGamesLoading && !gamesError && gamesToShow.length === 0 ? (
             <p className="activity-loading">no recent games yet.</p>
