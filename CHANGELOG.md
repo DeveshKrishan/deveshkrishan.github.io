@@ -1,10 +1,10 @@
 # my-project
 
-## 0.8.1
+## 0.9.0
 
-### Patch Changes
+### Minor Changes
 
-- Populate the recent restaurants column with real Beli visit data.
+- Populate the recent restaurants column with real Beli visit data and add restaurant photos from Google Places.
 
 ## 0.8.0
 
