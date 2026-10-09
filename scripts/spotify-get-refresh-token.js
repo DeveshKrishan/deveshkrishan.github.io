@@ -16,20 +16,26 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const SCOPE = 'user-read-recently-played';
 
+function parseEnvFile(filePath) {
+  const env = {};
+  const content = fs.readFileSync(filePath, 'utf8');
+  for (const line of content.split('\n')) {
+    const m = line.match(/^\s*([^#=]+)=(.*)$/);
+    if (m) env[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, '');
+  }
+  return env;
+}
+
 function loadEnv() {
   const root = path.resolve(__dirname, '..');
-  for (const file of ['.env.local', '.env']) {
+  const env = {};
+  // .env.local is read last so it overrides .env, matching Vite/Vercel precedence.
+  for (const file of ['.env', '.env.local']) {
     const p = path.join(root, file);
     if (!fs.existsSync(p)) continue;
-    const content = fs.readFileSync(p, 'utf8');
-    const env = {};
-    for (const line of content.split('\n')) {
-      const m = line.match(/^\s*([^#=]+)=(.*)$/);
-      if (m) env[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, '');
-    }
-    return env;
+    Object.assign(env, parseEnvFile(p));
   }
-  return {};
+  return env;
 }
 
 const env = loadEnv();
