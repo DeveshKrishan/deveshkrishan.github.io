@@ -1,16 +1,19 @@
 /* eslint-env node */
 /**
- * GitHub API - recent commits via PushEvent activity.
+ * GitHub API - recent commits via public PushEvent activity.
  *
- * This is a lightweight homepage widget, so it uses user events when a token is
- * available and public events otherwise. It only returns commit metadata
- * (repo, message, sha, url, timestamp). PushEvent payloads do not include
- * line-diff counts.
+ * This homepage widget only surfaces commits from public repositories. A token
+ * is optional and used only to raise GitHub rate limits — never to include
+ * private activity. It returns commit metadata (repo, message, sha, url,
+ * timestamp). PushEvent payloads do not include line-diff counts.
  */
 
 import {
   clampRequestLimit,
   getGitHubCommitsNote,
+  getGitHubEventsPath,
+  isPublicGitHubRepo,
+  isPublicPushEvent,
   mapCommitFromPushEvent,
 } from './map-recent-commits.js';
 
@@ -47,15 +50,39 @@ async function fetchWithRetry(url, options, retriesLeft = MAX_RETRIES) {
   return res;
 }
 
+async function isPublicRepo(repoName, headers, repoVisibility) {
+  if (repoVisibility.has(repoName)) {
+    return repoVisibility.get(repoName);
+  }
+
+  try {
+    const repoRes = await fetchWithRetry(`${GITHUB_API_BASE}/repos/${repoName}`, { headers });
+    const repoText = await repoRes.text();
+    if (!repoRes.ok) {
+      repoVisibility.set(repoName, false);
+      return false;
+    }
+
+    const isPublic = isPublicGitHubRepo(JSON.parse(repoText));
+    repoVisibility.set(repoName, isPublic);
+    return isPublic;
+  } catch {
+    repoVisibility.set(repoName, false);
+    return false;
+  }
+}
+
 async function buildRecentCommits(events, limit, headers) {
   const commits = [];
+  const repoVisibility = new Map();
 
   for (const event of events) {
-    if (event?.type !== 'PushEvent') continue;
+    if (!isPublicPushEvent(event)) continue;
 
-    const repoName = event?.repo?.name ?? '';
-    const headSha = event?.payload?.head ?? null;
-    if (!repoName || !headSha) continue;
+    const repoName = event.repo.name;
+    const headSha = event.payload.head;
+    const isPublic = await isPublicRepo(repoName, headers, repoVisibility);
+    if (!isPublic) continue;
 
     const commitApiUrl = `${GITHUB_API_BASE}/repos/${repoName}/commits/${headSha}`;
 
@@ -101,9 +128,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const eventsPath = token
-      ? `/users/${encodeURIComponent(username)}/events?per_page=100`
-      : `/users/${encodeURIComponent(username)}/events/public?per_page=100`;
+    const eventsPath = getGitHubEventsPath(username);
     const eventsRes = await fetchWithRetry(`${GITHUB_API_BASE}${eventsPath}`, { headers });
 
     const eventsText = await eventsRes.text();
@@ -118,7 +143,7 @@ export default async function handler(req, res) {
 
     const events = JSON.parse(eventsText);
     const commits = await buildRecentCommits(Array.isArray(events) ? events : [], limit, headers);
-    const note = getGitHubCommitsNote(commits, Boolean(token));
+    const note = getGitHubCommitsNote(commits);
 
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
     return res.status(200).json({ commits, note });

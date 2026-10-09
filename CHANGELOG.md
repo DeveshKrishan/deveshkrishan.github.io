@@ -1,10 +1,16 @@
 # my-project
 
-## 0.7.1
+## 0.7.2
 
 ### Patch Changes
 
 - 1f98703: Fix the Spotify refresh-token script failing to find credentials when a Vercel-generated `.env.local` exists. It now merges `.env` and `.env.local` instead of reading only the first file found.
+
+## 0.7.1
+
+### Patch Changes
+
+- b54e7f8: Show only public GitHub commits in the homepage activity widget.
 
 ## 0.7.0
 

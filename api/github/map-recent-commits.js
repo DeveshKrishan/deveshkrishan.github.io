@@ -3,12 +3,25 @@ export function formatCommitMessage(message) {
   return subject || '';
 }
 
-export function mapCommitFromPushEvent(event, commitJson) {
-  if (event?.type !== 'PushEvent') return null;
+export function getGitHubEventsPath(username) {
+  return `/users/${encodeURIComponent(username)}/events/public?per_page=100`;
+}
 
-  const repoName = event?.repo?.name ?? '';
-  const headSha = event?.payload?.head ?? null;
-  if (!repoName || !headSha) return null;
+export function isPublicGitHubRepo(repoJson) {
+  return repoJson?.private === false;
+}
+
+export function isPublicPushEvent(event) {
+  if (event?.type !== 'PushEvent') return false;
+  if (event.public === false) return false;
+  return Boolean(event?.repo?.name && event?.payload?.head);
+}
+
+export function mapCommitFromPushEvent(event, commitJson) {
+  if (!isPublicPushEvent(event)) return null;
+
+  const repoName = event.repo.name;
+  const headSha = event.payload.head;
 
   const repoUrl = `https://github.com/${repoName}`;
   const message = formatCommitMessage(commitJson?.commit?.message);
@@ -30,12 +43,9 @@ export function mapCommitFromPushEvent(event, commitJson) {
   };
 }
 
-export function getGitHubCommitsNote(commits, hasToken) {
+export function getGitHubCommitsNote(commits) {
   if (commits.length > 0) return null;
-
-  return hasToken
-    ? 'No recent PushEvents found yet.'
-    : 'No public PushEvents found. Set GITHUB_TOKEN to include authenticated activity.';
+  return 'No public PushEvents found.';
 }
 
 export function clampRequestLimit(limit, defaultLimit = 3, max = 50) {
