@@ -1,5 +1,11 @@
 # my-project
 
+## 0.15.0
+
+### Minor Changes
+
+- ac496fa: Add a footer visitor count from Vercel Web Analytics.
+
 ## 0.14.0
 
 ### Minor Changes

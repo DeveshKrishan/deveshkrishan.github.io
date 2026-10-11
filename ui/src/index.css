@@ -875,13 +875,26 @@ img {
   width: 100%;
   padding-top: 1.5rem;
   border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+#footer_p,
+.footer-visitors {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink-muted);
 }
 
 #footer_p {
-  margin: 0;
   text-align: left;
-  font-size: 0.8rem;
-  color: var(--ink-muted);
+}
+
+.footer-visitors {
+  text-align: right;
 }
 
 @media (min-width: 768px) {
