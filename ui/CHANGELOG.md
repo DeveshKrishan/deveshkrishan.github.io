@@ -1,5 +1,11 @@
 # my-project
 
+## 0.15.2
+
+### Patch Changes
+
+- Clarify the footer as unique visitors, drop unused Tremor and Heroicons, and add homepage SEO metadata.
+
 ## 0.15.1
 
 ### Patch Changes

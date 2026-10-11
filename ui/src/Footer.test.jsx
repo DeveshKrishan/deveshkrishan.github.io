@@ -14,10 +14,10 @@ function mockJsonResponse(data, ok = true, status = 200) {
 
 describe('formatVisitorLabel', () => {
   it('formats a unique-visitor count', () => {
-    expect(formatVisitorLabel(0)).toBe('0 visitors');
-    expect(formatVisitorLabel(1)).toBe('1 visitor');
-    expect(formatVisitorLabel(980)).toBe('980 visitors');
-    expect(formatVisitorLabel(1250)).toBe('1,250 visitors');
+    expect(formatVisitorLabel(0)).toBe('0 unique visitors');
+    expect(formatVisitorLabel(1)).toBe('1 unique visitor');
+    expect(formatVisitorLabel(980)).toBe('980 unique visitors');
+    expect(formatVisitorLabel(1250)).toBe('1,250 unique visitors');
     expect(formatVisitorLabel(null)).toBeNull();
   });
 });
@@ -41,7 +41,7 @@ describe('Footer', () => {
     expect(screen.getByText('© 2026 devesh krishan | portfolio.')).toBeInTheDocument();
 
     await waitFor(() => {
-      expect(screen.getByText('980 visitors')).toBeInTheDocument();
+      expect(screen.getByText('980 unique visitors')).toBeInTheDocument();
     });
   });
 

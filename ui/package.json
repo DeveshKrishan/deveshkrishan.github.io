@@ -1,7 +1,7 @@
 {
   "name": "devesh-portfolio",
   "private": true,
-  "version": "0.15.1",
+  "version": "0.15.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,8 +13,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@heroicons/react": "^1.0.6",
-    "@tremor/react": "^3.7.9",
     "@vercel/analytics": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
