@@ -1,5 +1,11 @@
 # my-project
 
+## 0.15.4
+
+### Patch Changes
+
+- Restore unique visitors and other homepage widgets by removing the `@vercel/node` type clash that crashed production API functions.
+
 ## 0.15.3
 
 ### Patch Changes
