@@ -22,10 +22,15 @@ export function getNavbarScrollState({
   };
 }
 
-export function useScrollNavbar() {
+export function useScrollNavbar(isLocked = false) {
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
+    if (isLocked) {
+      setIsHidden(false);
+      return undefined;
+    }
+
     const prefersReducedMotion =
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -58,7 +63,7 @@ export function useScrollNavbar() {
       window.removeEventListener('scroll', handleScroll);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [isLocked]);
 
-  return isHidden;
+  return isLocked ? false : isHidden;
 }

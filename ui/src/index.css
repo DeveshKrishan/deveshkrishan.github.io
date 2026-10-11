@@ -76,6 +76,27 @@ img {
   height: 4.75rem;
 }
 
+.navbar-toggle {
+  display: none;
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: var(--body);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.navbar-toggle:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
 .logo {
   display: inline-flex;
   align-items: center;
@@ -900,6 +921,48 @@ img {
 }
 
 @media (max-width: 767px) {
+  .navbar-toggle {
+    display: inline-flex;
+    z-index: 22;
+  }
+
+  .project_list {
+    position: fixed;
+    top: var(--navbar-offset, 4.75rem);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 21;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1.6rem;
+    padding: 2.25rem 5vw 3rem;
+    background-color: var(--paper);
+    border-top: 1px solid var(--rule);
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-0.4rem);
+    transition:
+      opacity 0.28s cubic-bezier(0.19, 1, 0.22, 1),
+      transform 0.28s cubic-bezier(0.19, 1, 0.22, 1),
+      visibility 0.28s;
+  }
+
+  .navbar.is-menu-open .project_list {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .project_list a {
+    font-size: 1.45rem;
+  }
+
   .hero-wordmark {
     font-size: 9.4vw;
     font-size: 10.4cqi;
@@ -954,7 +1017,8 @@ img {
   }
 
   .navbar,
-  .navbar.is-scroll-hidden {
+  .navbar.is-scroll-hidden,
+  .project_list {
     transform: none;
   }
 
