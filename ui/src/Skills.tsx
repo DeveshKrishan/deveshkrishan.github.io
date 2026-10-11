@@ -48,7 +48,9 @@ function Skills() {
           </div>
         ))}
       </div>
-      <GithubHeatmap />
+      <div className="intro-heatmap-slot">
+        <GithubHeatmap />
+      </div>
     </section>
   );
 }
