@@ -6,12 +6,12 @@
  * Team projects also need VERCEL_TEAM_ID, or VERCEL_ORG_ID when it is a team_ id.
  */
 
-import type { ApiRequest, ApiResponse } from '../_http';
+import type { ApiRequest, ApiResponse } from '../_http.js';
 import {
   buildVisitCountUrl,
   mapVisitCount,
   resolveAnalyticsAuth,
-} from './_map-visitors';
+} from './_map-visitors.js';
 
 const MAX_RETRIES = 3;
 const DEFAULT_BACKOFF_MS = 1000;

@@ -6,11 +6,11 @@
  * A token is required; the GraphQL API does not serve this calendar anonymously.
  */
 
-import type { ApiRequest, ApiResponse } from '../_http';
+import type { ApiRequest, ApiResponse } from '../_http.js';
 import {
   getCalendarFromGraphQL,
   mapContributionCalendar,
-} from './_map-contributions';
+} from './_map-contributions.js';
 
 const GITHUB_GRAPHQL_URL = 'https://api.github.com/graphql';
 const MAX_RETRIES = 3;

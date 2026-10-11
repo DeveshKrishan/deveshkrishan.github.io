@@ -8,7 +8,7 @@
  * timestamp). PushEvent payloads do not include line-diff counts.
  */
 
-import type { ApiRequest, ApiResponse } from '../_http';
+import type { ApiRequest, ApiResponse } from '../_http.js';
 import {
   clampRequestLimit,
   getGitHubCommitsNote,
@@ -16,7 +16,7 @@ import {
   isPublicGitHubRepo,
   isPublicPushEvent,
   mapCommitFromPushEvent,
-} from './_map-recent-commits';
+} from './_map-recent-commits.js';
 
 const GITHUB_API_BASE = 'https://api.github.com';
 const MAX_RETRIES = 3;

@@ -13,13 +13,13 @@
  * Env: STEAM_WEB_API_KEY, STEAM_ID (or STEAM_VANITY_URL).
  */
 
-import type { ApiRequest, ApiResponse } from '../_http';
+import type { ApiRequest, ApiResponse } from '../_http.js';
 import {
   clampRequestLimit,
   getRecentGamesFromOwned,
   getSteamGamesNote,
   mapSteamGame,
-} from './_map-recent-games';
+} from './_map-recent-games.js';
 
 const STEAM_API_BASE = 'https://api.steampowered.com';
 const MAX_RETRIES = 3;

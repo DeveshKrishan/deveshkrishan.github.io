@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- Restore unique visitors and other homepage widgets by removing the `@vercel/node` type clash that crashed production API functions.
+- Restore unique visitors and other homepage widgets by fixing Vercel TypeScript function compile and ESM helper imports.
 
 ## 0.15.3
 

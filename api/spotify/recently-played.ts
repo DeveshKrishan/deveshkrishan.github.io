@@ -15,11 +15,11 @@
  * ToS: minimal caching (60s); attribute Spotify in the UI.
  */
 
-import type { ApiRequest, ApiResponse } from '../_http';
+import type { ApiRequest, ApiResponse } from '../_http.js';
 import {
   getRecentlyPlayedFetchLimit,
   mapRecentlyPlayedItems,
-} from './_map-recently-played';
+} from './_map-recently-played.js';
 
 const SPOTIFY_API_BASE = 'https://api.spotify.com/v1';
 const SPOTIFY_ACCOUNTS_BASE = 'https://accounts.spotify.com';
