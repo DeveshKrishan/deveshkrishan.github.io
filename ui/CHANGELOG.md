@@ -1,5 +1,11 @@
 # my-project
 
+## 0.15.7
+
+### Patch Changes
+
+- Add a divider between the skills chips and GitHub activity to match the intro rule.
+
 ## 0.15.6
 
 ### Patch Changes

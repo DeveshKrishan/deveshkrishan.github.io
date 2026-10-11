@@ -401,6 +401,12 @@ img {
   border: 0;
 }
 
+.intro-heatmap-slot {
+  margin-top: 0.35rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+}
+
 .intro-heatmap {
   position: relative;
   isolation: isolate;
