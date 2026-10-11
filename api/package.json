@@ -4,9 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "test": "vitest run --environment node"
   },
   "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@vercel/node": "^5.10.2",
+    "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   }
 }

@@ -1,6 +1,6 @@
 # React + Vite
 
-This project is a Vite + React personal site with Spotify, GitHub, Steam, and Beli activity widgets, plus a footer visitor count from Vercel Web Analytics.
+This project is a Vite + React + TypeScript personal site with Spotify, GitHub, Steam, and Beli activity widgets, plus a footer visitor count from Vercel Web Analytics.
 
 The repo is a pnpm workspace:
 

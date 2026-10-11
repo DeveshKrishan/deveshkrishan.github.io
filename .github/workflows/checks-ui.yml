@@ -46,6 +46,9 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: Typecheck
+        run: pnpm --filter ./ui typecheck
+
       - name: Run UI tests
         run: pnpm test:ui
 
