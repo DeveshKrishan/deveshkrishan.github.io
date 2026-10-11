@@ -4,6 +4,7 @@ import { SiGithub, SiSpotify, SiSteam } from 'react-icons/si';
 
 import beliLogo from './assets/beli_logo.webp';
 import beliVisitsData from './data/beli-visits.json';
+import { formatWidgetError, formatWidgetResponseError } from './format-widget-error';
 import type { BeliVisitsFile, Commit, Game, Song, Visit } from './types';
 
 const SHOW_RECENT_COMMITS = false;
@@ -51,14 +52,14 @@ function Activity() {
         const data = await res.json().catch(() => null);
 
         if (!res.ok) {
-          const message = data?.error || `Request failed (${res.status})`;
-          throw new Error(message);
+          if (isActive) setSongsError(formatWidgetResponseError('spotify', res, data));
+          return;
         }
 
         const nextSongs = Array.isArray(data?.songs) ? data.songs : [];
         if (isActive) setSongs(nextSongs);
-      } catch (err) {
-        if (isActive) setSongsError(err instanceof Error ? err.message : 'Failed to load songs');
+      } catch {
+        if (isActive) setSongsError(formatWidgetError({ source: 'spotify' }));
       } finally {
         if (isActive) setIsSongsLoading(false);
       }
@@ -129,8 +130,8 @@ function Activity() {
         const data = await res.json().catch(() => null);
 
         if (!res.ok) {
-          const message = data?.error || `Request failed (${res.status})`;
-          throw new Error(message);
+          if (isActive) setCommitsError(formatWidgetResponseError('commits', res, data));
+          return;
         }
 
         const nextCommits = Array.isArray(data?.commits) ? data.commits : [];
@@ -138,10 +139,8 @@ function Activity() {
           setCommits(nextCommits);
           setCommitsNote(typeof data?.note === 'string' ? data.note : null);
         }
-      } catch (err) {
-        if (isActive) {
-          setCommitsError(err instanceof Error ? err.message : 'Failed to load commits');
-        }
+      } catch {
+        if (isActive) setCommitsError(formatWidgetError({ source: 'commits' }));
       } finally {
         if (isActive) setIsCommitsLoading(false);
       }
@@ -166,8 +165,8 @@ function Activity() {
         const data = await res.json().catch(() => null);
 
         if (!res.ok) {
-          const message = data?.error || `Request failed (${res.status})`;
-          throw new Error(message);
+          if (isActive) setGamesError(formatWidgetResponseError('steam', res, data));
+          return;
         }
 
         const nextGames = Array.isArray(data?.games) ? data.games : [];
@@ -175,10 +174,8 @@ function Activity() {
           setGames(nextGames);
           setGamesNote(typeof data?.note === 'string' ? data.note : null);
         }
-      } catch (err) {
-        if (isActive) {
-          setGamesError(err instanceof Error ? err.message : 'Failed to load games');
-        }
+      } catch {
+        if (isActive) setGamesError(formatWidgetError({ source: 'steam' }));
       } finally {
         if (isActive) setIsGamesLoading(false);
       }
@@ -196,7 +193,7 @@ function Activity() {
       <div className={SHOW_RECENT_COMMITS ? 'activity-grid' : 'activity-grid activity-grid--three'}>
         <div className="activity-column">
           <h3>recent songs listened to</h3>
-          {songsError ? <p className="activity-error">spotify error: {songsError}</p> : null}
+          {songsError ? <p className="activity-error">{songsError}</p> : null}
           {isSongsLoading ? <ActivitySkeleton /> : null}
           {!isSongsLoading && !songsError && songsToShow.length === 0 ? (
             <p className="activity-loading">no recent songs yet.</p>
@@ -260,7 +257,7 @@ function Activity() {
         {SHOW_RECENT_COMMITS ? (
           <div className="activity-column">
             <h3>recent commits pushed</h3>
-            {commitsError ? <p className="activity-error">github error: {commitsError}</p> : null}
+            {commitsError ? <p className="activity-error">{commitsError}</p> : null}
             {isCommitsLoading ? <p className="activity-loading">loading…</p> : null}
             {!isCommitsLoading && commitsNote ? <p className="activity-loading">{commitsNote}</p> : null}
             {!isCommitsLoading && !commitsError && commitsToShow.length === 0 ? (
@@ -304,7 +301,7 @@ function Activity() {
         ) : null}
         <div className="activity-column">
           <h3>recent games played (past 2 weeks)</h3>
-          {gamesError ? <p className="activity-error">steam error: {gamesError}</p> : null}
+          {gamesError ? <p className="activity-error">{gamesError}</p> : null}
           {isGamesLoading ? <ActivitySkeleton /> : null}
           {!isGamesLoading && gamesNote ? <p className="activity-loading">{gamesNote}</p> : null}
           {!isGamesLoading && !gamesError && gamesToShow.length === 0 ? (

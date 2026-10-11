@@ -1,5 +1,11 @@
 # my-project
 
+## 0.15.6
+
+### Patch Changes
+
+- Show visitor-friendly widget errors and remove unused image assets.
+
 ## 0.15.5
 
 ### Patch Changes

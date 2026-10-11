@@ -93,6 +93,43 @@ describe('Activity', () => {
     expect(document.querySelectorAll('.activity-skeleton-row')).toHaveLength(6);
   });
 
+  it('shows a friendly spotify error instead of the raw API message', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url) => {
+        if (String(url).includes('/api/spotify/recently-played')) {
+          return Promise.resolve({
+            ok: false,
+            status: 500,
+            json: () =>
+              Promise.resolve({
+                error:
+                  'Missing Spotify env vars. Set SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN.',
+              }),
+          });
+        }
+
+        if (String(url).includes('/api/steam/recent-games')) {
+          return Promise.resolve({
+            ok: false,
+            status: 429,
+            json: () => Promise.resolve({ error: 'rate limited', code: 'rate_limited' }),
+          });
+        }
+
+        return Promise.reject(new Error(`Unexpected fetch: ${url}`));
+      }),
+    );
+
+    render(<Activity />);
+
+    expect(
+      await screen.findByText("couldn't load recent songs right now."),
+    ).toBeInTheDocument();
+    expect(screen.getByText('steam is rate-limited. try again soon.')).toBeInTheDocument();
+    expect(screen.queryByText(/SPOTIFY_CLIENT_ID/)).not.toBeInTheDocument();
+  });
+
   it('renders the beli column from the committed visit data', async () => {
     render(<Activity />);
 

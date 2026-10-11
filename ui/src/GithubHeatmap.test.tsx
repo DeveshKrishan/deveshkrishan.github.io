@@ -90,6 +90,7 @@ describe('GithubHeatmap', () => {
     await waitFor(() => {
       expect(screen.getByText('contributions unavailable')).toBeInTheDocument();
     });
-    expect(screen.getByText('Missing GITHUB_TOKEN')).toBeInTheDocument();
+    expect(screen.queryByText('Missing GITHUB_TOKEN')).not.toBeInTheDocument();
+    expect(screen.getByText("couldn't load github activity right now.")).toBeInTheDocument();
   });
 });
