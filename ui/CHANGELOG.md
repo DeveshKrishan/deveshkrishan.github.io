@@ -1,5 +1,11 @@
 # my-project
 
+## 0.15.5
+
+### Patch Changes
+
+- Add robots.txt and a homepage sitemap so search engines can crawl the site cleanly.
+
 ## 0.15.4
 
 ### Patch Changes
