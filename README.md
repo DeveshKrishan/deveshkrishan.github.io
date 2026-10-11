@@ -1,6 +1,6 @@
 # React + Vite
 
-This project is a Vite + React personal site with Spotify, GitHub, Steam, and Beli activity widgets.
+This project is a Vite + React personal site with Spotify, GitHub, Steam, and Beli activity widgets, plus a footer visitor count from Vercel Web Analytics.
 
 The repo is a pnpm workspace:
 
@@ -42,9 +42,33 @@ STEAM_WEB_API_KEY=...
 STEAM_ID=76561198...
 # Optional alternative to STEAM_ID:
 # STEAM_VANITY_URL=yourname
+# Required to show the footer visitor count. Create at https://vercel.com/account/tokens
+VERCEL_TOKEN=...
+# Injected automatically on Vercel. Set locally for `vercel dev`.
+VERCEL_PROJECT_ID=...
+# Team projects only. Personal accounts can omit this.
+# VERCEL_TEAM_ID=team_...
 ```
 
 If you only run `pnpm dev`, the UI will still load, but the API routes will not be available locally.
+
+## Visitor count
+
+The footer shows unique visitors from [Vercel Web Analytics](https://vercel.com/docs/analytics) since analytics was enabled (production only).
+
+1. Enable Web Analytics: `npx vercel project web-analytics`
+2. Create an access token at [vercel.com/account/tokens](https://vercel.com/account/tokens). `vercel tokens add` fails if the CLI is logged in with **Sign in with Vercel**.
+3. Add it for every environment:
+
+   ```bash
+   printf '%s' 'YOUR_TOKEN' | npx vercel env add VERCEL_TOKEN production,preview --sensitive --yes
+   printf '%s' 'YOUR_TOKEN' | npx vercel env add VERCEL_TOKEN development --no-sensitive --yes
+   ```
+
+   Also put `VERCEL_TOKEN=...` in local `.env`.
+4. `VERCEL_PROJECT_ID` and `VERCEL_TEAM_ID` can be added with `vercel env add`. On Vercel, `VERCEL_PROJECT_ID` and a `team_` `VERCEL_ORG_ID` are also injected automatically.
+
+The site sends page views with `@vercel/analytics`. Counts stay at zero until Web Analytics is enabled and production traffic arrives after the tracking script is deployed.
 
 ## Steam setup
 
