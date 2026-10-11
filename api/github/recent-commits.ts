@@ -8,6 +8,7 @@
  * timestamp). PushEvent payloads do not include line-diff counts.
  */
 
+import { apiError } from '../_errors.js';
 import type { ApiRequest, ApiResponse } from '../_http.js';
 import {
   clampRequestLimit,
@@ -121,7 +122,7 @@ async function buildRecentCommits(
 export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json(apiError(405, 'Method not allowed'));
   }
 
   const username = process.env.GITHUB_USERNAME || 'DeveshKrishan';
@@ -147,10 +148,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     if (!eventsRes.ok) {
       const message = parseGitHubErrorBody(eventsText);
       const status = eventsRes.status === 429 ? 429 : eventsRes.status >= 500 ? 502 : 500;
-      return res.status(status).json({
-        error: 'Failed to fetch GitHub activity',
-        message,
-      });
+      return res.status(status).json(apiError(status, 'Failed to fetch GitHub activity', { message }));
     }
 
     const events = JSON.parse(eventsText);
@@ -160,9 +158,10 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
     return res.status(200).json({ commits, note });
   } catch (err) {
-    return res.status(500).json({
-      error: 'Unexpected GitHub error',
-      message: err instanceof Error ? err.message : 'Unknown error',
-    });
+    return res.status(500).json(
+      apiError(500, 'Unexpected GitHub error', {
+        message: err instanceof Error ? err.message : 'Unknown error',
+      }),
+    );
   }
 }

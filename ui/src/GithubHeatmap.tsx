@@ -1,6 +1,7 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import DitherBackground from './DitherBackground';
+import { formatWidgetError, formatWidgetResponseError } from './format-widget-error';
 import {
   formatDayTitle,
   formatHeatmapCaption,
@@ -53,15 +54,13 @@ function GithubHeatmap() {
         const data = await res.json().catch(() => null);
 
         if (!res.ok) {
-          const message = data?.error || `Request failed (${res.status})`;
-          throw new Error(message);
+          if (isActive) setError(formatWidgetResponseError('github', res, data));
+          return;
         }
 
         if (isActive) setCalendar(data as ContributionCalendar);
-      } catch (err) {
-        if (isActive) {
-          setError(err instanceof Error ? err.message : 'Failed to load contributions');
-        }
+      } catch {
+        if (isActive) setError(formatWidgetError({ source: 'github' }));
       } finally {
         if (isActive) setIsLoading(false);
       }

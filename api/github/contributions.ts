@@ -6,6 +6,7 @@
  * A token is required; the GraphQL API does not serve this calendar anonymously.
  */
 
+import { API_ERROR_CODE, apiError } from '../_errors.js';
 import type { ApiRequest, ApiResponse } from '../_http.js';
 import {
   getCalendarFromGraphQL,
@@ -67,7 +68,7 @@ async function fetchWithRetry(url: string, options: RequestInit, retriesLeft = M
 export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json(apiError(405, 'Method not allowed'));
   }
 
   const username = process.env.GITHUB_USERNAME || 'DeveshKrishan';
@@ -76,6 +77,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (!token) {
     return res.status(500).json({
       error: 'Missing GITHUB_TOKEN. Set it to load the contribution heatmap.',
+      code: API_ERROR_CODE.missingConfig,
     });
   }
 
@@ -98,33 +100,32 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     if (!graphRes.ok) {
       const message = parseGitHubErrorBody(graphText);
       const status = graphRes.status === 429 ? 429 : graphRes.status >= 500 ? 502 : 500;
-      return res.status(status).json({
-        error: 'Failed to fetch GitHub contributions',
-        message,
-      });
+      return res
+        .status(status)
+        .json(apiError(status, 'Failed to fetch GitHub contributions', { message }));
     }
 
     const payload = JSON.parse(graphText);
     if (Array.isArray(payload?.errors) && payload.errors.length > 0) {
-      return res.status(502).json({
-        error: 'Failed to fetch GitHub contributions',
-        message: payload.errors[0]?.message || 'GraphQL error',
-      });
+      return res.status(502).json(
+        apiError(502, 'Failed to fetch GitHub contributions', {
+          message: payload.errors[0]?.message || 'GraphQL error',
+        }),
+      );
     }
 
     const calendar = getCalendarFromGraphQL(payload);
     if (!calendar) {
-      return res.status(404).json({
-        error: 'GitHub user or contribution calendar not found',
-      });
+      return res.status(404).json(apiError(404, 'GitHub user or contribution calendar not found'));
     }
 
     res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400');
     return res.status(200).json(mapContributionCalendar(calendar, username));
   } catch (err) {
-    return res.status(500).json({
-      error: 'Unexpected GitHub error',
-      message: err instanceof Error ? err.message : 'Unknown error',
-    });
+    return res.status(500).json(
+      apiError(500, 'Unexpected GitHub error', {
+        message: err instanceof Error ? err.message : 'Unknown error',
+      }),
+    );
   }
 }

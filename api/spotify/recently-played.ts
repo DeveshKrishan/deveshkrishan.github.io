@@ -15,6 +15,7 @@
  * ToS: minimal caching (60s); attribute Spotify in the UI.
  */
 
+import { API_ERROR_CODE, apiError } from '../_errors.js';
 import type { ApiRequest, ApiResponse } from '../_http.js';
 import {
   getRecentlyPlayedFetchLimit,
@@ -63,7 +64,7 @@ async function fetchWithRetry(url: string, options: RequestInit, retriesLeft = M
 export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json(apiError(405, 'Method not allowed'));
   }
 
   const clientId = process.env.SPOTIFY_CLIENT_ID;
@@ -74,6 +75,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     return res.status(500).json({
       error:
         'Missing Spotify env vars. Set SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN.',
+      code: API_ERROR_CODE.missingConfig,
     });
   }
 
@@ -95,16 +97,14 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     const tokenText = await tokenRes.text();
     if (!tokenRes.ok) {
       const message = parseSpotifyErrorBody(tokenText);
-      return res.status(tokenRes.status >= 500 ? 502 : 500).json({
-        error: 'Failed to refresh Spotify token',
-        message,
-      });
+      const status = tokenRes.status >= 500 ? 502 : 500;
+      return res.status(status).json(apiError(status, 'Failed to refresh Spotify token', { message }));
     }
 
     const tokenJson = JSON.parse(tokenText);
     const accessToken = tokenJson.access_token;
     if (!accessToken) {
-      return res.status(500).json({ error: 'No access_token in refresh response' });
+      return res.status(500).json(apiError(500, 'No access_token in refresh response'));
     }
 
     // GET /v1/me/player/recently-played – limit 1–50; optional after, before (Unix ms)
@@ -128,10 +128,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     if (!recentRes.ok) {
       const message = parseSpotifyErrorBody(recentText);
       const status = recentRes.status === 429 ? 429 : recentRes.status >= 500 ? 502 : 500;
-      return res.status(status).json({
-        error: 'Failed to fetch recently played',
-        message,
-      });
+      return res.status(status).json(apiError(status, 'Failed to fetch recently played', { message }));
     }
 
     const recentJson = JSON.parse(recentText);
@@ -141,9 +138,10 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
     return res.status(200).json({ songs });
   } catch (err) {
-    return res.status(500).json({
-      error: 'Unexpected Spotify error',
-      message: err instanceof Error ? err.message : 'Unknown error',
-    });
+    return res.status(500).json(
+      apiError(500, 'Unexpected Spotify error', {
+        message: err instanceof Error ? err.message : 'Unknown error',
+      }),
+    );
   }
 }

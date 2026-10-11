@@ -13,6 +13,7 @@
  * Env: STEAM_WEB_API_KEY, STEAM_ID (or STEAM_VANITY_URL).
  */
 
+import { API_ERROR_CODE, apiError } from '../_errors.js';
 import type { ApiRequest, ApiResponse } from '../_http.js';
 import {
   clampRequestLimit,
@@ -126,7 +127,7 @@ async function fetchRecentlyPlayedGames(apiKey: string, steamId: string, limit: 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json(apiError(405, 'Method not allowed'));
   }
 
   const apiKey = process.env.STEAM_WEB_API_KEY;
@@ -136,12 +137,14 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (!apiKey) {
     return res.status(500).json({
       error: 'Missing Steam env vars. Set STEAM_WEB_API_KEY.',
+      code: API_ERROR_CODE.missingConfig,
     });
   }
 
   if (!steamId && !vanityUrl) {
     return res.status(500).json({
       error: 'Missing Steam env vars. Set STEAM_ID or STEAM_VANITY_URL.',
+      code: API_ERROR_CODE.missingConfig,
     });
   }
 
@@ -157,6 +160,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     if (!steamId) {
       return res.status(500).json({
         error: 'Missing Steam env vars. Set STEAM_ID or STEAM_VANITY_URL.',
+        code: API_ERROR_CODE.missingConfig,
       });
     }
 
@@ -183,9 +187,10 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       typeof err === 'object' && err && 'status' in err && typeof err.status === 'number'
         ? err.status
         : 500;
-    return res.status(status).json({
-      error: 'Unexpected Steam error',
-      message: err instanceof Error ? err.message : 'Unknown error',
-    });
+    return res.status(status).json(
+      apiError(status, 'Unexpected Steam error', {
+        message: err instanceof Error ? err.message : 'Unknown error',
+      }),
+    );
   }
 }
