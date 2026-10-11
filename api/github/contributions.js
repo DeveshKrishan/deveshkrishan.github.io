@@ -9,7 +9,7 @@
 import {
   getCalendarFromGraphQL,
   mapContributionCalendar,
-} from './map-contributions.js';
+} from './_map-contributions.js';
 
 const GITHUB_GRAPHQL_URL = 'https://api.github.com/graphql';
 const MAX_RETRIES = 3;

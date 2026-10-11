@@ -7,7 +7,7 @@ import {
   isPublicGitHubRepo,
   isPublicPushEvent,
   mapCommitFromPushEvent,
-} from './map-recent-commits.js';
+} from './_map-recent-commits.js';
 
 describe('formatCommitMessage', () => {
   it('returns only the first line of a multi-line commit message', () => {

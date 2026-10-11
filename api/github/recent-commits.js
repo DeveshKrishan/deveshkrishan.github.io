@@ -15,7 +15,7 @@ import {
   isPublicGitHubRepo,
   isPublicPushEvent,
   mapCommitFromPushEvent,
-} from './map-recent-commits.js';
+} from './_map-recent-commits.js';
 
 const GITHUB_API_BASE = 'https://api.github.com';
 const MAX_RETRIES = 3;
