@@ -13,14 +13,13 @@
  * Env: STEAM_WEB_API_KEY, STEAM_ID (or STEAM_VANITY_URL).
  */
 
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-
+import type { ApiRequest, ApiResponse } from '../_http.js';
 import {
   clampRequestLimit,
   getRecentGamesFromOwned,
   getSteamGamesNote,
   mapSteamGame,
-} from './_map-recent-games';
+} from './_map-recent-games.js';
 
 const STEAM_API_BASE = 'https://api.steampowered.com';
 const MAX_RETRIES = 3;
@@ -124,7 +123,7 @@ async function fetchRecentlyPlayedGames(apiKey: string, steamId: string, limit: 
   return Array.isArray(data?.response?.games) ? data.response.games : [];
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ error: 'Method not allowed' });
