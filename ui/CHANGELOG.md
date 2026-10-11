@@ -1,5 +1,11 @@
 # my-project
 
+## 0.14.0
+
+### Minor Changes
+
+- 44953c5: Add a mobile menu overlay for the navbar, with menu/close controls and stacked links.
+
 ## 0.13.0
 
 ### Minor Changes
