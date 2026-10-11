@@ -1,5 +1,17 @@
 # my-project
 
+## 0.13.0
+
+### Minor Changes
+
+- d6fc4b6: Add a black dithered mountain backdrop behind the GitHub activity card.
+- d6fc4b6: Add a GitHub activity card with contribution heatmap under homepage skills, and stretch the profile photo to match the intro column on large screens.
+- d6fc4b6: Hide the navbar while scrolling down and bring it back when scrolling up.
+
+### Patch Changes
+
+- d6fc4b6: Stop stretching homepage skill groups to the photo height on large screens.
+
 ## 0.12.1
 
 ### Patch Changes

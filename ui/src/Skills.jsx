@@ -1,3 +1,5 @@
+import GithubHeatmap from './GithubHeatmap';
+
 /**
  * Grouped skills — edit `SKILL_GROUPS` to match your experience.
  */
@@ -46,6 +48,7 @@ function Skills() {
           </div>
         ))}
       </div>
+      <GithubHeatmap />
     </section>
   );
 }
