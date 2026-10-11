@@ -1,5 +1,11 @@
 # my-project
 
+## 0.15.3
+
+### Patch Changes
+
+- Migrate the UI and API to TypeScript with strict type-checking.
+
 ## 0.15.2
 
 ### Patch Changes
