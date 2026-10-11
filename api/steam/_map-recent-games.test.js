@@ -5,7 +5,7 @@ import {
   getRecentGamesFromOwned,
   getSteamGamesNote,
   mapSteamGame,
-} from './map-recent-games.js';
+} from './_map-recent-games.js';
 
 describe('buildSteamIconUrl', () => {
   it('builds a Steam CDN icon URL', () => {

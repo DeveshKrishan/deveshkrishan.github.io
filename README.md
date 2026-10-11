@@ -5,7 +5,7 @@ This project is a Vite + React personal site with Spotify, GitHub, Steam, and Be
 The repo is a pnpm workspace:
 
 - `ui/` — Vite + React frontend (the versioned `devesh-portfolio` package)
-- `api/` — Vercel Node functions at the git root so the UI can call same-origin `/api/*`
+- `api/` — Vercel Node functions at the git root so the UI can call same-origin `/api/*`. Helper and test files must start with `_` so they do not count toward the Hobby 12-function limit.
 
 Do not set Vercel’s Root Directory to `ui/`; keep it at the repository root so `/api` stays on the same project.
 

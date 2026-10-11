@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getRecentlyPlayedFetchLimit, mapRecentlyPlayedItems } from './map-recently-played.js';
+import { getRecentlyPlayedFetchLimit, mapRecentlyPlayedItems } from './_map-recently-played.js';
 
 function makeItem(id, title, playedAt, overrides = {}) {
   return {

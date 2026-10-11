@@ -1,5 +1,11 @@
 # my-project
 
+## 0.15.1
+
+### Patch Changes
+
+- 7df6b98: Keep API helpers and tests out of the Vercel Hobby serverless-function limit.
+
 ## 0.15.0
 
 ### Minor Changes

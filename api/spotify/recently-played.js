@@ -18,7 +18,7 @@
 import {
   getRecentlyPlayedFetchLimit,
   mapRecentlyPlayedItems,
-} from './map-recently-played.js';
+} from './_map-recently-played.js';
 
 const SPOTIFY_API_BASE = 'https://api.spotify.com/v1';
 const SPOTIFY_ACCOUNTS_BASE = 'https://accounts.spotify.com';

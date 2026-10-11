@@ -10,7 +10,7 @@ import {
   buildVisitCountUrl,
   mapVisitCount,
   resolveAnalyticsAuth,
-} from './map-visitors.js';
+} from './_map-visitors.js';
 
 const MAX_RETRIES = 3;
 const DEFAULT_BACKOFF_MS = 1000;

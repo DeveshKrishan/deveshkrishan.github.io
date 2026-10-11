@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { buildVisitCountUrl, mapVisitCount, resolveAnalyticsAuth } from './map-visitors.js';
+import { buildVisitCountUrl, mapVisitCount, resolveAnalyticsAuth } from './_map-visitors.js';
 
 describe('resolveAnalyticsAuth', () => {
   it('reads the token and project id', () => {

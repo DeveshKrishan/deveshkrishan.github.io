@@ -5,7 +5,7 @@ import {
   getCalendarFromGraphQL,
   getContributionMonthLabels,
   mapContributionCalendar,
-} from './map-contributions.js';
+} from './_map-contributions.js';
 
 describe('contributionCountToLevel', () => {
   it('maps counts onto five ink levels', () => {

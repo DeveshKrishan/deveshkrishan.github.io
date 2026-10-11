@@ -18,7 +18,7 @@ import {
   getRecentGamesFromOwned,
   getSteamGamesNote,
   mapSteamGame,
-} from './map-recent-games.js';
+} from './_map-recent-games.js';
 
 const STEAM_API_BASE = 'https://api.steampowered.com';
 const MAX_RETRIES = 3;
