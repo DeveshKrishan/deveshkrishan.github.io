@@ -51,6 +51,11 @@ img {
 }
 
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,6 +64,16 @@ img {
   margin: 0;
   padding: 1.35rem 5vw;
   border-bottom: 1px solid var(--rule);
+  background-color: var(--paper);
+  transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.navbar.is-scroll-hidden {
+  transform: translateY(-100%);
+}
+
+.navbar-spacer {
+  height: 4.75rem;
 }
 
 .logo {
@@ -112,6 +127,7 @@ img {
 
 .project_list a:focus-visible,
 .icon-list a:focus-visible,
+.intro-heatmap a:focus-visible,
 .activity-source:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
@@ -349,6 +365,227 @@ img {
   .intro-skills-chip:hover {
     background-color: var(--ink);
     color: var(--paper);
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.intro-heatmap {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+  padding: 0.9rem 1rem 0.85rem;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: #050505;
+}
+
+.intro-heatmap-header,
+.intro-heatmap-error,
+.intro-heatmap-scroll,
+.intro-heatmap-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.intro-heatmap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid hsla(0, 0%, 98%, 0.16);
+}
+
+.intro-heatmap-title,
+.intro-heatmap-profile,
+.intro-heatmap-total,
+.intro-heatmap-legend {
+  text-shadow: 0 0 10px #000;
+}
+
+.intro-heatmap-title {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  font-family: var(--body);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.intro-heatmap-handle {
+  color: var(--ink-muted);
+  font-size: 0.75rem;
+}
+
+.intro-heatmap-logo {
+  width: 0.85rem;
+  height: 0.85rem;
+  flex-shrink: 0;
+}
+
+.intro-heatmap-profile {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.intro-heatmap a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.intro-heatmap a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.intro-heatmap-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  flex-wrap: wrap;
+}
+
+.intro-heatmap-total {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+}
+
+.intro-heatmap-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  font-size: 0.62rem;
+  color: var(--ink-muted);
+}
+
+.intro-heatmap-legend .intro-heatmap-cell {
+  width: 0.62rem;
+  flex-shrink: 0;
+}
+
+.intro-heatmap-error {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 0.75rem;
+  color: var(--ink);
+}
+
+.intro-heatmap-dither {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.intro-heatmap-dither svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.intro-heatmap-scroll {
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.intro-heatmap-chart {
+  --heatmap-gap: 0.18rem;
+  display: grid;
+  grid-template-columns: 1.55rem minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 0.3rem 0.35rem;
+  width: 100%;
+}
+
+.intro-heatmap-weekdays {
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  grid-template-rows: repeat(7, minmax(0, 1fr));
+  align-items: center;
+  font-size: 0.58rem;
+  line-height: 1;
+  color: var(--ink-muted);
+  text-shadow: 0 0 8px #000;
+}
+
+.intro-heatmap-months,
+.intro-heatmap-weeks {
+  grid-column: 2;
+  display: grid;
+  column-gap: var(--heatmap-gap);
+  grid-template-columns: repeat(var(--heatmap-weeks, 53), minmax(0, 1fr));
+}
+
+.intro-heatmap-weeks {
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, auto);
+  row-gap: var(--heatmap-gap);
+}
+
+.intro-heatmap-weeks--skeleton {
+  --heatmap-weeks: 53;
+}
+
+.intro-heatmap-month {
+  font-size: 0.62rem;
+  line-height: 1;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  text-shadow: 0 0 8px #000;
+}
+
+.intro-heatmap-cell {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 1px;
+  background: hsla(0, 0%, 98%, 0.04);
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 98%, 0.16);
+}
+
+.intro-heatmap-cell[data-level='1'] {
+  background: hsla(0, 0%, 98%, 0.22);
+}
+
+.intro-heatmap-cell[data-level='2'] {
+  background: hsla(0, 0%, 98%, 0.4);
+}
+
+.intro-heatmap-cell[data-level='3'] {
+  background: hsla(0, 0%, 98%, 0.68);
+}
+
+.intro-heatmap-cell[data-level='4'] {
+  background: var(--ink);
+}
+
+@media (hover: hover) {
+  .intro-heatmap-cell[title]:hover {
+    outline: 1px solid var(--ink);
+    outline-offset: 1px;
   }
 }
 
@@ -633,6 +870,18 @@ img {
     align-items: stretch;
   }
 
+  .intro-photo {
+    align-self: stretch;
+  }
+
+  .intro-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
   .activity-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 3rem;
@@ -640,24 +889,6 @@ img {
 }
 
 @media (min-width: 1100px) {
-  .intro-details {
-    /* Match the photo column; leftover height is used by skills. */
-    height: 0;
-    min-height: 100%;
-  }
-
-  .intro-skills {
-    flex: 1 1 auto;
-    min-height: 0;
-  }
-
-  .intro-skills-groups {
-    flex: 1 1 auto;
-    min-height: 0;
-    grid-auto-rows: 1fr;
-    align-content: stretch;
-  }
-
   .activity-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: 2.5rem;
@@ -700,10 +931,6 @@ img {
     transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.navbar[data-reveal] {
-  transform: none;
-}
-
 [data-reveal].is-revealed {
   opacity: 1;
   transform: none;
@@ -724,6 +951,11 @@ img {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .navbar,
+  .navbar.is-scroll-hidden {
+    transform: none;
   }
 
   [data-reveal],
