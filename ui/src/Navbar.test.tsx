@@ -12,18 +12,18 @@ describe('Navbar', () => {
   it('opens the mobile menu and closes it after a link is chosen', () => {
     render(<Navbar />);
 
-    const toggle = screen.getByRole('button', { name: 'menu' });
+    const toggle = screen.getByRole('button', { name: 'Open menu' });
     expect(toggle).toHaveAttribute('aria-expanded', 'false');
 
     fireEvent.click(toggle);
-    expect(screen.getByRole('button', { name: 'close' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Close menu' })).toHaveAttribute(
       'aria-expanded',
       'true',
     );
     expect(document.body.style.overflow).toBe('hidden');
 
     fireEvent.click(screen.getByRole('link', { name: 'skills' }));
-    expect(screen.getByRole('button', { name: 'menu' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Open menu' })).toHaveAttribute(
       'aria-expanded',
       'false',
     );
@@ -33,10 +33,10 @@ describe('Navbar', () => {
   it('closes the mobile menu on Escape', () => {
     render(<Navbar />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'menu' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
     fireEvent.keyDown(window, { key: 'Escape' });
 
-    expect(screen.getByRole('button', { name: 'menu' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Open menu' })).toHaveAttribute(
       'aria-expanded',
       'false',
     );
