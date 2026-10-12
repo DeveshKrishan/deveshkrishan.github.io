@@ -79,22 +79,68 @@ img {
 .navbar-toggle {
   display: none;
   appearance: none;
+  align-items: center;
+  justify-content: center;
   margin: 0;
-  padding: 0;
+  padding: 0.35rem;
   border: 0;
   background: none;
   color: inherit;
-  font-family: var(--body);
-  font-size: 0.95rem;
-  font-weight: 400;
   line-height: 1;
-  letter-spacing: 0;
   cursor: pointer;
 }
 
 .navbar-toggle:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
+}
+
+.navbar-toggle-icon {
+  position: relative;
+  display: block;
+  width: 1.35rem;
+  height: 0.9rem;
+}
+
+.navbar-toggle-icon span {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background-color: currentColor;
+  border-radius: 1px;
+  transition:
+    transform 0.28s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 0.2s ease,
+    top 0.28s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.navbar-toggle-icon span:nth-child(1) {
+  top: 0;
+}
+
+.navbar-toggle-icon span:nth-child(2) {
+  top: calc(50% - 0.75px);
+}
+
+.navbar-toggle-icon span:nth-child(3) {
+  top: calc(100% - 1.5px);
+}
+
+.navbar.is-menu-open .navbar-toggle-icon span:nth-child(1) {
+  top: calc(50% - 0.75px);
+  transform: rotate(45deg);
+}
+
+.navbar.is-menu-open .navbar-toggle-icon span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.4);
+}
+
+.navbar.is-menu-open .navbar-toggle-icon span:nth-child(3) {
+  top: calc(50% - 0.75px);
+  transform: rotate(-45deg);
 }
 
 .logo {
@@ -987,21 +1033,94 @@ img {
     font-size: 10.4cqi;
   }
 
+  /* Large phones (e.g. iPhone Pro Max): photo + copy side by side, skills full-width below */
   .intro {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: minmax(6.75rem, 0.36fr) minmax(0, 1fr);
+    grid-template-areas:
+      'photo copy'
+      'skills skills';
+    gap: 0.85rem 1.1rem;
+    align-items: start;
   }
 
   .intro-photo {
-    max-width: 13.5rem;
+    grid-area: photo;
+    max-width: none;
+  }
+
+  .intro-details {
+    display: contents;
+  }
+
+  .intro-copy {
+    grid-area: copy;
+    gap: 0.65rem;
+  }
+
+  .intro-skills {
+    grid-area: skills;
+    margin-top: 0;
+    padding-top: 0.75rem;
+    gap: 0.5rem;
   }
 
   .intro-skills-groups {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem 1rem;
+  }
+
+  .intro-heatmap-slot {
+    margin-top: 0.2rem;
+    padding-top: 0.75rem;
   }
 
   .intro-heading {
     font-size: 1.15rem;
+  }
+
+  .intro-name,
+  #name,
+  .intro-title,
+  #who {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .icon-list {
+    gap: 0.5rem 0.9rem;
+    margin-top: 0.1rem;
+  }
+
+  .icon-list a {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 399px) {
+  .intro {
+    grid-template-columns: 1fr;
+    grid-template-areas: none;
+    gap: 1.25rem;
+  }
+
+  .intro-photo,
+  .intro-copy,
+  .intro-skills {
+    grid-area: auto;
+  }
+
+  .intro-photo {
+    max-width: 12.5rem;
+  }
+
+  .intro-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .intro-skills-groups {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1037,8 +1156,10 @@ img {
 
   .navbar,
   .navbar.is-scroll-hidden,
-  .project_list {
+  .project_list,
+  .navbar-toggle-icon span {
     transform: none;
+    transition: none;
   }
 
   [data-reveal],

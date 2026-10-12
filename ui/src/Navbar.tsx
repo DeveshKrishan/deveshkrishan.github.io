@@ -89,9 +89,14 @@ function Navbar() {
           className="navbar-toggle"
           aria-expanded={isMenuOpen}
           aria-controls="navbar-menu"
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           onClick={handleToggleMenu}
         >
-          {isMenuOpen ? 'close' : 'menu'}
+          <span className="navbar-toggle-icon" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
         </button>
         <ul className="project_list" id="navbar-menu">
           {NAV_LINKS.map((link) => (

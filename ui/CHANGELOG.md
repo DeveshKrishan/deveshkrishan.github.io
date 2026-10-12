@@ -1,5 +1,11 @@
 # my-project
 
+## 0.15.8
+
+### Patch Changes
+
+- Fix large-phone intro layout so skills fit beside the photo, and replace the mobile menu text with a hamburger icon.
+
 ## 0.15.7
 
 ### Patch Changes
