@@ -24,13 +24,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # Node 22 can load the shared .ts mapper via tsx; 20 is deprecated on Actions.
+          node-version: 22
 
       - name: Fetch Beli visits
         env:
           BELI_EMAIL: ${{ secrets.BELI_EMAIL }}
           BELI_PASSWORD: ${{ secrets.BELI_PASSWORD }}
-        run: node scripts/beli-fetch-visits.js
+        # The mapper lives in TypeScript (shared with UI tests). tsx loads it
+        # without a workspace install, matching this workflow's zero-deps design.
+        run: npx --yes tsx scripts/beli-fetch-visits.js
 
       - name: Commit updated visits
         run: |

@@ -1,5 +1,11 @@
 # my-project
 
+## 0.15.9
+
+### Patch Changes
+
+- Fix the daily Beli visits refresh workflow after the TypeScript migration by loading the shared `.ts` mapper with tsx.
+
 ## 0.15.8
 
 ### Patch Changes
