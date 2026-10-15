@@ -1,6 +1,20 @@
 {
-  "generatedAt": "2026-10-09T05:09:17.241Z",
+  "generatedAt": "2026-10-15T18:50:34.685Z",
   "visits": [
+    {
+      "id": 66285,
+      "name": "Pho Banh Mi",
+      "city": "Palo Alto, CA",
+      "neighborhood": "Downtown North",
+      "cuisines": [
+        "Vietnamese"
+      ],
+      "score": 5.5,
+      "category": "restaurant",
+      "visitedAt": "2026-10-13T03:24:15.339649Z",
+      "placeId": "ChIJpWqjjHC7j4ARettvwSaXU6E",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJpWqjjHC7j4ARettvwSaXU6E"
+    },
     {
       "id": 8325,
       "name": "Adel's Famous Halal Food",
@@ -31,21 +45,6 @@
       "visitedAt": "2026-10-07T04:33:57.934565Z",
       "placeId": "ChIJB067ZZxZwokRmuAHA3uMd68",
       "url": "https://www.google.com/maps/place/?q=place_id:ChIJB067ZZxZwokRmuAHA3uMd68"
-    },
-    {
-      "id": 710697,
-      "name": "L’industrie Pizzeria - West Village",
-      "city": "New York, NY",
-      "neighborhood": "West Village",
-      "cuisines": [
-        "Pizza",
-        "Italian"
-      ],
-      "score": 9.4,
-      "category": "restaurant",
-      "visitedAt": "2026-10-07T04:24:19.974793Z",
-      "placeId": "ChIJ92OsaJVZwokRsC54kf-J-3g",
-      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ92OsaJVZwokRsC54kf-J-3g"
     }
   ]
 }
