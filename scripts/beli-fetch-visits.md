@@ -34,18 +34,22 @@ BELI_PASSWORD=your-beli-password
 ## Step 2: Run the script
 
 ```bash
-node scripts/beli-fetch-visits.js
+pnpm beli:refresh
+# or: npx --yes tsx scripts/beli-fetch-visits.js
 ```
 
 It logs in, resolves your user id, reads your profile feed, keeps the most recent
 rating events, and rewrites `ui/src/data/beli-visits.json`. It refuses to write an empty
 file, so a bad run leaves the previous data intact.
 
+The script imports the TypeScript mapper at `ui/src/data/map-beli-visits.ts`, so it must
+be run through `tsx` (plain `node` cannot load `.ts`).
+
 Options:
 
 ```bash
-node scripts/beli-fetch-visits.js --limit 5   # keep more entries (default 3)
-node scripts/beli-fetch-visits.js --raw       # print the raw feed instead of writing
+pnpm beli:refresh -- --limit 5   # keep more entries (default 3)
+pnpm beli:refresh -- --raw       # print the raw feed instead of writing
 ```
 
 ## Step 3: Commit the result (local refresh)
@@ -80,6 +84,8 @@ deployed site still only reads the committed JSON.
 - **401 on login** — wrong credentials, or Beli throttled repeated logins. Wait and retry.
 - **"No rating events found"** — the feed returned only bookmarks or other event types.
   Run with `--raw` to inspect what came back.
-- **Fields come back empty** — the mapper in `ui/src/data/map-beli-visits.js` expects
+- **Fields come back empty** — the mapper in `ui/src/data/map-beli-visits.ts` expects
   `business_full`, `score`, `sent_dt`, and `event_type`. These are observed field names,
   not a published contract, so they can change. Use `--raw` and adjust the mapper.
+- **`ERR_MODULE_NOT_FOUND` for `map-beli-visits`** — run via `tsx` (see Step 2), not plain
+  `node`. The shared mapper is TypeScript.

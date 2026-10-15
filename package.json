@@ -14,7 +14,7 @@
     "test:api": "pnpm --filter ./api test",
     "preview": "pnpm --filter ./ui preview",
     "format:fix": "prettier \"ui/src/**/*.{ts,tsx,js,jsx,css,md}\" \"api/**/*.{ts,js}\" --write",
-    "beli:refresh": "node scripts/beli-fetch-visits.js",
+    "beli:refresh": "npx --yes tsx scripts/beli-fetch-visits.js",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "cs:prepare": "changeset",

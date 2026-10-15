@@ -11,9 +11,10 @@
  * and the site cannot break when Beli changes an endpoint.
  *
  * Usage:
- *   node scripts/beli-fetch-visits.js            # refresh ui/src/data/beli-visits.json
- *   node scripts/beli-fetch-visits.js --raw      # print the raw feed response instead
- *   node scripts/beli-fetch-visits.js --limit 5
+ *   npx --yes tsx scripts/beli-fetch-visits.js            # refresh ui/src/data/beli-visits.json
+ *   npx --yes tsx scripts/beli-fetch-visits.js --raw      # print the raw feed response instead
+ *   npx --yes tsx scripts/beli-fetch-visits.js --limit 5
+ *   # or: pnpm beli:refresh
  *
  * Requires SPOTIFY-style credentials in .env (gitignored):
  *   BELI_EMAIL (or BELI_USERNAME), BELI_PASSWORD
@@ -24,7 +25,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { loadEnv } from './load-env.js';
-import { mapBeliFeedItems } from '../ui/src/data/map-beli-visits.js';
+import { mapBeliFeedItems } from '../ui/src/data/map-beli-visits.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
