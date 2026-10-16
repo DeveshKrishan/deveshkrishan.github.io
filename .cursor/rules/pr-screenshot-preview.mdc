@@ -1,0 +1,30 @@
+---
+description: Add browser screenshot previews to UI pull request descriptions
+alwaysApply: true
+---
+
+# PR screenshot previews
+
+When opening or updating a PR that changes user-visible UI (layout, styling, routing, or rendered data), include screenshots in the PR body. Skip this for API-only, docs, CI, or Cursor-rule PRs.
+
+## Capture
+
+1. Prefer the Vercel preview URL from the PR. If it is not ready, use `pnpm --filter ./ui dev` at http://localhost:5173/.
+2. Exercise the changed flow the way a reviewer would, then screenshot the affected surface. A single unclicked render is not enough when the change is interactive.
+3. Capture desktop. Also capture a mobile viewport when the change is layout or responsive.
+4. Save PNGs under `.github/pr-previews/<branch-slug>/` on the PR branch (for example `steam-column-desktop.png`). Commit them with the feature or as `docs: add pr preview screenshots`.
+
+## PR body
+
+Add a **Preview** section after Summary/Notes:
+
+```markdown
+## Preview
+Vercel: <preview-url>
+
+![Steam column, desktop](https://raw.githubusercontent.com/DeveshKrishan/deveshkrishan.github.io/<branch>/.github/pr-previews/<branch-slug>/steam-column-desktop.png)
+```
+
+Use `raw.githubusercontent.com` URLs against the PR head branch so images render before merge. Relative paths in the PR body resolve against `main` and will 404.
+
+If browser tools are unavailable, still link the Vercel preview and say screenshots could not be captured. Do not invent or generate fake UI images.
