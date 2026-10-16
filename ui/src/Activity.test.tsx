@@ -187,11 +187,11 @@ describe('Activity', () => {
 
     render(<Activity />);
 
-    expect(await screen.findByRole('heading', { name: 'recent games played' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Dota 2' })).toHaveAttribute(
+    expect(await screen.findByRole('link', { name: 'Dota 2' })).toHaveAttribute(
       'href',
       'https://store.steampowered.com/app/570',
     );
+    expect(screen.getByRole('heading', { name: 'recent games played' })).toBeInTheDocument();
     expect(screen.getByText(/1h 30m played/)).toBeInTheDocument();
     expect(screen.getByText('12 / 47 achievements')).toBeInTheDocument();
     const lastPlayed = screen.getByText(/^last played /);
