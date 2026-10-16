@@ -194,6 +194,11 @@ describe('Activity', () => {
     );
     expect(screen.getByText(/1h 30m played/)).toBeInTheDocument();
     expect(screen.getByText('12 / 47 achievements')).toBeInTheDocument();
+    const meter = document.querySelector('.activity-achievement-meter');
+    expect(meter).toBeInTheDocument();
+    expect((meter as HTMLElement).style.getPropertyValue('--achievement-fill')).toBe(
+      `${(12 / 47) * 100}%`,
+    );
     expect(screen.queryByText(/past 2 weeks/i)).not.toBeInTheDocument();
     expect(screen.queryByText('First Win')).not.toBeInTheDocument();
   });

@@ -1,5 +1,11 @@
 # my-project
 
+## 0.19.2
+
+### Patch Changes
+
+- Add a thin progress meter under Steam achievement counts.
+
 ## 0.19.1
 
 ### Patch Changes
