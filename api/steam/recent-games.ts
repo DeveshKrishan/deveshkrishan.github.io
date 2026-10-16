@@ -1,10 +1,10 @@
 /* eslint-env node */
 /**
- * Steam Web API – Recent games played in the past 2 weeks
+ * Steam Web API – Most recently played games
  *
- * Primary: GET /IPlayerService/GetOwnedGames/v1/ — filter playtime_2weeks > 0,
- * sort by rtime_last_played (most recent first). Works when the API key belongs
- * to the same account as STEAM_ID.
+ * Primary: GET /IPlayerService/GetOwnedGames/v1/ — sort by rtime_last_played
+ * (most recent first). Works when the API key belongs to the same account as
+ * STEAM_ID.
  *
  * Fallback: GET /IPlayerService/GetRecentlyPlayedGames/v1/ when last-played
  * timestamps are unavailable.

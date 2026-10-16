@@ -90,9 +90,9 @@ function Activity() {
     if (!minutes || minutes <= 0) return null;
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
-    if (hours === 0) return `${mins}m in past 2 weeks`;
-    if (mins === 0) return `${hours}h in past 2 weeks`;
-    return `${hours}h ${mins}m in past 2 weeks`;
+    if (hours === 0) return `${mins}m played`;
+    if (mins === 0) return `${hours}h played`;
+    return `${hours}h ${mins}m played`;
   };
 
   const formatShortDate = (value?: string | null) => {
@@ -307,7 +307,7 @@ function Activity() {
           </div>
         ) : null}
         <div className="activity-column">
-          <h3>recent games played (past 2 weeks)</h3>
+          <h3>recent games played</h3>
           {gamesError ? <p className="activity-error">{gamesError}</p> : null}
           {isGamesLoading ? <ActivitySkeleton /> : null}
           {!isGamesLoading && gamesNote ? <p className="activity-loading">{gamesNote}</p> : null}

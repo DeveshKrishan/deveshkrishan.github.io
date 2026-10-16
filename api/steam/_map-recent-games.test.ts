@@ -26,7 +26,7 @@ describe('mapSteamGame', () => {
       mapSteamGame({
         appid: 570,
         name: 'Dota 2',
-        playtime_2weeks: 120,
+        playtime_forever: 120,
         rtime_last_played: 1_755_100_800,
         img_icon_url: 'abc123',
       }),
@@ -48,28 +48,28 @@ describe('mapSteamGame', () => {
 });
 
 describe('getRecentGamesFromOwned', () => {
-  it('filters to games played in the past 2 weeks and sorts by last played', () => {
+  it('sorts owned games by last played and keeps titles outside the two-week window', () => {
     const games = getRecentGamesFromOwned(
       [
         {
           appid: 1,
           name: 'Older Game',
-          playtime_2weeks: 60,
+          playtime_forever: 60,
           rtime_last_played: 100,
           img_icon_url: 'a',
         },
         {
           appid: 2,
           name: 'Recent Game',
-          playtime_2weeks: 30,
+          playtime_forever: 30,
           rtime_last_played: 200,
           img_icon_url: 'b',
         },
         {
           appid: 3,
-          name: 'Not Recent',
-          playtime_2weeks: 0,
-          rtime_last_played: 999,
+          name: 'Never Played',
+          playtime_forever: 0,
+          rtime_last_played: 0,
           img_icon_url: 'c',
         },
       ],
@@ -81,11 +81,11 @@ describe('getRecentGamesFromOwned', () => {
     expect(games[1].name).toBe('Older Game');
   });
 
-  it('sorts by playtime when last played timestamps are unavailable', () => {
+  it('sorts by lifetime playtime when last played timestamps are unavailable', () => {
     const games = getRecentGamesFromOwned(
       [
-        { appid: 1, name: 'Low Time', playtime_2weeks: 10, img_icon_url: 'a' },
-        { appid: 2, name: 'High Time', playtime_2weeks: 90, img_icon_url: 'b' },
+        { appid: 1, name: 'Low Time', playtime_forever: 10, img_icon_url: 'a' },
+        { appid: 2, name: 'High Time', playtime_forever: 90, img_icon_url: 'b' },
       ],
       2,
     );
@@ -98,7 +98,7 @@ describe('getSteamGamesNote', () => {
   it('returns an empty-state note only when there are no games', () => {
     expect(getSteamGamesNote([{ name: 'Dota 2' }])).toBeNull();
     expect(getSteamGamesNote([])).toBe(
-      'No games played in the last 2 weeks. Make sure Game details is set to Public on your Steam profile.',
+      'No recent games yet. Make sure Game details is set to Public on your Steam profile.',
     );
   });
 });

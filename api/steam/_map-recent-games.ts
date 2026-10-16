@@ -2,6 +2,7 @@ interface SteamGameInput {
   appid?: number;
   name?: string;
   playtime_2weeks?: number;
+  playtime_forever?: number;
   rtime_last_played?: number;
   img_icon_url?: string;
 }
@@ -27,21 +28,28 @@ export function mapSteamGame(game: SteamGameInput | null | undefined) {
   return {
     appid,
     name,
-    playtimeMinutes: game?.playtime_2weeks ?? 0,
+    playtimeMinutes: game?.playtime_forever ?? game?.playtime_2weeks ?? 0,
     lastPlayedAt,
     storeUrl: `https://store.steampowered.com/app/${appid}`,
     iconUrl: buildSteamIconUrl(appid, game?.img_icon_url),
   };
 }
 
+function hasBeenPlayed(game: SteamGameInput) {
+  return (game?.rtime_last_played ?? 0) > 0 || (game?.playtime_forever ?? 0) > 0 || (game?.playtime_2weeks ?? 0) > 0;
+}
+
 export function getRecentGamesFromOwned(ownedGames: SteamGameInput[], limit: number) {
-  const recent = ownedGames.filter((game) => (game?.playtime_2weeks ?? 0) > 0);
+  const recent = ownedGames.filter(hasBeenPlayed);
   const hasLastPlayed = recent.some((game) => (game?.rtime_last_played ?? 0) > 0);
 
   if (hasLastPlayed) {
     recent.sort((a, b) => (b?.rtime_last_played ?? 0) - (a?.rtime_last_played ?? 0));
   } else {
-    recent.sort((a, b) => (b?.playtime_2weeks ?? 0) - (a?.playtime_2weeks ?? 0));
+    recent.sort(
+      (a, b) =>
+        (b?.playtime_forever ?? b?.playtime_2weeks ?? 0) - (a?.playtime_forever ?? a?.playtime_2weeks ?? 0),
+    );
   }
 
   return recent.slice(0, limit).map(mapSteamGame).filter((game): game is NonNullable<typeof game> => Boolean(game));
@@ -50,7 +58,7 @@ export function getRecentGamesFromOwned(ownedGames: SteamGameInput[], limit: num
 export function getSteamGamesNote(games: unknown[]) {
   if (games.length > 0) return null;
 
-  return 'No games played in the last 2 weeks. Make sure Game details is set to Public on your Steam profile.';
+  return 'No recent games yet. Make sure Game details is set to Public on your Steam profile.';
 }
 
 export function clampRequestLimit(limit: unknown, defaultLimit = 3, max = 50) {
