@@ -1,5 +1,11 @@
 # my-project
 
+## 0.16.0
+
+### Minor Changes
+
+- Improve Google results for Devesh Krishan with a photo preview, Person schema, a name heading, and a redirect from the default Vercel URL to the custom domain.
+
 ## 0.15.10
 
 ### Patch Changes
