@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getCategoryLabel, getPlaceUrl, mapBeliFeedItems } from './map-beli-visits';
+import { getCategoryLabel, getPlacePhotoUrl, getPlaceUrl, mapBeliFeedItems } from './map-beli-visits';
 
 function ratingItem(overrides: Record<string, unknown> = {}) {
   return {
@@ -101,5 +101,12 @@ describe('getPlaceUrl', () => {
       'https://www.google.com/maps/place/?q=place_id:ChIJ%20a%2Bb',
     );
     expect(getPlaceUrl(null)).toBeNull();
+  });
+});
+
+describe('getPlacePhotoUrl', () => {
+  it('points at the Places photo proxy and encodes the id', () => {
+    expect(getPlacePhotoUrl('ChIJ a+b')).toBe('/api/places/photo?placeId=ChIJ%20a%2Bb');
+    expect(getPlacePhotoUrl(null)).toBeNull();
   });
 });
