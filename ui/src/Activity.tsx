@@ -6,6 +6,7 @@ import beliLogo from './assets/beli_logo.webp';
 import beliVisitsData from './data/beli-visits.json';
 import { getPlacePhotoUrl } from './data/map-beli-visits';
 import { formatWidgetError, formatWidgetResponseError } from './format-widget-error';
+import { Photos } from './Photos';
 import type { BeliVisitsFile, Commit, Game, Song, Visit } from './types';
 
 const SHOW_RECENT_COMMITS = false;
@@ -409,6 +410,7 @@ function Activity() {
           </p>
         </div>
       </div>
+      <Photos />
     </section>
   );
 }

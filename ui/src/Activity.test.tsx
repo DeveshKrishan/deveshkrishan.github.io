@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Activity from './Activity';
 import beliVisitsData from './data/beli-visits.json';
@@ -154,5 +154,18 @@ describe('Activity', () => {
       `/api/places/photo?placeId=${encodeURIComponent(firstVisit.placeId ?? '')}`,
     );
     expect(screen.queryByText('recent commits pushed')).not.toBeInTheDocument();
+  });
+
+  it('nests recent frames under what i have been up to', async () => {
+    render(<Activity />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Test Song')).toBeInTheDocument();
+    });
+
+    const about = document.getElementById('about');
+    const photos = document.getElementById('photos');
+    expect(about?.contains(photos)).toBe(true);
+    expect(within(about as HTMLElement).getByRole('heading', { name: 'recent frames' })).toBeInTheDocument();
   });
 });
