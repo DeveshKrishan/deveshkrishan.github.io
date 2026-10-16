@@ -1,5 +1,11 @@
 # my-project
 
+## 0.19.2
+
+### Patch Changes
+
+- Sharpen photo grid previews with 1280px thumbs so they stay crisp on 1440p monitors.
+
 ## 0.19.1
 
 ### Patch Changes

@@ -107,6 +107,9 @@ export function formatPhotoCaption(photo: Pick<Photo, 'location' | 'takenAt'>): 
     .join(' · ');
 }
 
+/** Preview width for the 3-up grid (~760px cells on 1440p). */
+export const PHOTO_THUMB_WIDTH = 1280;
+export const PHOTO_THUMB_HEIGHT = 960;
 export const PHOTOS_PER_PAGE = 6;
 export const PHOTO_ZOOM_MIN = 1;
 export const PHOTO_ZOOM_MAX = 4;
