@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import Welcome from './Welcome';
 import './App.css';
@@ -19,6 +20,7 @@ function App() {
         <Footer />
       </div>
       <Analytics />
+      <SpeedInsights />
     </>
   );
 }
