@@ -6,7 +6,6 @@ const NAV_LINKS = [
   { href: '/', label: 'home' },
   { href: '#skills', label: 'skills' },
   { href: '#about', label: 'about' },
-  { href: '#photos', label: 'photos' },
 ];
 
 function Navbar() {

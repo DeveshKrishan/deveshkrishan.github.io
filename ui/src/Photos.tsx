@@ -49,7 +49,7 @@ export function Photos() {
 
   return (
     <div className="photos-section" id="photos">
-      <h3 className="photos-heading">recent frames</h3>
+      <h3 className="photos-heading">recent shots</h3>
       <p className="photos-lede">getting into photography a bit. click one to see the full image.</p>
       <ul className="photos-grid">
         {pageSlots.map((photo, index) => {

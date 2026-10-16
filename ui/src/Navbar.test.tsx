@@ -22,6 +22,7 @@ describe('Navbar', () => {
     );
     expect(document.body.style.overflow).toBe('hidden');
 
+    expect(screen.queryByRole('link', { name: 'photos' })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole('link', { name: 'skills' }));
     expect(screen.getByRole('button', { name: 'Open menu' })).toHaveAttribute(
       'aria-expanded',
