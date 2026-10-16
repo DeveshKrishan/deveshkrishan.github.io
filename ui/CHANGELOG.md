@@ -1,5 +1,11 @@
 # my-project
 
+## 0.15.10
+
+### Patch Changes
+
+- Add Vercel Speed Insights to collect Core Web Vitals on the live site.
+
 ## 0.15.9
 
 ### Patch Changes
