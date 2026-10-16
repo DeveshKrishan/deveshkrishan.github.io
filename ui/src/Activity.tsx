@@ -86,6 +86,11 @@ function Activity() {
     return `${achievements.unlocked} / ${achievements.total} achievements`;
   };
 
+  const getAchievementFillPercent = (achievements?: Game['achievements']) => {
+    if (!achievements || achievements.total <= 0) return null;
+    return Math.min(100, Math.max(0, (achievements.unlocked / achievements.total) * 100));
+  };
+
   const formatPlaytime = (minutes?: number | null) => {
     if (!minutes || minutes <= 0) return null;
     const hours = Math.floor(minutes / 60);
@@ -345,7 +350,18 @@ function Activity() {
                     <div className="activity-sub">{formatPlaytime(game.playtimeMinutes)}</div>
                   ) : null}
                   {formatAchievementProgress(game.achievements) ? (
-                    <div className="activity-sub">{formatAchievementProgress(game.achievements)}</div>
+                    <div className="activity-achievements">
+                      <div className="activity-sub">{formatAchievementProgress(game.achievements)}</div>
+                      <div
+                        className="activity-achievement-meter"
+                        aria-hidden="true"
+                        style={
+                          {
+                            '--achievement-fill': `${getAchievementFillPercent(game.achievements)}%`,
+                          } as CSSProperties
+                        }
+                      />
+                    </div>
                   ) : null}
                 </li>
               ))}

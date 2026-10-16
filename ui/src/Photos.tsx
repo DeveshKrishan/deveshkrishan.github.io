@@ -8,6 +8,7 @@ import {
   type WheelEvent,
 } from 'react';
 import { createPortal } from 'react-dom';
+import { SiApple } from 'react-icons/si';
 
 import {
   formatPhotoCaption,
@@ -96,6 +97,17 @@ export function Photos() {
           />
         </nav>
       ) : null}
+      <p className="activity-attribution">
+        <a
+          className="activity-source"
+          href="https://www.apple.com/ios/photos/"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <SiApple className="activity-source-icon" aria-hidden="true" focusable="false" />
+          Apple Photos
+        </a>
+      </p>
       {openIndex != null ? (
         <PhotoViewer
           photos={PHOTOS}

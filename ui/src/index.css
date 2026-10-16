@@ -922,6 +922,26 @@ img {
   }
 }
 
+.activity-achievements {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.activity-achievement-meter {
+  width: 5.5rem;
+  height: 2px;
+  background: var(--rule);
+}
+
+.activity-achievement-meter::after {
+  content: '';
+  display: block;
+  width: var(--achievement-fill, 0%);
+  height: 100%;
+  background: var(--ink);
+}
+
 .activity-game-row a {
   display: inline-flex;
   align-items: center;

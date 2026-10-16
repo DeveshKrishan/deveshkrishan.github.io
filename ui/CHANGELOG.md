@@ -1,10 +1,22 @@
 # my-project
 
-## 0.19.2
+## 0.19.4
 
 ### Patch Changes
 
 - Sharpen photo grid previews with 1280px thumbs so they stay crisp on 1440p monitors.
+
+## 0.19.3
+
+### Patch Changes
+
+- Credit Apple Photos on the recent frames section.
+
+## 0.19.2
+
+### Patch Changes
+
+- Add a thin progress meter under Steam achievement counts.
 
 ## 0.19.1
 

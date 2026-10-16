@@ -17,6 +17,14 @@ describe('Photos', () => {
     vi.mocked(track).mockClear();
   });
 
+  it('credits Apple Photos as the source', () => {
+    render(<Photos />);
+
+    const credit = screen.getByRole('link', { name: 'Apple Photos' });
+    expect(credit).toHaveAttribute('href', 'https://www.apple.com/ios/photos/');
+    expect(credit.querySelector('svg')).not.toBeNull();
+  });
+
   it('shows preview thumbs and keeps full files out of the strip', () => {
     render(<Photos />);
 
