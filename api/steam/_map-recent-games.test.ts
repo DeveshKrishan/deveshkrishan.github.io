@@ -31,6 +31,7 @@ describe('mapSteamGame', () => {
         img_icon_url: 'abc123',
       }),
     ).toEqual({
+      appid: 570,
       name: 'Dota 2',
       playtimeMinutes: 120,
       lastPlayedAt: '2025-08-13T16:00:00.000Z',

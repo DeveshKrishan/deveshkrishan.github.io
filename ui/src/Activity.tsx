@@ -81,6 +81,11 @@ function Activity() {
     [],
   );
 
+  const formatAchievementProgress = (achievements?: Game['achievements']) => {
+    if (!achievements || achievements.total <= 0) return null;
+    return `${achievements.unlocked} / ${achievements.total} achievements`;
+  };
+
   const formatPlaytime = (minutes?: number | null) => {
     if (!minutes || minutes <= 0) return null;
     const hours = Math.floor(minutes / 60);
@@ -338,6 +343,9 @@ function Activity() {
                     </div>
                   ) : formatPlaytime(game.playtimeMinutes) ? (
                     <div className="activity-sub">{formatPlaytime(game.playtimeMinutes)}</div>
+                  ) : null}
+                  {formatAchievementProgress(game.achievements) ? (
+                    <div className="activity-sub">{formatAchievementProgress(game.achievements)}</div>
                   ) : null}
                 </li>
               ))}

@@ -25,6 +25,7 @@ export function mapSteamGame(game: SteamGameInput | null | undefined) {
       : null;
 
   return {
+    appid,
     name,
     playtimeMinutes: game?.playtime_2weeks ?? 0,
     lastPlayedAt,

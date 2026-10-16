@@ -156,6 +156,45 @@ describe('Activity', () => {
     expect(screen.queryByText('recent commits pushed')).not.toBeInTheDocument();
   });
 
+  it('renders steam achievement progress for recent games', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url) => {
+        if (String(url).includes('/api/spotify/recently-played')) {
+          return Promise.resolve(mockJsonResponse({ songs: [] }));
+        }
+
+        if (String(url).includes('/api/steam/recent-games')) {
+          return Promise.resolve(
+            mockJsonResponse({
+              games: [
+                {
+                  name: 'Dota 2',
+                  storeUrl: 'https://store.steampowered.com/app/570',
+                  iconUrl: 'https://media.steampowered.com/steamcommunity/public/images/apps/570/abc.jpg',
+                  lastPlayedAt: '2026-10-15T17:00:00.000Z',
+                  playtimeMinutes: 90,
+                  achievements: { unlocked: 12, total: 47, lastUnlockName: 'First Win' },
+                },
+              ],
+            }),
+          );
+        }
+
+        return Promise.reject(new Error(`Unexpected fetch: ${url}`));
+      }),
+    );
+
+    render(<Activity />);
+
+    expect(await screen.findByRole('link', { name: 'Dota 2' })).toHaveAttribute(
+      'href',
+      'https://store.steampowered.com/app/570',
+    );
+    expect(screen.getByText('12 / 47 achievements')).toBeInTheDocument();
+    expect(screen.queryByText('First Win')).not.toBeInTheDocument();
+  });
+
   it('nests recent frames under what i have been up to', async () => {
     render(<Activity />);
 

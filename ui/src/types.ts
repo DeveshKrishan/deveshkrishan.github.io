@@ -22,12 +22,20 @@ export interface Commit {
   createdAt?: string | null;
 }
 
+export interface GameAchievements {
+  unlocked: number;
+  total: number;
+  lastUnlockName?: string | null;
+}
+
 export interface Game {
   name: string;
   storeUrl: string;
   iconUrl?: string | null;
   lastPlayedAt?: string | null;
   playtimeMinutes?: number;
+  appid?: number;
+  achievements?: GameAchievements | null;
 }
 
 export interface Visit {
