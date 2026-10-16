@@ -321,50 +321,61 @@ function Activity() {
           ) : null}
           {gamesToShow.length > 0 ? (
             <ul>
-              {gamesToShow.map((game, index) => (
-                <li key={`${game.name}-${index}`} className="activity-game-row">
-                  <a href={game.storeUrl} target="_blank" rel="noreferrer noopener">
-                    {game.iconUrl ? (
-                      <img
-                        src={game.iconUrl}
-                        alt=""
-                        className="activity-game-icon"
-                        width={32}
-                        height={32}
-                        loading="lazy"
-                        onError={(event) => {
-                          event.currentTarget.style.display = 'none';
-                        }}
-                      />
+              {gamesToShow.map((game, index) => {
+                const lastPlayed = formatShortDate(game.lastPlayedAt);
+                const playtime = formatPlaytime(game.playtimeMinutes);
+                const progress = formatAchievementProgress(game.achievements);
+                const fillPercent = getAchievementFillPercent(game.achievements);
+
+                return (
+                  <li key={`${game.name}-${index}`} className="activity-game-row">
+                    <a href={game.storeUrl} target="_blank" rel="noreferrer noopener">
+                      {game.iconUrl ? (
+                        <img
+                          src={game.iconUrl}
+                          alt=""
+                          className="activity-game-icon"
+                          width={32}
+                          height={32}
+                          loading="lazy"
+                          onError={(event) => {
+                            event.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      ) : null}
+                      <span className="activity-main">{game.name}</span>
+                    </a>
+                    {lastPlayed || playtime || progress ? (
+                      <div className="activity-game-meta">
+                        {lastPlayed ? (
+                          <div className="activity-sub activity-last-played">
+                            last played {lastPlayed}
+                          </div>
+                        ) : null}
+                        {playtime ? (
+                          <div className="activity-sub activity-playtime">
+                            {lastPlayed ? ` · ${playtime}` : playtime}
+                          </div>
+                        ) : null}
+                        {progress ? (
+                          <div className="activity-sub activity-achievement-count">{progress}</div>
+                        ) : null}
+                        {fillPercent !== null ? (
+                          <div
+                            className="activity-achievement-meter"
+                            aria-hidden="true"
+                            style={
+                              {
+                                '--achievement-fill': `${fillPercent}%`,
+                              } as CSSProperties
+                            }
+                          />
+                        ) : null}
+                      </div>
                     ) : null}
-                    <span className="activity-main">{game.name}</span>
-                  </a>
-                  {formatShortDate(game.lastPlayedAt) ? (
-                    <div className="activity-sub">
-                      last played {formatShortDate(game.lastPlayedAt)}
-                      {formatPlaytime(game.playtimeMinutes)
-                        ? ` · ${formatPlaytime(game.playtimeMinutes)}`
-                        : null}
-                    </div>
-                  ) : formatPlaytime(game.playtimeMinutes) ? (
-                    <div className="activity-sub">{formatPlaytime(game.playtimeMinutes)}</div>
-                  ) : null}
-                  {formatAchievementProgress(game.achievements) ? (
-                    <div className="activity-achievements">
-                      <div className="activity-sub">{formatAchievementProgress(game.achievements)}</div>
-                      <div
-                        className="activity-achievement-meter"
-                        aria-hidden="true"
-                        style={
-                          {
-                            '--achievement-fill': `${getAchievementFillPercent(game.achievements)}%`,
-                          } as CSSProperties
-                        }
-                      />
-                    </div>
-                  ) : null}
-                </li>
-              ))}
+                  </li>
+                );
+              })}
             </ul>
           ) : null}
           <p className="activity-attribution">
@@ -372,7 +383,7 @@ function Activity() {
           </p>
         </div>
         <div className="activity-column">
-          <h3>recent restaurants visited</h3>
+          <h3>recent restaurants rated</h3>
           {visitsToShow.length === 0 ? (
             <p className="activity-loading">no recent visits yet.</p>
           ) : (

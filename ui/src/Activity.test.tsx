@@ -133,7 +133,7 @@ describe('Activity', () => {
   it('renders the beli column from the committed visit data', async () => {
     render(<Activity />);
 
-    expect(await screen.findByText('recent restaurants visited')).toBeInTheDocument();
+    expect(await screen.findByText('recent restaurants rated')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Beli' })).toHaveAttribute(
       'href',
       'https://beliapp.com',
@@ -194,8 +194,11 @@ describe('Activity', () => {
     );
     expect(screen.getByText(/1h 30m played/)).toBeInTheDocument();
     expect(screen.getByText('12 / 47 achievements')).toBeInTheDocument();
+    const lastPlayed = screen.getByText(/^last played /);
     const meter = document.querySelector('.activity-achievement-meter');
+    expect(lastPlayed).toHaveClass('activity-last-played');
     expect(meter).toBeInTheDocument();
+    expect(meter?.parentElement).toBe(lastPlayed.parentElement);
     expect((meter as HTMLElement).style.getPropertyValue('--achievement-fill')).toBe(
       `${(12 / 47) * 100}%`,
     );
