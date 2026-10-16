@@ -1,10 +1,10 @@
 /* eslint-env node */
 /**
- * Steam Web API – Recent games played in the past 2 weeks
+ * Steam Web API – Most recently played games
  *
- * Primary: GET /IPlayerService/GetOwnedGames/v1/ — filter playtime_2weeks > 0,
- * sort by rtime_last_played (most recent first). Works when the API key belongs
- * to the same account as STEAM_ID.
+ * Primary: GET /IPlayerService/GetOwnedGames/v1/ — sort by rtime_last_played
+ * (most recent first). Works when the API key belongs to the same account as
+ * STEAM_ID.
  *
  * Fallback: GET /IPlayerService/GetRecentlyPlayedGames/v1/ when last-played
  * timestamps are unavailable.
@@ -15,6 +15,7 @@
 
 import { API_ERROR_CODE, apiError } from '../_errors.js';
 import type { ApiRequest, ApiResponse } from '../_http.js';
+import { mapSteamAchievements } from './_map-achievements.js';
 import {
   clampRequestLimit,
   getRecentGamesFromOwned,
@@ -124,6 +125,40 @@ async function fetchRecentlyPlayedGames(apiKey: string, steamId: string, limit: 
   return Array.isArray(data?.response?.games) ? data.response.games : [];
 }
 
+async function fetchPlayerAchievements(apiKey: string, steamId: string, appid: number) {
+  const params = new URLSearchParams({
+    key: apiKey,
+    steamid: steamId,
+    appid: String(appid),
+    l: 'english',
+  });
+
+  try {
+    const res = await fetchWithRetry(
+      `${STEAM_API_BASE}/ISteamUserStats/GetPlayerAchievements/v1/?${params.toString()}`,
+    );
+    const text = await res.text();
+    if (!res.ok) return null;
+    return mapSteamAchievements(JSON.parse(text));
+  } catch {
+    return null;
+  }
+}
+
+async function attachAchievements<T extends { appid?: number }>(
+  games: T[],
+  apiKey: string,
+  steamId: string,
+) {
+  return Promise.all(
+    games.map(async (game) => {
+      if (!game.appid) return { ...game, achievements: null };
+      const achievements = await fetchPlayerAchievements(apiKey, steamId, game.appid);
+      return { ...game, achievements };
+    }),
+  );
+}
+
 export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
@@ -178,10 +213,11 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       games = recentGames.map(mapSteamGame).filter(Boolean);
     }
 
-    const note = getSteamGamesNote(games);
+    const gamesWithAchievements = await attachAchievements(games, apiKey, steamId);
+    const note = getSteamGamesNote(gamesWithAchievements);
 
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
-    return res.status(200).json({ games, note });
+    return res.status(200).json({ games: gamesWithAchievements, note });
   } catch (err) {
     const status =
       typeof err === 'object' && err && 'status' in err && typeof err.status === 'number'

@@ -167,7 +167,7 @@ See [`scripts/steam-resolve-id.md`](scripts/steam-resolve-id.md) for full steps.
 2. Find your SteamID64 (from your profile URL or via vanity URL resolution).
 3. Set **Game details** to **Public** in [Steam privacy settings](https://steamcommunity.com/my/edit/settings).
 
-The Steam widget shows games played in the **last 2 weeks** only.
+The Steam widget shows the **3 most recently played** games, plus a compact achievement count when the game supports Steamworks stats.
 
 ## Changesets workflow
 

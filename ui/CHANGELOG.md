@@ -1,5 +1,17 @@
 # my-project
 
+## 0.19.1
+
+### Patch Changes
+
+- 579e88f: Show the three most recently played Steam games instead of only the last two weeks.
+
+## 0.19.0
+
+### Minor Changes
+
+- 3e8855e: Show Steam achievement progress on each recent game in the activity section.
+
 ## 0.18.1
 
 ### Patch Changes
