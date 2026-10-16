@@ -1,5 +1,11 @@
 # my-project
 
+## 0.18.1
+
+### Patch Changes
+
+- 91d42b0: Track each photo open in Vercel Analytics so the dashboard can show which frames get viewed.
+
 ## 0.18.0
 
 ### Minor Changes
