@@ -1,5 +1,11 @@
 # my-project
 
+## 0.19.0
+
+### Minor Changes
+
+- 3e8855e: Show Steam achievement progress on each recent game in the activity section.
+
 ## 0.18.1
 
 ### Patch Changes
