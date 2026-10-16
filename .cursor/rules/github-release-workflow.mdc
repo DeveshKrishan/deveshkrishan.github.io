@@ -5,7 +5,7 @@ alwaysApply: false
 
 # GitHub release (Changesets + `gh`)
 
-When asked to **ship a release** or **publish a version** after features are merged to `main`:
+Merges to `main` that bump `ui/package.json` already create a GitHub release via `.github/workflows/release.yml` (`vX.Y.Z` + `--generate-notes`). Use the steps below only when asked to **cut a release by hand** (for example if CI skipped a version).
 
 ## 1. Version from Changesets
 

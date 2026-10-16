@@ -1,5 +1,11 @@
 # my-project
 
+## 0.17.2
+
+### Patch Changes
+
+- Create a GitHub release automatically when a versioned change lands on main.
+
 ## 0.17.1
 
 ### Patch Changes
