@@ -25,7 +25,7 @@ describe('Photos', () => {
     expect(credit.querySelector('svg')).not.toBeNull();
   });
 
-  it('shows low-res thumbs and keeps full files out of the strip', () => {
+  it('shows preview thumbs and keeps full files out of the strip', () => {
     render(<Photos />);
 
     const block = document.getElementById('photos');
@@ -35,6 +35,8 @@ describe('Photos', () => {
     expect(thumbs).toHaveLength(6);
     for (const thumb of thumbs) {
       expect(thumb).toHaveAttribute('src', expect.stringContaining('/thumbs/'));
+      expect(thumb).toHaveAttribute('width', '1280');
+      expect(thumb).toHaveAttribute('height', '960');
     }
 
     fireEvent.click(screen.getByRole('button', { name: 'next' }));

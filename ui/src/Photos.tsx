@@ -15,6 +15,8 @@ import {
   getPhotoPageCount,
   getWrappedPhotoIndex,
   padPhotoPage,
+  PHOTO_THUMB_HEIGHT,
+  PHOTO_THUMB_WIDTH,
   PHOTO_ZOOM_MAX,
   PHOTO_ZOOM_MIN,
   PHOTOS,
@@ -68,8 +70,8 @@ export function Photos() {
                 <img
                   src={photo.thumbSrc}
                   alt={photo.alt}
-                  width={320}
-                  height={240}
+                  width={PHOTO_THUMB_WIDTH}
+                  height={PHOTO_THUMB_HEIGHT}
                   loading={photoIndex < 2 ? 'eager' : 'lazy'}
                   decoding="async"
                 />

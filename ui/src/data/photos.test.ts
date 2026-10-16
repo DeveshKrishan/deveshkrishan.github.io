@@ -8,6 +8,8 @@ import {
   getWrappedPhotoIndex,
   padPhotoPage,
   PHOTOS,
+  PHOTO_THUMB_HEIGHT,
+  PHOTO_THUMB_WIDTH,
   PHOTOS_PER_PAGE,
   slicePhotoPage,
   stepPhotoZoom,
@@ -51,6 +53,11 @@ describe('stepPhotoZoom', () => {
 });
 
 describe('PHOTOS', () => {
+  it('uses 1280px preview thumbs so the grid stays sharp on 1440p', () => {
+    expect(PHOTO_THUMB_WIDTH).toBe(1280);
+    expect(PHOTO_THUMB_HEIGHT).toBe(960);
+  });
+
   it('keeps thumbs and full files on separate paths', () => {
     expect(PHOTOS.length).toBeGreaterThan(0);
     for (const photo of PHOTOS) {
