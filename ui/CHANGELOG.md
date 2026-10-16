@@ -1,5 +1,11 @@
 # my-project
 
+## 0.19.5
+
+### Patch Changes
+
+- 6064c15: Match the Steam achievement meter to the last-played date, rename restaurants to rated, and zoom photo thumbs on hover.
+
 ## 0.19.4
 
 ### Patch Changes
