@@ -1,5 +1,11 @@
 # my-project
 
+## 0.19.3
+
+### Patch Changes
+
+- Credit Apple Photos on the recent frames section.
+
 ## 0.19.2
 
 ### Patch Changes
