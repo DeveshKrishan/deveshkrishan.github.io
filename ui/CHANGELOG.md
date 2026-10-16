@@ -1,5 +1,11 @@
 # my-project
 
+## 0.18.0
+
+### Minor Changes
+
+- 09f0ea1: Add a recent frames strip and fullscreen photo viewer under the activity section.
+
 ## 0.17.2
 
 ### Patch Changes
