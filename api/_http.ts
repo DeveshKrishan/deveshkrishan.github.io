@@ -14,4 +14,5 @@ export interface ApiResponse {
   setHeader(name: string, value: string): this;
   status(code: number): this;
   json(body: unknown): unknown;
+  end(): unknown;
 }

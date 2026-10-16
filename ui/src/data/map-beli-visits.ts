@@ -55,6 +55,12 @@ export function getPlaceUrl(placeId: string | null | undefined) {
   return `https://www.google.com/maps/place/?q=place_id:${encodeURIComponent(placeId)}`;
 }
 
+/** Resolved at request time so expired Places photo names are never committed. */
+export function getPlacePhotoUrl(placeId: string | null | undefined) {
+  if (!placeId) return null;
+  return `/api/places/photo?placeId=${encodeURIComponent(placeId)}`;
+}
+
 function toNumericScore(value: unknown) {
   if (value === null || value === undefined || value === '') return null;
   const score = Number(value);

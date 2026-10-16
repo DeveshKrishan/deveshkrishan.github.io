@@ -1,5 +1,11 @@
 # my-project
 
+## 0.17.0
+
+### Minor Changes
+
+- Show Google Places thumbnails next to recent Beli restaurant visits.
+
 ## 0.16.0
 
 ### Minor Changes

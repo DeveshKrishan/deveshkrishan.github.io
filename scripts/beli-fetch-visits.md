@@ -2,7 +2,9 @@
 
 The "recent restaurants visited" column reads `ui/src/data/beli-visits.json`, which is
 **committed to the repo**. Nothing fetches Beli at runtime, so the deployed site holds
-no Beli credentials and cannot break when Beli changes an endpoint.
+no Beli credentials and cannot break when Beli changes an endpoint. Thumbnails are
+loaded separately from `/api/places/photo` using the stored Google `placeId` and
+`GOOGLE_PLACES_API_KEY` on Vercel. Photo names expire, so they are not written here.
 
 Refresh it whenever you want the site to show newer visits. A GitHub Action also
 runs daily on `main` (`Refresh Beli visits`) and commits the file only when the

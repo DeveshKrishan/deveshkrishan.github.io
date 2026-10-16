@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type { IconType } from 'react-icons';
-import { SiGithub, SiSpotify, SiSteam } from 'react-icons/si';
+import { SiGithub, SiGoogle, SiSpotify, SiSteam } from 'react-icons/si';
 
 import beliLogo from './assets/beli_logo.webp';
 import beliVisitsData from './data/beli-visits.json';
+import { getPlacePhotoUrl } from './data/map-beli-visits';
 import { formatWidgetError, formatWidgetResponseError } from './format-widget-error';
 import type { BeliVisitsFile, Commit, Game, Song, Visit } from './types';
 
@@ -351,43 +352,60 @@ function Activity() {
             <p className="activity-loading">no recent visits yet.</p>
           ) : (
             <ul>
-              {visitsToShow.map((visit) => (
-                <li key={visit.id} className="activity-visit-row">
-                  <div className="activity-visit-title-row">
-                    <span>
-                      {visit.url ? (
-                        <a href={visit.url} target="_blank" rel="noreferrer noopener">
+              {visitsToShow.map((visit) => {
+                const photoUrl = getPlacePhotoUrl(visit.placeId);
+                return (
+                  <li key={visit.id} className="activity-visit-row">
+                    <div className="activity-visit-title-row">
+                      {photoUrl ? (
+                        <img
+                          src={photoUrl}
+                          alt=""
+                          className="activity-visit-icon"
+                          width={40}
+                          height={40}
+                          loading="lazy"
+                          onError={(event) => {
+                            event.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      ) : null}
+                      <span>
+                        {visit.url ? (
+                          <a href={visit.url} target="_blank" rel="noreferrer noopener">
+                            <span className="activity-main">{visit.name}</span>
+                          </a>
+                        ) : (
                           <span className="activity-main">{visit.name}</span>
-                        </a>
-                      ) : (
-                        <span className="activity-main">{visit.name}</span>
-                      )}
-                      {visit.score == null ? null : (
-                        <span className="activity-sub"> — {visit.score}/10</span>
-                      )}
-                    </span>
-                  </div>
-                  {Array.isArray(visit.cuisines) && visit.cuisines.length > 0 ? (
-                    <ul className="activity-cuisine-chips">
-                      {visit.cuisines.map((cuisine) => (
-                        <li key={cuisine} className="activity-cuisine-chip">
-                          {cuisine}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                  {formatVisitPlace(visit) ? (
-                    <div className="activity-sub">{formatVisitPlace(visit)}</div>
-                  ) : null}
-                  {formatShortDate(visit.visitedAt) ? (
-                    <div className="activity-sub">visited {formatShortDate(visit.visitedAt)}</div>
-                  ) : null}
-                </li>
-              ))}
+                        )}
+                        {visit.score == null ? null : (
+                          <span className="activity-sub"> — {visit.score}/10</span>
+                        )}
+                      </span>
+                    </div>
+                    {Array.isArray(visit.cuisines) && visit.cuisines.length > 0 ? (
+                      <ul className="activity-cuisine-chips">
+                        {visit.cuisines.map((cuisine) => (
+                          <li key={cuisine} className="activity-cuisine-chip">
+                            {cuisine}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                    {formatVisitPlace(visit) ? (
+                      <div className="activity-sub">{formatVisitPlace(visit)}</div>
+                    ) : null}
+                    {formatShortDate(visit.visitedAt) ? (
+                      <div className="activity-sub">visited {formatShortDate(visit.visitedAt)}</div>
+                    ) : null}
+                  </li>
+                );
+              })}
             </ul>
           )}
           <p className="activity-attribution">
             {renderSourceCredit('beli')}
+            {visitsToShow.some((visit) => visit.placeId) ? renderSourceCredit('google') : null}
           </p>
         </div>
       </div>
@@ -431,6 +449,12 @@ const ACTIVITY_SOURCES: Record<string, ActivitySource> = {
     href: 'https://beliapp.com',
     color: '#ff5252',
     iconSrc: beliLogo,
+  },
+  google: {
+    name: 'Google Places',
+    href: 'https://developers.google.com/maps/documentation/places/web-service/policies',
+    color: '#4285f4',
+    Icon: SiGoogle,
   },
 };
 

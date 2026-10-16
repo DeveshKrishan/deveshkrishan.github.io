@@ -139,12 +139,20 @@ describe('Activity', () => {
       'https://beliapp.com',
     );
     expect(firstVisit?.cuisines?.[0]).toBeTruthy();
+    expect(firstVisit?.placeId).toBeTruthy();
     const cuisineChip = screen.getByText(firstVisit.cuisines[0]);
     expect(cuisineChip).toHaveClass('activity-cuisine-chip');
-    expect(screen.queryByRole('link', { name: 'Google Places' })).not.toBeInTheDocument();
-    expect(
-      screen.queryAllByAltText('').some((img) => img.classList.contains('activity-visit-icon')),
-    ).toBe(false);
+    expect(screen.getByRole('link', { name: 'Google Places' })).toHaveAttribute(
+      'href',
+      'https://developers.google.com/maps/documentation/places/web-service/policies',
+    );
+    const visitPhoto = screen
+      .getAllByAltText('')
+      .find((img) => img.classList.contains('activity-visit-icon'));
+    expect(visitPhoto).toHaveAttribute(
+      'src',
+      `/api/places/photo?placeId=${encodeURIComponent(firstVisit.placeId ?? '')}`,
+    );
     expect(screen.queryByText('recent commits pushed')).not.toBeInTheDocument();
   });
 });
