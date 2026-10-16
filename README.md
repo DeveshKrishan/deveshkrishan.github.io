@@ -1,6 +1,6 @@
 # React + Vite
 
-This project is a Vite + React + TypeScript personal site with Spotify, GitHub, Steam, and Beli activity widgets, plus a footer visitor count from Vercel Web Analytics.
+This project is a Vite + React + TypeScript personal site with Spotify, GitHub, Steam, and Beli activity widgets, Google Places thumbnails, a footer visitor count from Vercel Web Analytics, and Vercel Speed Insights.
 
 The repo is a pnpm workspace:
 
@@ -8,6 +8,93 @@ The repo is a pnpm workspace:
 - `api/` — Vercel Node functions at the git root so the UI can call same-origin `/api/*`. Helper and test files must start with `_` so they do not count toward the Hobby 12-function limit.
 
 Do not set Vercel’s Root Directory to `ui/`; keep it at the repository root so `/api` stays on the same project.
+
+## Integrations
+
+The homepage talks to several third-party services. Most widgets call a same-origin Vercel function at request time. Beli is the exception: visits are committed as JSON, then restaurant photos are resolved live from Google Places.
+
+```mermaid
+flowchart TB
+  subgraph browser [Browser]
+    UI[Vite React UI]
+    Analytics["@vercel/analytics"]
+    Speed["@vercel/speed-insights"]
+  end
+
+  subgraph vercelFns [Vercel functions]
+    SpotifyAPI["/api/spotify/recently-played"]
+    SteamAPI["/api/steam/recent-games"]
+    GithubHeatmap["/api/github/contributions"]
+    GithubCommits["/api/github/recent-commits"]
+    VisitorsAPI["/api/analytics/visitors"]
+    PlacesAPI["/api/places/photo"]
+  end
+
+  BeliJSON["ui/src/data/beli-visits.json"]
+
+  UI --> SpotifyAPI --> Spotify[Spotify Web API]
+  UI --> SteamAPI --> Steam[Steam Web API]
+  UI --> GithubHeatmap --> GitHub[GitHub GraphQL]
+  GithubCommits -.-> GitHub
+  UI --> VisitorsAPI --> VercelAnalytics[Vercel Web Analytics]
+  UI --> BeliJSON
+  UI --> PlacesAPI --> Places[Google Places API New]
+  Analytics --> VercelAnalytics
+  Speed --> VercelSpeed[Vercel Speed Insights]
+```
+
+`/api/github/recent-commits` exists but the Activity column is off (`SHOW_RECENT_COMMITS`). Helpers and tests under `api/` start with `_` so they do not count as Hobby functions.
+
+| Surface | Source | Runtime path | Secrets |
+| --- | --- | --- | --- |
+| Recent songs | Spotify | `/api/spotify/recently-played` | `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN` |
+| GitHub heatmap | GitHub GraphQL | `/api/github/contributions` | `GITHUB_TOKEN`, optional `GITHUB_USERNAME` |
+| Recent games | Steam | `/api/steam/recent-games` | `STEAM_WEB_API_KEY`, `STEAM_ID` |
+| Recent restaurants | Beli feed, committed daily | `beli-visits.json` | `BELI_EMAIL`, `BELI_PASSWORD` in GitHub Actions only |
+| Restaurant photos | Google Places | `/api/places/photo` | `GOOGLE_PLACES_API_KEY` |
+| Unique visitors | Vercel Web Analytics | `/api/analytics/visitors` | `VERCEL_TOKEN`, plus injected project/team ids |
+| Page views / CWV | Vercel | `@vercel/analytics`, `@vercel/speed-insights` | none |
+
+### Live widget request
+
+Spotify, Steam, GitHub, visitors, and Places all follow the same pattern: the browser calls `/api/*`, the function holds the secret, and the response is cached on Vercel.
+
+```mermaid
+sequenceDiagram
+  participant UI as Homepage
+  participant Fn as Vercel function
+  participant Upstream as Third-party API
+
+  UI->>Fn: GET /api/spotify/recently-played
+  Fn->>Upstream: refresh token + recently played
+  Upstream-->>Fn: tracks
+  Fn-->>UI: songs JSON
+```
+
+### Beli visits and Place photos
+
+Beli has no public API, so credentials never go on Vercel. A daily GitHub Action logs in, writes the latest rating events to `ui/src/data/beli-visits.json`, and commits only when the list changes. Photo resource names expire, so thumbnails are fetched later from the stored `placeId`.
+
+```mermaid
+sequenceDiagram
+  participant GHA as GitHub Action
+  participant Beli as Beli private API
+  participant Repo as beli-visits.json
+  participant UI as Homepage
+  participant PlacesFn as /api/places/photo
+  participant Google as Google Places
+
+  GHA->>Beli: login and profile feed
+  Beli-->>GHA: rating events plus placeId
+  GHA->>Repo: commit latest visits
+  UI->>Repo: read committed JSON
+  UI->>PlacesFn: GET ?placeId=
+  PlacesFn->>Google: Place Details then Place Photos
+  Google-->>PlacesFn: photoUri
+  PlacesFn-->>UI: 302 to image
+```
+
+See [`scripts/beli-fetch-visits.md`](scripts/beli-fetch-visits.md) for the refresh command and Action secrets.
 
 ## Run locally
 

@@ -1,5 +1,11 @@
 # my-project
 
+## 0.17.1
+
+### Patch Changes
+
+- Document homepage integrations in the README with Mermaid diagrams.
+
 ## 0.17.0
 
 ### Minor Changes
