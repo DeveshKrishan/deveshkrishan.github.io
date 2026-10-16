@@ -206,7 +206,7 @@ describe('Activity', () => {
     expect(screen.queryByText('First Win')).not.toBeInTheDocument();
   });
 
-  it('nests recent frames under what i have been up to', async () => {
+  it('nests recent shots under what i have been up to', async () => {
     render(<Activity />);
 
     await waitFor(() => {
@@ -216,6 +216,6 @@ describe('Activity', () => {
     const about = document.getElementById('about');
     const photos = document.getElementById('photos');
     expect(about?.contains(photos)).toBe(true);
-    expect(within(about as HTMLElement).getByRole('heading', { name: 'recent frames' })).toBeInTheDocument();
+    expect(within(about as HTMLElement).getByRole('heading', { name: 'recent shots' })).toBeInTheDocument();
   });
 });
