@@ -1,5 +1,11 @@
 # my-project
 
+## 0.19.6
+
+### Patch Changes
+
+- b7d4d91: Remove photos from the navbar and rename the gallery heading to recent shots.
+
 ## 0.19.5
 
 ### Patch Changes
