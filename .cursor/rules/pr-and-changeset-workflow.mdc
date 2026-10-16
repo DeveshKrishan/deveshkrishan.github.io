@@ -43,6 +43,7 @@ When asked to create a commit and/or open a GitHub PR in this repo, always follo
      - PR body should include:
        - A short **Summary** bullet list of key changes.
        - Any relevant **Notes** (e.g. auth flows used, external APIs, or migration considerations).
+       - For user-visible UI changes, a **Preview** section with screenshots (see `.cursor/rules/pr-screenshot-preview.mdc`).
    - If `gh` is not available, provide the user with the exact `gh pr create` command or clear instructions to open the PR via the GitHub UI.
 
 5. **Idempotency and safety**
