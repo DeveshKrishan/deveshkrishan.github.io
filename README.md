@@ -205,6 +205,14 @@ git commit -m "chore: release"
 git push
 ```
 
+In this repo, `cs:version` usually runs on the feature PR, so `main` already has the new `ui/package.json` version when that PR merges.
+
+### GitHub releases
+
+A [Release](.github/workflows/release.yml) workflow runs on every push to `main`. It reads the version from `ui/package.json` and, if `vX.Y.Z` is not already a GitHub release, creates that tag and release with auto-generated notes.
+
+Pushes that do not bump the version (for example the daily Beli visits refresh) do not create another release.
+
 ## Git hooks & commit style
 
 This project uses [Husky](https://typicode.github.io/husky) and [Commitlint](https://commitlint.js.org/#/) to enforce commit message style and run checks before commits.
