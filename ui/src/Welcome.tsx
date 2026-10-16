@@ -4,7 +4,7 @@ import { HiOutlineMail } from 'react-icons/hi';
 import { CONTACT_EMAIL } from './constants';
 import Skills from './Skills';
 
-const profilePhoto = new URL('./assets/profile-photo.jpg', import.meta.url).href;
+const profilePhoto = '/devesh-krishan.jpg';
 
 const birthDate = new Date(2003, 1, 1); // February 2003
 const ageMs = Date.now() - birthDate.getTime();
@@ -14,12 +14,12 @@ const age = Math.round(ageDate.getUTCFullYear() - 1970);
 function Welcome() {
   return (
     <div className="intro_spacing">
-      <p className="hero-wordmark" data-reveal>
+      <h1 className="hero-wordmark" data-reveal>
         Devesh Krishan
-      </p>
+      </h1>
       <div className="intro">
         <div className="intro-photo" data-reveal data-reveal-delay="1">
-          <img src={profilePhoto} alt="Devesh Krishan" />
+          <img src={profilePhoto} alt="Devesh Krishan, software engineer" width="2048" height="1536" />
         </div>
         <div className="intro-details">
           <div className="intro-copy" data-reveal data-reveal-delay="2">
@@ -33,11 +33,11 @@ function Welcome() {
               francisco bay area and am an alumni from the university of california, irvine.
             </h2>
             <div className="icon-list">
-              <a href="https://www.linkedin.com/in/deveshkrishan/" target="_blank" rel="noreferrer">
+              <a href="https://www.linkedin.com/in/deveshkrishan/" target="_blank" rel="me noreferrer">
                 <FaLinkedin className="icon" aria-hidden="true" focusable="false" />
                 LinkedIn →
               </a>
-              <a href="https://github.com/DeveshKrishan" target="_blank" rel="noreferrer">
+              <a href="https://github.com/DeveshKrishan" target="_blank" rel="me noreferrer">
                 <FaGithub className="icon" aria-hidden="true" focusable="false" />
                 GitHub →
               </a>

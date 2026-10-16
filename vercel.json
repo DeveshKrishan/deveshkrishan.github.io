@@ -2,5 +2,19 @@
   "installCommand": "pnpm install",
   "buildCommand": "pnpm --filter ./ui build",
   "outputDirectory": "ui/dist",
-  "devCommand": "pnpm --filter ./ui exec vite --port $PORT"
+  "devCommand": "pnpm --filter ./ui exec vite --port $PORT",
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "deveshkrishan-github-io.vercel.app" }],
+      "destination": "https://deveshkrishan.com/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "deveshkrishan-github-io.vercel.app" }],
+      "destination": "https://deveshkrishan.com/:path*",
+      "permanent": true
+    }
+  ]
 }
