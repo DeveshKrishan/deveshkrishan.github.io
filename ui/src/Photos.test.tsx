@@ -1,13 +1,20 @@
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { track } from '@vercel/analytics';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { formatPhotoCaption, PHOTOS } from './data/photos';
+import { PHOTO_OPEN_EVENT } from './data/track-photo';
 import { Photos } from './Photos';
+
+vi.mock('@vercel/analytics', () => ({
+  track: vi.fn(),
+}));
 
 describe('Photos', () => {
   afterEach(() => {
     cleanup();
     document.body.style.overflow = '';
+    vi.mocked(track).mockClear();
   });
 
   it('shows low-res thumbs and keeps full files out of the strip', () => {
@@ -92,6 +99,23 @@ describe('Photos', () => {
     expect(document.querySelector('[data-zoom="3"]')).not.toBeNull();
     fireEvent.keyDown(window, { key: '0' });
     expect(document.querySelector('[data-zoom="1"]')).not.toBeNull();
+  });
+
+  it('tracks each photo opened from the grid and viewer', () => {
+    render(<Photos />);
+
+    fireEvent.click(screen.getByRole('button', { name: PHOTOS[0].alt }));
+    expect(track).toHaveBeenCalledWith(
+      PHOTO_OPEN_EVENT,
+      expect.objectContaining({ id: PHOTOS[0].id, source: 'grid' }),
+    );
+
+    fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: PHOTOS[2].alt }));
+    expect(track).toHaveBeenCalledWith(
+      PHOTO_OPEN_EVENT,
+      expect.objectContaining({ id: PHOTOS[2].id, source: 'viewer' }),
+    );
+    expect(track).toHaveBeenCalledTimes(2);
   });
 
   it('uses chevron icons for the pager', () => {

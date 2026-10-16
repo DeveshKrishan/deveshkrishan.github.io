@@ -21,6 +21,7 @@ import {
   stepPhotoZoom,
   type Photo,
 } from './data/photos';
+import { trackPhotoOpen } from './data/track-photo';
 
 export function Photos() {
   const [page, setPage] = useState(0);
@@ -30,6 +31,12 @@ export function Photos() {
   const pageStart = page * PHOTOS_PER_PAGE;
 
   function handleOpen(index: number) {
+    trackPhotoOpen(PHOTOS[index], 'grid');
+    setOpenIndex(index);
+  }
+
+  function handleViewerPhotoChange(index: number) {
+    trackPhotoOpen(PHOTOS[index], 'viewer');
     setOpenIndex(index);
   }
 
@@ -91,7 +98,7 @@ export function Photos() {
         <PhotoViewer
           photos={PHOTOS}
           index={openIndex}
-          onIndexChange={setOpenIndex}
+          onIndexChange={handleViewerPhotoChange}
           onClose={handleClose}
         />
       ) : null}
