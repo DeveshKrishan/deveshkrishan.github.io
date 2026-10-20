@@ -1,6 +1,34 @@
 {
-  "generatedAt": "2026-10-15T18:50:34.685Z",
+  "generatedAt": "2026-10-20T18:52:27.971Z",
   "visits": [
+    {
+      "id": 357628,
+      "name": "Blue Bottle Coffee",
+      "city": "San Francisco, CA",
+      "neighborhood": "Embarcadero",
+      "cuisines": [
+        "Coffee Shop"
+      ],
+      "score": 9.1,
+      "category": "cof",
+      "visitedAt": "2026-10-20T05:46:40.637999Z",
+      "placeId": "ChIJWTGPjmaAhYAR6c9cUJ1axtM",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJWTGPjmaAhYAR6c9cUJ1axtM"
+    },
+    {
+      "id": 90952,
+      "name": "Boudin Bakery Cafe",
+      "city": "San Francisco, CA",
+      "neighborhood": "Fisherman's Wharf",
+      "cuisines": [
+        "Bakery"
+      ],
+      "score": 4.6,
+      "category": "restaurant",
+      "visitedAt": "2026-10-20T05:41:14.675020Z",
+      "placeId": "ChIJ1y_042CBhYAR1CgB07Gjk0A",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ1y_042CBhYAR1CgB07Gjk0A"
+    },
     {
       "id": 66285,
       "name": "Pho Banh Mi",
@@ -14,37 +42,6 @@
       "visitedAt": "2026-10-13T03:24:15.339649Z",
       "placeId": "ChIJpWqjjHC7j4ARettvwSaXU6E",
       "url": "https://www.google.com/maps/place/?q=place_id:ChIJpWqjjHC7j4ARettvwSaXU6E"
-    },
-    {
-      "id": 8325,
-      "name": "Adel's Famous Halal Food",
-      "city": "New York, NY",
-      "neighborhood": "Theater District",
-      "cuisines": [
-        "Middle Eastern",
-        "Halal",
-        "Food Truck"
-      ],
-      "score": 8.4,
-      "category": "restaurant",
-      "visitedAt": "2026-10-07T04:44:11.530902Z",
-      "placeId": "ChIJNRe1Mf9YwokRvxBdos5UEY4",
-      "url": "https://www.google.com/maps/place/?q=place_id:ChIJNRe1Mf9YwokRvxBdos5UEY4"
-    },
-    {
-      "id": 766387,
-      "name": "Sing Cha Chaan Teng",
-      "city": "New York, NY",
-      "neighborhood": "South Village",
-      "cuisines": [
-        "Cantonese",
-        "Hong Kong Style Cafe"
-      ],
-      "score": 6.8,
-      "category": "restaurant",
-      "visitedAt": "2026-10-07T04:33:57.934565Z",
-      "placeId": "ChIJB067ZZxZwokRmuAHA3uMd68",
-      "url": "https://www.google.com/maps/place/?q=place_id:ChIJB067ZZxZwokRmuAHA3uMd68"
     }
   ]
 }
