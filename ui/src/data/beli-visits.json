@@ -1,6 +1,20 @@
 {
-  "generatedAt": "2026-10-20T18:52:27.971Z",
+  "generatedAt": "2026-10-21T19:04:52.833Z",
   "visits": [
+    {
+      "id": 282143,
+      "name": "Peanuts Deluxe Cafe",
+      "city": "San Jose, CA",
+      "neighborhood": "Downtown San Jose",
+      "cuisines": [
+        "American"
+      ],
+      "score": 4.3,
+      "category": "restaurant",
+      "visitedAt": "2026-10-20T21:25:09.547165Z",
+      "placeId": "ChIJHbsXub7Mj4ARzT2JS7SkjH4",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJHbsXub7Mj4ARzT2JS7SkjH4"
+    },
     {
       "id": 357628,
       "name": "Blue Bottle Coffee",
@@ -23,25 +37,11 @@
       "cuisines": [
         "Bakery"
       ],
-      "score": 4.6,
+      "score": 4.7,
       "category": "restaurant",
       "visitedAt": "2026-10-20T05:41:14.675020Z",
       "placeId": "ChIJ1y_042CBhYAR1CgB07Gjk0A",
       "url": "https://www.google.com/maps/place/?q=place_id:ChIJ1y_042CBhYAR1CgB07Gjk0A"
-    },
-    {
-      "id": 66285,
-      "name": "Pho Banh Mi",
-      "city": "Palo Alto, CA",
-      "neighborhood": "Downtown North",
-      "cuisines": [
-        "Vietnamese"
-      ],
-      "score": 5.5,
-      "category": "restaurant",
-      "visitedAt": "2026-10-13T03:24:15.339649Z",
-      "placeId": "ChIJpWqjjHC7j4ARettvwSaXU6E",
-      "url": "https://www.google.com/maps/place/?q=place_id:ChIJpWqjjHC7j4ARettvwSaXU6E"
     }
   ]
 }
