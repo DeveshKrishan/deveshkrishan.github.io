@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type { IconType } from 'react-icons';
-import { SiGithub, SiGoogle, SiSpotify, SiSteam } from 'react-icons/si';
+import { SiGithub, SiGoogle, SiSpotify, SiSteam, SiValorant } from 'react-icons/si';
 
 import beliLogo from './assets/beli_logo.webp';
 import beliVisitsData from './data/beli-visits.json';
@@ -40,6 +40,7 @@ function Activity() {
   const [games, setGames] = useState<Game[]>([]);
   const [gamesError, setGamesError] = useState<string | null>(null);
   const [gamesNote, setGamesNote] = useState<string | null>(null);
+  const [gamesSources, setGamesSources] = useState<string[]>(['steam']);
   const [isGamesLoading, setIsGamesLoading] = useState(true);
 
   useEffect(() => {
@@ -86,18 +87,30 @@ function Activity() {
     return `${achievements.unlocked} / ${achievements.total} achievements`;
   };
 
+  const formatAccountLevel = (level?: number | null) => {
+    if (!level || level <= 0) return null;
+    return `Level ${level}`;
+  };
+
+  const formatRankTitle = (rank?: Game['rank']) => {
+    const name = rank?.name?.trim();
+    if (!name) return null;
+    if (typeof rank?.rr === 'number') return `${name} · ${rank.rr} RR`;
+    return name;
+  };
+
   const getAchievementFillPercent = (achievements?: Game['achievements']) => {
     if (!achievements || achievements.total <= 0) return null;
     return Math.min(100, Math.max(0, (achievements.unlocked / achievements.total) * 100));
   };
 
-  const formatPlaytime = (minutes?: number | null) => {
+  const formatPlaytime = (minutes?: number | null, window?: Game['playtimeWindow']) => {
     if (!minutes || minutes <= 0) return null;
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
-    if (hours === 0) return `${mins}m played`;
-    if (mins === 0) return `${hours}h played`;
-    return `${hours}h ${mins}m played`;
+    const duration = hours === 0 ? `${mins}m` : mins === 0 ? `${hours}h` : `${hours}h ${mins}m`;
+    if (window === '2weeks') return `${duration} in last 2 weeks`;
+    return `${duration} played`;
   };
 
   const formatShortDate = (value?: string | null) => {
@@ -172,6 +185,7 @@ function Activity() {
         setIsGamesLoading(true);
         setGamesError(null);
         setGamesNote(null);
+        setGamesSources(['steam']);
 
         const res = await fetch('/api/steam/recent-games?limit=3');
         const data = await res.json().catch(() => null);
@@ -182,9 +196,13 @@ function Activity() {
         }
 
         const nextGames = Array.isArray(data?.games) ? data.games : [];
+        const nextSources = Array.isArray(data?.sources)
+          ? data.sources.filter((source: unknown): source is string => typeof source === 'string')
+          : ['steam'];
         if (isActive) {
           setGames(nextGames);
           setGamesNote(typeof data?.note === 'string' ? data.note : null);
+          setGamesSources(nextSources.length > 0 ? nextSources : ['steam']);
         }
       } catch {
         if (isActive) setGamesError(formatWidgetError({ source: 'steam' }));
@@ -323,12 +341,15 @@ function Activity() {
             <ul>
               {gamesToShow.map((game, index) => {
                 const lastPlayed = formatShortDate(game.lastPlayedAt);
-                const playtime = formatPlaytime(game.playtimeMinutes);
+                const playtime = formatPlaytime(game.playtimeMinutes, game.playtimeWindow);
                 const progress = formatAchievementProgress(game.achievements);
+                const rankTitle = formatRankTitle(game.rank);
+                const accountLevel = formatAccountLevel(game.accountLevel);
                 const fillPercent = getAchievementFillPercent(game.achievements);
+                const secondary = progress || (!rankTitle ? accountLevel : null);
 
                 return (
-                  <li key={`${game.name}-${index}`} className="activity-game-row">
+                  <li key={`${game.source || 'game'}-${game.name}-${index}`} className="activity-game-row">
                     <a href={game.storeUrl} target="_blank" rel="noreferrer noopener">
                       {game.iconUrl ? (
                         <img
@@ -345,7 +366,7 @@ function Activity() {
                       ) : null}
                       <span className="activity-main">{game.name}</span>
                     </a>
-                    {lastPlayed || playtime || progress ? (
+                    {lastPlayed || playtime || rankTitle || secondary ? (
                       <div className="activity-game-meta">
                         {lastPlayed ? (
                           <div className="activity-sub activity-last-played">
@@ -357,8 +378,26 @@ function Activity() {
                             {lastPlayed ? ` · ${playtime}` : playtime}
                           </div>
                         ) : null}
-                        {progress ? (
-                          <div className="activity-sub activity-achievement-count">{progress}</div>
+                        {rankTitle ? (
+                          <div className="activity-sub activity-rank">
+                            {game.rank?.iconUrl ? (
+                              <img
+                                src={game.rank.iconUrl}
+                                alt=""
+                                className="activity-rank-icon"
+                                width={16}
+                                height={16}
+                                loading="lazy"
+                                onError={(event) => {
+                                  event.currentTarget.style.display = 'none';
+                                }}
+                              />
+                            ) : null}
+                            <span>{rankTitle}</span>
+                          </div>
+                        ) : null}
+                        {secondary ? (
+                          <div className="activity-sub activity-achievement-count">{secondary}</div>
                         ) : null}
                         {fillPercent !== null ? (
                           <div
@@ -379,7 +418,13 @@ function Activity() {
             </ul>
           ) : null}
           <p className="activity-attribution">
-            {renderSourceCredit('steam')}
+            {gamesSources.includes('steam') ? renderSourceCredit('steam') : null}
+            {gamesSources.includes('steam') && gamesSources.includes('valorant') ? (
+              <span className="activity-attribution-sep" aria-hidden="true">
+                {' · '}
+              </span>
+            ) : null}
+            {gamesSources.includes('valorant') ? renderSourceCredit('valorant') : null}
           </p>
         </div>
         <div className="activity-column">
@@ -481,6 +526,12 @@ const ACTIVITY_SOURCES: Record<string, ActivitySource> = {
     color: '#66c0f4',
     Icon: SiSteam,
   },
+  valorant: {
+    name: 'VALORANT',
+    href: 'https://playvalorant.com',
+    color: '#ff4655',
+    Icon: SiValorant,
+  },
   beli: {
     name: 'Beli',
     href: 'https://beliapp.com',
@@ -511,7 +562,7 @@ function renderSourceCredit(sourceKey: string) {
     >
       {Icon ? (
         <Icon className="activity-source-icon" aria-hidden="true" focusable="false" />
-      ) : (
+      ) : iconSrc ? (
         <img
           src={iconSrc}
           alt=""
@@ -522,7 +573,7 @@ function renderSourceCredit(sourceKey: string) {
             event.currentTarget.style.display = 'none';
           }}
         />
-      )}
+      ) : null}
       {name}
     </a>
   );

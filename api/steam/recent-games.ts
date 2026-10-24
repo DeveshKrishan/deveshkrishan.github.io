@@ -1,26 +1,30 @@
 /* eslint-env node */
 /**
- * Steam Web API – Most recently played games
+ * Recent games – Steam + optional VALORANT
  *
- * Primary: GET /IPlayerService/GetOwnedGames/v1/ — sort by rtime_last_played
- * (most recent first). Works when the API key belongs to the same account as
- * STEAM_ID.
+ * Steam:
+ *   Primary: GET /IPlayerService/GetOwnedGames/v1/ — sort by rtime_last_played
+ *   Fallback: GET /IPlayerService/GetRecentlyPlayedGames/v1/
+ *   Displayed playtime is Steam's last-two-weeks minutes, same window as VALORANT.
+ *   Env: STEAM_WEB_API_KEY, STEAM_ID (or STEAM_VANITY_URL).
  *
- * Fallback: GET /IPlayerService/GetRecentlyPlayedGames/v1/ when last-played
- * timestamps are unavailable.
- *
- * Requires Game details privacy to be Public.
- * Env: STEAM_WEB_API_KEY, STEAM_ID (or STEAM_VANITY_URL).
+ * Valorant (optional, via HenrikDev):
+ *   Account + live/stored matches for last-played and 2-week playtime; rank from MMR v3.
+ *   Env: HENRIKDEV_API_KEY, VALORANT_NAME, VALORANT_TAG;
+ *   optional VALORANT_REGION, VALORANT_PLATFORM.
  */
 
 import { API_ERROR_CODE, apiError } from '../_errors.js';
 import type { ApiRequest, ApiResponse } from '../_http.js';
+import { collectGameSources, mergeRecentGames } from '../games/_merge-recent-games.js';
+import { fetchValorantRecentGame } from '../valorant/_fetch-stats.js';
 import { mapSteamAchievements } from './_map-achievements.js';
 import {
   clampRequestLimit,
   getRecentGamesFromOwned,
   getSteamGamesNote,
   mapSteamGame,
+  type SteamGameInput,
 } from './_map-recent-games.js';
 
 const STEAM_API_BASE = 'https://api.steampowered.com';
@@ -100,7 +104,7 @@ async function fetchOwnedGames(apiKey: string, steamId: string) {
   }
 
   const data = JSON.parse(text);
-  return Array.isArray(data?.response?.games) ? data.response.games : [];
+  return (Array.isArray(data?.response?.games) ? data.response.games : []) as SteamGameInput[];
 }
 
 async function fetchRecentlyPlayedGames(apiKey: string, steamId: string, limit: number) {
@@ -122,7 +126,7 @@ async function fetchRecentlyPlayedGames(apiKey: string, steamId: string, limit: 
   }
 
   const data = JSON.parse(text);
-  return Array.isArray(data?.response?.games) ? data.response.games : [];
+  return (Array.isArray(data?.response?.games) ? data.response.games : []) as SteamGameInput[];
 }
 
 async function fetchPlayerAchievements(apiKey: string, steamId: string, appid: number) {
@@ -145,14 +149,16 @@ async function fetchPlayerAchievements(apiKey: string, steamId: string, appid: n
   }
 }
 
-async function attachAchievements<T extends { appid?: number }>(
+type SteamMappedGame = NonNullable<ReturnType<typeof mapSteamGame>>;
+
+async function attachAchievements<T extends SteamMappedGame>(
   games: T[],
   apiKey: string,
   steamId: string,
 ) {
   return Promise.all(
     games.map(async (game) => {
-      if (!game.appid) return { ...game, achievements: null };
+      if (!game.appid) return { ...game, achievements: null as ReturnType<typeof mapSteamAchievements> };
       const achievements = await fetchPlayerAchievements(apiKey, steamId, game.appid);
       return { ...game, achievements };
     }),
@@ -199,25 +205,39 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       });
     }
 
-    let games = [];
+    // Fetch one extra Steam title so Valorant can displace the oldest slot.
+    const steamFetchLimit = limit + 1;
+    let steamGames: SteamMappedGame[] = [];
 
     try {
       const ownedGames = await fetchOwnedGames(apiKey, steamId);
-      games = getRecentGamesFromOwned(ownedGames, limit);
+      steamGames = getRecentGamesFromOwned(ownedGames, steamFetchLimit);
     } catch {
       // Fall through to GetRecentlyPlayedGames
     }
 
-    if (games.length === 0) {
-      const recentGames = await fetchRecentlyPlayedGames(apiKey, steamId, limit);
-      games = recentGames.map(mapSteamGame).filter(Boolean);
+    if (steamGames.length === 0) {
+      const recentGames = await fetchRecentlyPlayedGames(apiKey, steamId, steamFetchLimit);
+      steamGames = recentGames
+        .map(mapSteamGame)
+        .filter((game): game is SteamMappedGame => Boolean(game));
     }
 
-    const gamesWithAchievements = await attachAchievements(games, apiKey, steamId);
-    const note = getSteamGamesNote(gamesWithAchievements);
+    const steamWithAchievements = await attachAchievements(steamGames, apiKey, steamId);
+
+    let valorantGame: Awaited<ReturnType<typeof fetchValorantRecentGame>> = null;
+    try {
+      valorantGame = await fetchValorantRecentGame();
+    } catch {
+      // Valorant is optional; Steam-only response is fine when HenrikDev fails.
+    }
+
+    const games = mergeRecentGames(steamWithAchievements, [valorantGame], limit);
+    const note = getSteamGamesNote(games);
+    const sources = collectGameSources(games);
 
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
-    return res.status(200).json({ games: gamesWithAchievements, note });
+    return res.status(200).json({ games, note, sources });
   } catch (err) {
     const status =
       typeof err === 'object' && err && 'status' in err && typeof err.status === 'number'

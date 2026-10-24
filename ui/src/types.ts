@@ -34,8 +34,17 @@ export interface Game {
   iconUrl?: string | null;
   lastPlayedAt?: string | null;
   playtimeMinutes?: number;
+  playtimeWindow?: '2weeks' | string | null;
   appid?: number;
   achievements?: GameAchievements | null;
+  source?: 'steam' | 'valorant' | string | null;
+  accountLevel?: number | null;
+  rank?: {
+    name: string;
+    iconUrl?: string | null;
+    rr?: number | null;
+  } | null;
+  riotId?: string | null;
 }
 
 export interface Visit {

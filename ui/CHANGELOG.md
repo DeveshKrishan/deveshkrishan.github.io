@@ -1,5 +1,30 @@
 # my-project
 
+## 0.22.1
+
+### Patch Changes
+
+- f576393: Show Steam playtime as time played in the last two weeks, matching VALORANT.
+- f576393: Count VALORANT two-week playtime from stored match history so sessions beyond the last 10 games are included.
+
+## 0.22.0
+
+### Minor Changes
+
+- Show VALORANT playtime as time played in the last two weeks from recent matches.
+
+## 0.21.0
+
+### Minor Changes
+
+- Show current VALORANT rank (icon + title) on the recent games row and add a Valorant mark to the source credit.
+
+## 0.20.0
+
+### Minor Changes
+
+- Merge VALORANT into the recent games column via HenrikDev (last played, level, optional seeded hours) alongside Steam.
+
 ## 0.19.6
 
 ### Patch Changes

@@ -1,4 +1,4 @@
-interface SteamGameInput {
+export interface SteamGameInput {
   appid?: number;
   name?: string;
   playtime_2weeks?: number;
@@ -28,10 +28,15 @@ export function mapSteamGame(game: SteamGameInput | null | undefined) {
   return {
     appid,
     name,
-    playtimeMinutes: game?.playtime_forever ?? game?.playtime_2weeks ?? 0,
+    playtimeMinutes:
+      typeof game?.playtime_2weeks === 'number' && game.playtime_2weeks > 0
+        ? Math.floor(game.playtime_2weeks)
+        : 0,
+    playtimeWindow: '2weeks' as const,
     lastPlayedAt,
     storeUrl: `https://store.steampowered.com/app/${appid}`,
     iconUrl: buildSteamIconUrl(appid, game?.img_icon_url),
+    source: 'steam' as const,
   };
 }
 
