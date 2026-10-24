@@ -1,5 +1,12 @@
 # my-project
 
+## 0.22.1
+
+### Patch Changes
+
+- f576393: Show Steam playtime as time played in the last two weeks, matching VALORANT.
+- f576393: Count VALORANT two-week playtime from stored match history so sessions beyond the last 10 games are included.
+
 ## 0.22.0
 
 ### Minor Changes
