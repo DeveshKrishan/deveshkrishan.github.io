@@ -1,10 +1,13 @@
 import {
   isValorantConfigured,
   mapValorantGame,
-  parsePlaytimeMinutes,
+  mapValorantRank,
+  mergeMatchesForPlaytime,
   type ValorantAccountInput,
   type ValorantGame,
   type ValorantMatchInput,
+  type ValorantMmrCurrentInput,
+  type ValorantStoredMatchInput,
 } from './_map-stats.js';
 
 const HENRIK_API_BASE = 'https://api.henrikdev.xyz';
@@ -46,6 +49,7 @@ async function fetchJson(url: string, apiKey: string) {
     headers: {
       Authorization: apiKey,
       Accept: 'application/json',
+      'User-Agent': 'devesh-portfolio/valorant',
     },
   });
   const text = await res.text();
@@ -68,7 +72,6 @@ export async function fetchValorantRecentGame(env: ValorantEnv = process.env): P
   const name = env.VALORANT_NAME!.trim();
   const tag = env.VALORANT_TAG!.trim();
   const platform = (env.VALORANT_PLATFORM || 'pc').trim().toLowerCase() || 'pc';
-  const playtimeMinutes = parsePlaytimeMinutes(env.VALORANT_PLAYTIME_MINUTES);
 
   const accountPayload = await fetchJson(
     `${HENRIK_API_BASE}/valorant/v1/account/${encodeURIComponent(name)}/${encodeURIComponent(tag)}`,
@@ -79,18 +82,34 @@ export async function fetchValorantRecentGame(env: ValorantEnv = process.env): P
 
   const region = (env.VALORANT_REGION || account.region || '').trim().toLowerCase();
   if (!region) {
-    return mapValorantGame(account, [], playtimeMinutes);
+    return mapValorantGame(account, []);
   }
 
-  try {
-    const matchesPayload = await fetchJson(
-      `${HENRIK_API_BASE}/valorant/v4/matches/${encodeURIComponent(region)}/${encodeURIComponent(platform)}/${encodeURIComponent(name)}/${encodeURIComponent(tag)}?size=1`,
+  const encodedRegion = encodeURIComponent(region);
+  const encodedPlatform = encodeURIComponent(platform);
+  const encodedName = encodeURIComponent(name);
+  const encodedTag = encodeURIComponent(tag);
+
+  const [matchesPayload, storedPayload, mmrPayload] = await Promise.all([
+    fetchJson(
+      `${HENRIK_API_BASE}/valorant/v4/matches/${encodedRegion}/${encodedPlatform}/${encodedName}/${encodedTag}?size=10`,
       apiKey,
-    );
-    const matches = (Array.isArray(matchesPayload?.data) ? matchesPayload.data : []) as ValorantMatchInput[];
-    return mapValorantGame(account, matches, playtimeMinutes);
-  } catch {
-    // Account data is still useful when match history is briefly unavailable.
-    return mapValorantGame(account, [], playtimeMinutes);
-  }
+    ).catch(() => null),
+    fetchJson(
+      `${HENRIK_API_BASE}/valorant/v1/stored-matches/${encodedRegion}/${encodedName}/${encodedTag}?size=80`,
+      apiKey,
+    ).catch(() => null),
+    fetchJson(
+      `${HENRIK_API_BASE}/valorant/v3/mmr/${encodedRegion}/${encodedPlatform}/${encodedName}/${encodedTag}`,
+      apiKey,
+    ).catch(() => null),
+  ]);
+
+  const liveMatches = (Array.isArray(matchesPayload?.data) ? matchesPayload.data : []) as ValorantMatchInput[];
+  const storedMatches = (
+    Array.isArray(storedPayload?.data) ? storedPayload.data : []
+  ) as ValorantStoredMatchInput[];
+  const matches = mergeMatchesForPlaytime(liveMatches, storedMatches);
+  const rank = mapValorantRank((mmrPayload?.data?.current ?? null) as ValorantMmrCurrentInput | null);
+  return mapValorantGame(account, matches, rank);
 }

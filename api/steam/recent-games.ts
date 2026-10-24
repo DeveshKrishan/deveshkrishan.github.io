@@ -5,13 +5,13 @@
  * Steam:
  *   Primary: GET /IPlayerService/GetOwnedGames/v1/ — sort by rtime_last_played
  *   Fallback: GET /IPlayerService/GetRecentlyPlayedGames/v1/
+ *   Displayed playtime is Steam's last-two-weeks minutes, same window as VALORANT.
  *   Env: STEAM_WEB_API_KEY, STEAM_ID (or STEAM_VANITY_URL).
  *
  * Valorant (optional, via HenrikDev):
- *   Account + latest match for last-played; lifetime hours from
- *   VALORANT_PLAYTIME_MINUTES (HenrikDev has no reliable lifetime hours field).
+ *   Account + live/stored matches for last-played and 2-week playtime; rank from MMR v3.
  *   Env: HENRIKDEV_API_KEY, VALORANT_NAME, VALORANT_TAG;
- *   optional VALORANT_REGION, VALORANT_PLATFORM, VALORANT_PLAYTIME_MINUTES.
+ *   optional VALORANT_REGION, VALORANT_PLATFORM.
  */
 
 import { API_ERROR_CODE, apiError } from '../_errors.js';

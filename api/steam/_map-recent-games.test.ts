@@ -21,11 +21,12 @@ describe('buildSteamIconUrl', () => {
 });
 
 describe('mapSteamGame', () => {
-  it('maps Steam game payloads with store and icon links', () => {
+  it('maps Steam game payloads with two-week playtime', () => {
     expect(
       mapSteamGame({
         appid: 570,
         name: 'Dota 2',
+        playtime_2weeks: 45,
         playtime_forever: 120,
         rtime_last_played: 1_755_100_800,
         img_icon_url: 'abc123',
@@ -33,13 +34,25 @@ describe('mapSteamGame', () => {
     ).toEqual({
       appid: 570,
       name: 'Dota 2',
-      playtimeMinutes: 120,
+      playtimeMinutes: 45,
+      playtimeWindow: '2weeks',
       lastPlayedAt: '2025-08-13T16:00:00.000Z',
       storeUrl: 'https://store.steampowered.com/app/570',
       iconUrl:
         'https://media.steampowered.com/steamcommunity/public/images/apps/570/abc123.jpg',
       source: 'steam',
     });
+  });
+
+  it('omits playtime when Steam has no two-week minutes', () => {
+    expect(
+      mapSteamGame({
+        appid: 570,
+        name: 'Dota 2',
+        playtime_forever: 120,
+        img_icon_url: 'abc123',
+      })?.playtimeMinutes,
+    ).toBe(0);
   });
 
   it('returns null for invalid game payloads', () => {

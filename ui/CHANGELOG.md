@@ -1,5 +1,17 @@
 # my-project
 
+## 0.22.0
+
+### Minor Changes
+
+- Show VALORANT playtime as time played in the last two weeks from recent matches.
+
+## 0.21.0
+
+### Minor Changes
+
+- Show current VALORANT rank (icon + title) on the recent games row and add a Valorant mark to the source credit.
+
 ## 0.20.0
 
 ### Minor Changes

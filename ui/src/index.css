@@ -943,8 +943,22 @@ img {
   grid-column: 1 / -1;
 }
 
-.activity-achievement-count {
+.activity-achievement-count,
+.activity-rank {
   grid-column: 1 / -1;
+}
+
+.activity-rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.activity-rank-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .activity-achievement-meter {

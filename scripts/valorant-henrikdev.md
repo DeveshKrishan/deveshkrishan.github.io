@@ -1,8 +1,9 @@
 # How to wire VALORANT into the games widget (HenrikDev)
 
 Valorant is **not** on Steam, and Tracker Network does not offer a public Valorant API.
-This site uses [HenrikDev](https://docs.henrikdev.xyz) for last-played + account level, then
-merges that row into `/api/steam/recent-games` with your Steam titles.
+This site uses [HenrikDev](https://docs.henrikdev.xyz) for last-played, current rank, and
+playtime in the last two weeks, then merges that row into `/api/steam/recent-games` with
+your Steam titles.
 
 ---
 
@@ -33,20 +34,6 @@ Optional overrides:
 
 ---
 
-## Step 3: Seed total hours (recommended)
-
-HenrikDev does not expose reliable lifetime playtime. Set minutes from your
-[tracker.gg](https://tracker.gg/valorant) profile (or any hours counter you trust):
-
-```bash
-# Example: 122 hours → 7320 minutes
-VALORANT_PLAYTIME_MINUTES=7320
-```
-
-Without this, VALORANT still appears with last played + account level, but no hours line.
-
----
-
 ## Env checklist
 
 ```bash
@@ -56,7 +43,10 @@ VALORANT_TAG=...
 # optional:
 # VALORANT_REGION=na
 # VALORANT_PLATFORM=pc
-# VALORANT_PLAYTIME_MINUTES=7320
 ```
 
 If any of the three required vars are missing, the games widget stays Steam-only.
+Playtime is the sum of match lengths from the last 14 days (not lifetime hours).
+HenrikDev’s live match list is capped at 10 games, so two-week totals also
+include stored match history. Exact v4 durations win when both exist; older
+matches are estimated from mode and round scores.
