@@ -1,9 +1,8 @@
 # How to wire VALORANT into the games widget (HenrikDev)
 
 Valorant is **not** on Steam, and Tracker Network does not offer a public Valorant API.
-This site uses [HenrikDev](https://docs.henrikdev.xyz) for last-played, current rank, and
-playtime in the last two weeks, then merges that row into `/api/steam/recent-games` with
-your Steam titles.
+This site uses [HenrikDev](https://docs.henrikdev.xyz) for last-played and playtime in the
+last two weeks, then merges that row into `/api/steam/recent-games` with your Steam titles.
 
 ---
 

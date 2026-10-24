@@ -1,12 +1,10 @@
 import {
   isValorantConfigured,
   mapValorantGame,
-  mapValorantRank,
   mergeMatchesForPlaytime,
   type ValorantAccountInput,
   type ValorantGame,
   type ValorantMatchInput,
-  type ValorantMmrCurrentInput,
   type ValorantStoredMatchInput,
 } from './_map-stats.js';
 
@@ -90,17 +88,13 @@ export async function fetchValorantRecentGame(env: ValorantEnv = process.env): P
   const encodedName = encodeURIComponent(name);
   const encodedTag = encodeURIComponent(tag);
 
-  const [matchesPayload, storedPayload, mmrPayload] = await Promise.all([
+  const [matchesPayload, storedPayload] = await Promise.all([
     fetchJson(
       `${HENRIK_API_BASE}/valorant/v4/matches/${encodedRegion}/${encodedPlatform}/${encodedName}/${encodedTag}?size=10`,
       apiKey,
     ).catch(() => null),
     fetchJson(
       `${HENRIK_API_BASE}/valorant/v1/stored-matches/${encodedRegion}/${encodedName}/${encodedTag}?size=80`,
-      apiKey,
-    ).catch(() => null),
-    fetchJson(
-      `${HENRIK_API_BASE}/valorant/v3/mmr/${encodedRegion}/${encodedPlatform}/${encodedName}/${encodedTag}`,
       apiKey,
     ).catch(() => null),
   ]);
@@ -110,6 +104,5 @@ export async function fetchValorantRecentGame(env: ValorantEnv = process.env): P
     Array.isArray(storedPayload?.data) ? storedPayload.data : []
   ) as ValorantStoredMatchInput[];
   const matches = mergeMatchesForPlaytime(liveMatches, storedMatches);
-  const rank = mapValorantRank((mmrPayload?.data?.current ?? null) as ValorantMmrCurrentInput | null);
-  return mapValorantGame(account, matches, rank);
+  return mapValorantGame(account, matches);
 }

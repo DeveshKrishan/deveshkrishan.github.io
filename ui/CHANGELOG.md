@@ -1,5 +1,11 @@
 # my-project
 
+## 0.23.1
+
+### Patch Changes
+
+- 5fb3abe: Move the two-week playtime window onto the recent games heading and drop VALORANT rank and level.
+
 ## 0.23.0
 
 ### Minor Changes

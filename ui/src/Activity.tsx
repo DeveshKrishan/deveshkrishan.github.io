@@ -87,30 +87,18 @@ function Activity() {
     return `${achievements.unlocked} / ${achievements.total} achievements`;
   };
 
-  const formatAccountLevel = (level?: number | null) => {
-    if (!level || level <= 0) return null;
-    return `Level ${level}`;
-  };
-
-  const formatRankTitle = (rank?: Game['rank']) => {
-    const name = rank?.name?.trim();
-    if (!name) return null;
-    if (typeof rank?.rr === 'number') return `${name} · ${rank.rr} RR`;
-    return name;
-  };
-
   const getAchievementFillPercent = (achievements?: Game['achievements']) => {
     if (!achievements || achievements.total <= 0) return null;
     return Math.min(100, Math.max(0, (achievements.unlocked / achievements.total) * 100));
   };
 
-  const formatPlaytime = (minutes?: number | null, window?: Game['playtimeWindow']) => {
+  const formatPlaytime = (minutes?: number | null) => {
     if (!minutes || minutes <= 0) return null;
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
-    const duration = hours === 0 ? `${mins}m` : mins === 0 ? `${hours}h` : `${hours}h ${mins}m`;
-    if (window === '2weeks') return `${duration} in last 2 weeks`;
-    return `${duration} played`;
+    if (hours === 0) return `${mins}m`;
+    if (mins === 0) return `${hours}h`;
+    return `${hours}h ${mins}m`;
   };
 
   const formatShortDate = (value?: string | null) => {
@@ -330,7 +318,7 @@ function Activity() {
           </div>
         ) : null}
         <div className="activity-column">
-          <h3>recent games played</h3>
+          <h3>recent games played in last 2 weeks</h3>
           {gamesError ? <p className="activity-error">{gamesError}</p> : null}
           {isGamesLoading ? <ActivitySkeleton /> : null}
           {!isGamesLoading && gamesNote ? <p className="activity-loading">{gamesNote}</p> : null}
@@ -341,12 +329,9 @@ function Activity() {
             <ul>
               {gamesToShow.map((game, index) => {
                 const lastPlayed = formatShortDate(game.lastPlayedAt);
-                const playtime = formatPlaytime(game.playtimeMinutes, game.playtimeWindow);
+                const playtime = formatPlaytime(game.playtimeMinutes);
                 const progress = formatAchievementProgress(game.achievements);
-                const rankTitle = formatRankTitle(game.rank);
-                const accountLevel = formatAccountLevel(game.accountLevel);
                 const fillPercent = getAchievementFillPercent(game.achievements);
-                const secondary = progress || (!rankTitle ? accountLevel : null);
 
                 return (
                   <li key={`${game.source || 'game'}-${game.name}-${index}`} className="activity-game-row">
@@ -366,7 +351,7 @@ function Activity() {
                       ) : null}
                       <span className="activity-main">{game.name}</span>
                     </a>
-                    {lastPlayed || playtime || rankTitle || secondary ? (
+                    {lastPlayed || playtime || progress ? (
                       <div className="activity-game-meta">
                         {lastPlayed ? (
                           <div className="activity-sub activity-last-played">
@@ -378,26 +363,8 @@ function Activity() {
                             {lastPlayed ? ` · ${playtime}` : playtime}
                           </div>
                         ) : null}
-                        {rankTitle ? (
-                          <div className="activity-sub activity-rank">
-                            {game.rank?.iconUrl ? (
-                              <img
-                                src={game.rank.iconUrl}
-                                alt=""
-                                className="activity-rank-icon"
-                                width={16}
-                                height={16}
-                                loading="lazy"
-                                onError={(event) => {
-                                  event.currentTarget.style.display = 'none';
-                                }}
-                              />
-                            ) : null}
-                            <span>{rankTitle}</span>
-                          </div>
-                        ) : null}
-                        {secondary ? (
-                          <div className="activity-sub activity-achievement-count">{secondary}</div>
+                        {progress ? (
+                          <div className="activity-sub activity-achievement-count">{progress}</div>
                         ) : null}
                         {fillPercent !== null ? (
                           <div

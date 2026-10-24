@@ -194,8 +194,9 @@ describe('Activity', () => {
       'href',
       'https://store.steampowered.com/app/570',
     );
-    expect(screen.getByRole('heading', { name: 'recent games played' })).toBeInTheDocument();
-    expect(screen.getByText(/1h 30m in last 2 weeks/)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'recent games played in last 2 weeks' })).toBeInTheDocument();
+    expect(screen.getByText(/1h 30m/)).toBeInTheDocument();
+    expect(screen.queryByText(/1h 30m in last 2 weeks/)).not.toBeInTheDocument();
     expect(screen.getByText('12 / 47 achievements')).toBeInTheDocument();
     const lastPlayed = screen.getByText(/^last played /);
     const meter = document.querySelector('.activity-achievement-meter');
@@ -209,7 +210,7 @@ describe('Activity', () => {
     expect(screen.queryByText('First Win')).not.toBeInTheDocument();
   });
 
-  it('merges Valorant into recent games with level and dual attribution', async () => {
+  it('merges Valorant into recent games with dual attribution', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn((url) => {
@@ -229,13 +230,6 @@ describe('Activity', () => {
                   playtimeMinutes: 130,
                   playtimeWindow: '2weeks',
                   source: 'valorant',
-                  accountLevel: 210,
-                  rank: {
-                    name: 'Diamond 1',
-                    iconUrl:
-                      'https://media.valorant-api.com/competitivetiers/03621f52-342b-cf4e-4f86-9350a49c6d04/18/largeicon.png',
-                    rr: 85,
-                  },
                   riotId: 'Solo#NA1',
                   achievements: null,
                 },
@@ -261,13 +255,11 @@ describe('Activity', () => {
     render(<Activity />);
 
     await waitFor(() => {
-      expect(screen.getByText('Diamond 1 · 85 RR')).toBeInTheDocument();
+      expect(screen.getByText(/2h 10m/)).toBeInTheDocument();
     });
-    expect(screen.queryByText('Level 210')).not.toBeInTheDocument();
-    expect(document.querySelector('.activity-rank-icon')).toHaveAttribute(
-      'src',
-      'https://media.valorant-api.com/competitivetiers/03621f52-342b-cf4e-4f86-9350a49c6d04/18/largeicon.png',
-    );
+    expect(screen.queryByText(/Level \d+/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Diamond|RR/)).not.toBeInTheDocument();
+    expect(document.querySelector('.activity-rank-icon')).toBeNull();
 
     const valorantLinks = screen.getAllByRole('link', { name: 'VALORANT' });
     expect(
@@ -280,7 +272,7 @@ describe('Activity', () => {
     expect(
       valorantLinks.some((link) => link.getAttribute('href') === 'https://playvalorant.com'),
     ).toBe(true);
-    expect(screen.getByText(/2h 10m in last 2 weeks/)).toBeInTheDocument();
+    expect(screen.queryByText(/2h 10m in last 2 weeks/)).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Steam' })).toBeInTheDocument();
   });
 
