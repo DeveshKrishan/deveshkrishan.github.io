@@ -32,14 +32,14 @@ describe('photo pages', () => {
     expect(PHOTOS_PER_PAGE).toBe(6);
     expect(getPhotoPageCount(8)).toBe(2);
     expect(slicePhotoPage(PHOTOS, 0)).toHaveLength(6);
-    expect(slicePhotoPage(PHOTOS, 1)).toHaveLength(1);
+    expect(slicePhotoPage(PHOTOS, 1)).toHaveLength(3);
   });
 
   it('pads a short last page so the pager stays put', () => {
     const lastPage = padPhotoPage(PHOTOS, 1);
     expect(lastPage).toHaveLength(PHOTOS_PER_PAGE);
-    expect(lastPage.filter(Boolean)).toHaveLength(1);
-    expect(lastPage.slice(1).every((slot) => slot === null)).toBe(true);
+    expect(lastPage.filter(Boolean)).toHaveLength(3);
+    expect(lastPage.slice(3).every((slot) => slot === null)).toBe(true);
   });
 });
 
@@ -74,6 +74,19 @@ describe('PHOTOS', () => {
       expect(formatPhotoCaption(photo)).toBe(formatPhotoLocation(photo.location));
       expect(formatPhotoCaption(photo)).not.toMatch(/\d{4}|am|pm/);
     }
+  });
+
+  it('labels the new alcatraz island and berryessa frames', () => {
+    expect(PHOTOS[0]).toMatchObject({
+      id: 'alcatraz-island',
+      location: { place: 'alcatraz island', city: 'san francisco', state: 'ca' },
+    });
+    expect(PHOTOS[1]).toMatchObject({
+      id: 'berryessa-bart',
+      location: { place: 'berryessa bart', city: 'san jose', state: 'ca' },
+    });
+    expect(formatPhotoCaption(PHOTOS[0])).toBe('alcatraz island, san francisco, ca');
+    expect(formatPhotoCaption(PHOTOS[1])).toBe('berryessa bart, san jose, ca');
   });
 
   it('labels the horses frame as half moon bay beach', () => {

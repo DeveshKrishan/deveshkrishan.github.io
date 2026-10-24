@@ -16,6 +16,20 @@ export interface Photo {
 
 export const PHOTOS = [
   {
+    id: 'alcatraz-island',
+    alt: 'An abandoned concrete building behind a chain-link fence on Alcatraz Island',
+    location: { place: 'alcatraz island', city: 'san francisco', state: 'ca' },
+    fullSrc: '/photos/alcatraz-island.jpeg',
+    thumbSrc: '/photos/thumbs/alcatraz-island.jpeg',
+  },
+  {
+    id: 'berryessa-bart',
+    alt: 'A BART train at a shaded platform under a clear sky',
+    location: { place: 'berryessa bart', city: 'san jose', state: 'ca' },
+    fullSrc: '/photos/berryessa-bart.jpeg',
+    thumbSrc: '/photos/thumbs/berryessa-bart.jpeg',
+  },
+  {
     id: '100_0246',
     alt: 'A grassy hill and rock outcrop under trees in a city park',
     location: { place: 'central park', city: 'new york', state: 'ny' },
