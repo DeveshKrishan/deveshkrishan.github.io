@@ -1,5 +1,11 @@
 # my-project
 
+## 0.23.0
+
+### Minor Changes
+
+- cd500db: Add Alcatraz Island and Berryessa BART frames to the recent shots gallery.
+
 ## 0.22.1
 
 ### Patch Changes
