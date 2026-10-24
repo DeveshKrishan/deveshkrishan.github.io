@@ -38,6 +38,7 @@ describe('mapSteamGame', () => {
       storeUrl: 'https://store.steampowered.com/app/570',
       iconUrl:
         'https://media.steampowered.com/steamcommunity/public/images/apps/570/abc123.jpg',
+      source: 'steam',
     });
   });
 

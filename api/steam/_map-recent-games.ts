@@ -1,4 +1,4 @@
-interface SteamGameInput {
+export interface SteamGameInput {
   appid?: number;
   name?: string;
   playtime_2weeks?: number;
@@ -32,6 +32,7 @@ export function mapSteamGame(game: SteamGameInput | null | undefined) {
     lastPlayedAt,
     storeUrl: `https://store.steampowered.com/app/${appid}`,
     iconUrl: buildSteamIconUrl(appid, game?.img_icon_url),
+    source: 'steam' as const,
   };
 }
 

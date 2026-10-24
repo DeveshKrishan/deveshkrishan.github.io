@@ -1,6 +1,6 @@
 # React + Vite
 
-This project is a Vite + React + TypeScript personal site with Spotify, GitHub, Steam, and Beli activity widgets, Google Places thumbnails, a footer visitor count from Vercel Web Analytics, and Vercel Speed Insights.
+This project is a Vite + React + TypeScript personal site with Spotify, GitHub, Steam (+ optional VALORANT via HenrikDev), and Beli activity widgets, Google Places thumbnails, a footer visitor count from Vercel Web Analytics, and Vercel Speed Insights.
 
 The repo is a pnpm workspace:
 
@@ -34,6 +34,7 @@ flowchart TB
 
   UI --> SpotifyAPI --> Spotify[Spotify Web API]
   UI --> SteamAPI --> Steam[Steam Web API]
+  SteamAPI -.-> HenrikDev[HenrikDev Valorant API]
   UI --> GithubHeatmap --> GitHub[GitHub GraphQL]
   GithubCommits -.-> GitHub
   UI --> VisitorsAPI --> VercelAnalytics[Vercel Web Analytics]
@@ -49,7 +50,7 @@ flowchart TB
 | --- | --- | --- | --- |
 | Recent songs | Spotify | `/api/spotify/recently-played` | `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN` |
 | GitHub heatmap | GitHub GraphQL | `/api/github/contributions` | `GITHUB_TOKEN`, optional `GITHUB_USERNAME` |
-| Recent games | Steam | `/api/steam/recent-games` | `STEAM_WEB_API_KEY`, `STEAM_ID` |
+| Recent games | Steam + optional VALORANT (HenrikDev) | `/api/steam/recent-games` | `STEAM_WEB_API_KEY`, `STEAM_ID`; optional `HENRIKDEV_API_KEY`, `VALORANT_NAME`, `VALORANT_TAG`, `VALORANT_PLAYTIME_MINUTES` |
 | Recent restaurants | Beli feed, committed daily | `beli-visits.json` | `BELI_EMAIL`, `BELI_PASSWORD` in GitHub Actions only |
 | Restaurant photos | Google Places | `/api/places/photo` | `GOOGLE_PLACES_API_KEY` |
 | Unique visitors | Vercel Web Analytics | `/api/analytics/visitors` | `VERCEL_TOKEN`, plus injected project/team ids |
@@ -129,6 +130,11 @@ STEAM_WEB_API_KEY=...
 STEAM_ID=76561198...
 # Optional alternative to STEAM_ID:
 # STEAM_VANITY_URL=yourname
+# Optional VALORANT row merged into recent games (HenrikDev). See scripts/valorant-henrikdev.md.
+# HENRIKDEV_API_KEY=...
+# VALORANT_NAME=YourName
+# VALORANT_TAG=TAG
+# VALORANT_PLAYTIME_MINUTES=7320
 # Restaurant thumbnails on the Beli widget. Enable Places API (New) in Google Cloud.
 GOOGLE_PLACES_API_KEY=...
 # Required to show the footer visitor count. Create at https://vercel.com/account/tokens
@@ -168,6 +174,8 @@ See [`scripts/steam-resolve-id.md`](scripts/steam-resolve-id.md) for full steps.
 3. Set **Game details** to **Public** in [Steam privacy settings](https://steamcommunity.com/my/edit/settings).
 
 The Steam widget shows the **3 most recently played** games, plus a compact achievement count when the game supports Steamworks stats.
+
+When HenrikDev env vars are set, **VALORANT** is merged into that same list by last-played time (see [`scripts/valorant-henrikdev.md`](scripts/valorant-henrikdev.md)). Lifetime hours come from `VALORANT_PLAYTIME_MINUTES` because HenrikDev (and Tracker’s public API) do not expose a reliable total-hours field.
 
 ## Changesets workflow
 

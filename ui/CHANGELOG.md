@@ -1,5 +1,11 @@
 # my-project
 
+## 0.20.0
+
+### Minor Changes
+
+- Merge VALORANT into the recent games column via HenrikDev (last played, level, optional seeded hours) alongside Steam.
+
 ## 0.19.6
 
 ### Patch Changes

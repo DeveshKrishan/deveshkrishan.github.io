@@ -36,6 +36,9 @@ export interface Game {
   playtimeMinutes?: number;
   appid?: number;
   achievements?: GameAchievements | null;
+  source?: 'steam' | 'valorant' | string | null;
+  accountLevel?: number | null;
+  riotId?: string | null;
 }
 
 export interface Visit {

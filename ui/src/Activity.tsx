@@ -40,6 +40,7 @@ function Activity() {
   const [games, setGames] = useState<Game[]>([]);
   const [gamesError, setGamesError] = useState<string | null>(null);
   const [gamesNote, setGamesNote] = useState<string | null>(null);
+  const [gamesSources, setGamesSources] = useState<string[]>(['steam']);
   const [isGamesLoading, setIsGamesLoading] = useState(true);
 
   useEffect(() => {
@@ -84,6 +85,11 @@ function Activity() {
   const formatAchievementProgress = (achievements?: Game['achievements']) => {
     if (!achievements || achievements.total <= 0) return null;
     return `${achievements.unlocked} / ${achievements.total} achievements`;
+  };
+
+  const formatAccountLevel = (level?: number | null) => {
+    if (!level || level <= 0) return null;
+    return `Level ${level}`;
   };
 
   const getAchievementFillPercent = (achievements?: Game['achievements']) => {
@@ -172,6 +178,7 @@ function Activity() {
         setIsGamesLoading(true);
         setGamesError(null);
         setGamesNote(null);
+        setGamesSources(['steam']);
 
         const res = await fetch('/api/steam/recent-games?limit=3');
         const data = await res.json().catch(() => null);
@@ -182,9 +189,13 @@ function Activity() {
         }
 
         const nextGames = Array.isArray(data?.games) ? data.games : [];
+        const nextSources = Array.isArray(data?.sources)
+          ? data.sources.filter((source: unknown): source is string => typeof source === 'string')
+          : ['steam'];
         if (isActive) {
           setGames(nextGames);
           setGamesNote(typeof data?.note === 'string' ? data.note : null);
+          setGamesSources(nextSources.length > 0 ? nextSources : ['steam']);
         }
       } catch {
         if (isActive) setGamesError(formatWidgetError({ source: 'steam' }));
@@ -325,10 +336,12 @@ function Activity() {
                 const lastPlayed = formatShortDate(game.lastPlayedAt);
                 const playtime = formatPlaytime(game.playtimeMinutes);
                 const progress = formatAchievementProgress(game.achievements);
+                const accountLevel = formatAccountLevel(game.accountLevel);
                 const fillPercent = getAchievementFillPercent(game.achievements);
+                const secondary = progress || accountLevel;
 
                 return (
-                  <li key={`${game.name}-${index}`} className="activity-game-row">
+                  <li key={`${game.source || 'game'}-${game.name}-${index}`} className="activity-game-row">
                     <a href={game.storeUrl} target="_blank" rel="noreferrer noopener">
                       {game.iconUrl ? (
                         <img
@@ -345,7 +358,7 @@ function Activity() {
                       ) : null}
                       <span className="activity-main">{game.name}</span>
                     </a>
-                    {lastPlayed || playtime || progress ? (
+                    {lastPlayed || playtime || secondary ? (
                       <div className="activity-game-meta">
                         {lastPlayed ? (
                           <div className="activity-sub activity-last-played">
@@ -357,8 +370,8 @@ function Activity() {
                             {lastPlayed ? ` · ${playtime}` : playtime}
                           </div>
                         ) : null}
-                        {progress ? (
-                          <div className="activity-sub activity-achievement-count">{progress}</div>
+                        {secondary ? (
+                          <div className="activity-sub activity-achievement-count">{secondary}</div>
                         ) : null}
                         {fillPercent !== null ? (
                           <div
@@ -379,7 +392,13 @@ function Activity() {
             </ul>
           ) : null}
           <p className="activity-attribution">
-            {renderSourceCredit('steam')}
+            {gamesSources.includes('steam') ? renderSourceCredit('steam') : null}
+            {gamesSources.includes('steam') && gamesSources.includes('valorant') ? (
+              <span className="activity-attribution-sep" aria-hidden="true">
+                {' · '}
+              </span>
+            ) : null}
+            {gamesSources.includes('valorant') ? renderSourceCredit('valorant') : null}
           </p>
         </div>
         <div className="activity-column">
@@ -481,6 +500,11 @@ const ACTIVITY_SOURCES: Record<string, ActivitySource> = {
     color: '#66c0f4',
     Icon: SiSteam,
   },
+  valorant: {
+    name: 'VALORANT',
+    href: 'https://playvalorant.com',
+    color: '#ff4655',
+  },
   beli: {
     name: 'Beli',
     href: 'https://beliapp.com',
@@ -511,7 +535,7 @@ function renderSourceCredit(sourceKey: string) {
     >
       {Icon ? (
         <Icon className="activity-source-icon" aria-hidden="true" focusable="false" />
-      ) : (
+      ) : iconSrc ? (
         <img
           src={iconSrc}
           alt=""
@@ -522,7 +546,7 @@ function renderSourceCredit(sourceKey: string) {
             event.currentTarget.style.display = 'none';
           }}
         />
-      )}
+      ) : null}
       {name}
     </a>
   );

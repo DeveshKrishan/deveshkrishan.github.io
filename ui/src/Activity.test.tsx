@@ -174,9 +174,11 @@ describe('Activity', () => {
                   iconUrl: 'https://media.steampowered.com/steamcommunity/public/images/apps/570/abc.jpg',
                   lastPlayedAt: '2026-10-15T17:00:00.000Z',
                   playtimeMinutes: 90,
+                  source: 'steam',
                   achievements: { unlocked: 12, total: 47, lastUnlockName: 'First Win' },
                 },
               ],
+              sources: ['steam'],
             }),
           );
         }
@@ -204,6 +206,69 @@ describe('Activity', () => {
     );
     expect(screen.queryByText(/past 2 weeks/i)).not.toBeInTheDocument();
     expect(screen.queryByText('First Win')).not.toBeInTheDocument();
+  });
+
+  it('merges Valorant into recent games with level and dual attribution', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url) => {
+        if (String(url).includes('/api/spotify/recently-played')) {
+          return Promise.resolve(mockJsonResponse({ songs: [] }));
+        }
+
+        if (String(url).includes('/api/steam/recent-games')) {
+          return Promise.resolve(
+            mockJsonResponse({
+              games: [
+                {
+                  name: 'VALORANT',
+                  storeUrl: 'https://tracker.gg/valorant/profile/riot/Solo%23NA1/overview',
+                  iconUrl: 'https://media.valorant-api.com/playercards/abc/smallart.png',
+                  lastPlayedAt: '2026-10-22T12:30:00.000Z',
+                  playtimeMinutes: 7320,
+                  source: 'valorant',
+                  accountLevel: 210,
+                  riotId: 'Solo#NA1',
+                  achievements: null,
+                },
+                {
+                  name: 'Dota 2',
+                  storeUrl: 'https://store.steampowered.com/app/570',
+                  iconUrl: 'https://media.steampowered.com/steamcommunity/public/images/apps/570/abc.jpg',
+                  lastPlayedAt: '2026-10-15T17:00:00.000Z',
+                  playtimeMinutes: 90,
+                  source: 'steam',
+                  achievements: null,
+                },
+              ],
+              sources: ['steam', 'valorant'],
+            }),
+          );
+        }
+
+        return Promise.reject(new Error(`Unexpected fetch: ${url}`));
+      }),
+    );
+
+    render(<Activity />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Level 210')).toBeInTheDocument();
+    });
+
+    const valorantLinks = screen.getAllByRole('link', { name: 'VALORANT' });
+    expect(
+      valorantLinks.some(
+        (link) =>
+          link.getAttribute('href') ===
+          'https://tracker.gg/valorant/profile/riot/Solo%23NA1/overview',
+      ),
+    ).toBe(true);
+    expect(
+      valorantLinks.some((link) => link.getAttribute('href') === 'https://playvalorant.com'),
+    ).toBe(true);
+    expect(screen.getByText(/122h played/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Steam' })).toBeInTheDocument();
   });
 
   it('nests recent shots under what i have been up to', async () => {
