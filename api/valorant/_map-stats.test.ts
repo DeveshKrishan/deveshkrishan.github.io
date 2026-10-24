@@ -1,13 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
   ESTIMATED_ROUND_MS,
-  VALORANT_TIER_TABLE_UUID,
-  buildRankIconUrl,
   buildValorantProfileUrl,
   estimateMatchLengthMs,
   isValorantConfigured,
   mapValorantGame,
-  mapValorantRank,
   mergeMatchesForPlaytime,
   parsePlaytimeMinutes,
   resolveLastPlayedAt,
@@ -19,35 +16,6 @@ describe('buildValorantProfileUrl', () => {
     expect(buildValorantProfileUrl('Solo', 'NA1')).toBe(
       'https://tracker.gg/valorant/profile/riot/Solo%23NA1/overview',
     );
-  });
-});
-
-describe('mapValorantRank', () => {
-  it('maps current MMR tier to a rank with icon and RR', () => {
-    expect(
-      mapValorantRank({
-        rr: 85,
-        tier: { id: 18, name: 'Diamond 1' },
-      }),
-    ).toEqual({
-      name: 'Diamond 1',
-      iconUrl: buildRankIconUrl(18),
-      rr: 85,
-    });
-    expect(buildRankIconUrl(18)).toBe(
-      `https://media.valorant-api.com/competitivetiers/${VALORANT_TIER_TABLE_UUID}/18/largeicon.png`,
-    );
-  });
-
-  it('omits RR while unranked or still in placements', () => {
-    expect(mapValorantRank({ rr: 0, tier: { id: 0, name: 'Unranked' } })?.rr).toBeNull();
-    expect(
-      mapValorantRank({
-        rr: 12,
-        games_needed_for_rating: 3,
-        tier: { id: 0, name: 'Unranked' },
-      })?.rr,
-    ).toBeNull();
   });
 });
 
@@ -198,7 +166,6 @@ describe('mapValorantGame', () => {
             },
           },
         ],
-        { name: 'Diamond 1', iconUrl: buildRankIconUrl(18), rr: 85 },
         Date.parse('2026-10-24T18:00:00.000Z'),
       ),
     ).toEqual({
@@ -209,8 +176,6 @@ describe('mapValorantGame', () => {
       playtimeMinutes: 40,
       playtimeWindow: '2weeks',
       source: 'valorant',
-      accountLevel: 210,
-      rank: { name: 'Diamond 1', iconUrl: buildRankIconUrl(18), rr: 85 },
       riotId: 'Solo#NA1',
       achievements: null,
     });

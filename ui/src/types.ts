@@ -38,12 +38,6 @@ export interface Game {
   appid?: number;
   achievements?: GameAchievements | null;
   source?: 'steam' | 'valorant' | string | null;
-  accountLevel?: number | null;
-  rank?: {
-    name: string;
-    iconUrl?: string | null;
-    rr?: number | null;
-  } | null;
   riotId?: string | null;
 }
 

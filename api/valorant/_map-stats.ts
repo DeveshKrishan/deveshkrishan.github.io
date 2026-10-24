@@ -34,21 +34,6 @@ export interface ValorantStoredMatchInput {
   } | null;
 }
 
-export interface ValorantMmrCurrentInput {
-  rr?: number | null;
-  games_needed_for_rating?: number | null;
-  tier?: {
-    id?: number | null;
-    name?: string | null;
-  } | null;
-}
-
-export interface ValorantRank {
-  name: string;
-  iconUrl: string | null;
-  rr: number | null;
-}
-
 export interface ValorantGame {
   name: string;
   storeUrl: string;
@@ -57,8 +42,6 @@ export interface ValorantGame {
   playtimeMinutes: number;
   playtimeWindow: '2weeks';
   source: 'valorant';
-  accountLevel: number | null;
-  rank: ValorantRank | null;
   riotId: string;
   achievements: null;
 }
@@ -71,40 +54,9 @@ const ESTIMATED_SWIFTPLAY_MS = 10 * 60 * 1000;
 const ESTIMATED_SPIKE_RUSH_MS = 8 * 60 * 1000;
 const ESTIMATED_DEFAULT_MS = 35 * 60 * 1000;
 
-/** Episode 5+ competitive tier table used by valorant-api.com for rank icons. */
-export const VALORANT_TIER_TABLE_UUID = '03621f52-342b-cf4e-4f86-9350a49c6d04';
-
 export function buildValorantProfileUrl(name: string, tag: string) {
   const riotId = `${name}#${tag}`;
   return `https://tracker.gg/valorant/profile/riot/${encodeURIComponent(riotId)}/overview`;
-}
-
-export function buildRankIconUrl(tierId: number) {
-  if (!Number.isInteger(tierId) || tierId < 0) return null;
-  return `https://media.valorant-api.com/competitivetiers/${VALORANT_TIER_TABLE_UUID}/${tierId}/largeicon.png`;
-}
-
-export function mapValorantRank(current: ValorantMmrCurrentInput | null | undefined): ValorantRank | null {
-  const name = current?.tier?.name?.trim();
-  if (!name) return null;
-
-  const tierId = current?.tier?.id;
-  const isUnranked = /^unranked$/i.test(name);
-  const inPlacements =
-    typeof current?.games_needed_for_rating === 'number' && current.games_needed_for_rating > 0;
-  const rr =
-    !isUnranked &&
-    !inPlacements &&
-    typeof current?.rr === 'number' &&
-    Number.isFinite(current.rr)
-      ? Math.floor(current.rr)
-      : null;
-
-  return {
-    name,
-    iconUrl: typeof tierId === 'number' ? buildRankIconUrl(tierId) : null,
-    rr,
-  };
 }
 
 export function parsePlaytimeMinutes(value: unknown) {
@@ -220,7 +172,6 @@ export function resolveLastPlayedAt(
 export function mapValorantGame(
   account: ValorantAccountInput | null | undefined,
   matches: ValorantMatchInput[] | null | undefined,
-  rank: ValorantRank | null = null,
   now = Date.now(),
 ): ValorantGame | null {
   const name = account?.name?.trim();
@@ -228,10 +179,6 @@ export function mapValorantGame(
   if (!name || !tag) return null;
 
   const riotId = `${name}#${tag}`;
-  const accountLevel =
-    typeof account?.account_level === 'number' && account.account_level > 0
-      ? account.account_level
-      : null;
 
   return {
     name: 'VALORANT',
@@ -241,8 +188,6 @@ export function mapValorantGame(
     playtimeMinutes: sumRecentPlaytimeMinutes(matches, now),
     playtimeWindow: '2weeks',
     source: 'valorant',
-    accountLevel,
-    rank,
     riotId,
     achievements: null,
   };
