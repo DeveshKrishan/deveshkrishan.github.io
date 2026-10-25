@@ -130,9 +130,9 @@ SPOTIFY_CLIENT_SECRET=...
 SPOTIFY_REFRESH_TOKEN=...
 # YouTube Data API v3 key. See scripts/youtube-api-key.md.
 YOUTUBE_API_KEY=...
-# Optional overrides; defaults to @devaliskedits3290
+# Optional overrides; defaults to @devaliskedits
 # YOUTUBE_CHANNEL_ID=UCqN3hQCQMaNG2lroc3uhfCQ
-# YOUTUBE_CHANNEL_HANDLE=devaliskedits3290
+# YOUTUBE_CHANNEL_HANDLE=devaliskedits
 GITHUB_USERNAME=DeveshKrishan
 # Optional, helps with GitHub rate limits. Private repos are never included.
 GITHUB_TOKEN=...
@@ -236,6 +236,28 @@ In this repo, `cs:version` usually runs on the feature PR, so `main` already has
 A [Release](.github/workflows/release.yml) workflow runs on every push to `main`. It reads the version from `ui/package.json` and, if `vX.Y.Z` is not already a GitHub release, creates that tag and release with auto-generated notes.
 
 Pushes that do not bump the version (for example the daily Beli visits refresh) do not create another release.
+
+## CI/CD
+
+[CI](.github/workflows/ci.yml) is the deploy gate. On pull requests and on pushes to `main` it:
+
+1. Lints and typechecks
+2. Builds the UI
+3. Runs the Vitest unit tests
+4. Runs Playwright against that build
+5. Deploys that commit with the Vercel CLI
+
+Production deploys run only for `main`. Pull requests get a preview URL after the same tests pass. Git-triggered Vercel builds are skipped (`ignoreCommand` in `vercel.json`) so a commit cannot go live before this workflow finishes.
+
+The workflow uses the GitHub Actions secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID`.
+
+End-to-end tests live in `e2e/`. They open the built site and stub `/api/*`, so they do not call Spotify, YouTube, Steam, or GitHub. Run them locally after a build:
+
+```bash
+pnpm build
+pnpm exec playwright install chromium
+pnpm test:e2e
+```
 
 ## Git hooks & commit style
 

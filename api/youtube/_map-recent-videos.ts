@@ -1,5 +1,5 @@
 export const DEFAULT_YOUTUBE_CHANNEL_ID = 'UCqN3hQCQMaNG2lroc3uhfCQ';
-export const DEFAULT_YOUTUBE_CHANNEL_HANDLE = 'devaliskedits3290';
+export const DEFAULT_YOUTUBE_CHANNEL_HANDLE = 'devaliskedits';
 
 interface YouTubeThumbnail {
   url?: string;

@@ -2,7 +2,7 @@
 
 You only need this once. Use the same value **locally** (`.env`) and on **Vercel**.
 
-The homepage widget reads the public [Devalisk Edits](https://www.youtube.com/@devaliskedits3290/videos) uploads playlist. An API key is enough — no OAuth.
+The homepage widget reads the public [Devalisk Edits](https://www.youtube.com/@devaliskedits/videos) uploads playlist. An API key is enough — no OAuth.
 
 ---
 
@@ -37,7 +37,7 @@ Optional overrides (defaults already match this channel):
 
 ```bash
 YOUTUBE_CHANNEL_ID=UCqN3hQCQMaNG2lroc3uhfCQ
-YOUTUBE_CHANNEL_HANDLE=devaliskedits3290
+YOUTUBE_CHANNEL_HANDLE=devaliskedits
 ```
 
 On Vercel, add `YOUTUBE_API_KEY` for production, preview, and development.
