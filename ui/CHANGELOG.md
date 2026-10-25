@@ -1,5 +1,11 @@
 # my-project
 
+## 0.24.0
+
+### Minor Changes
+
+- dbe44d3: Add a homepage column for the three most recent YouTube uploads with view counts and duration.
+
 ## 0.23.1
 
 ### Patch Changes
