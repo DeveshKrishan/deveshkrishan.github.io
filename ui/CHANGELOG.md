@@ -1,5 +1,11 @@
 # my-project
 
+## 0.24.1
+
+### Patch Changes
+
+- 6610988: Use the VALORANT logo on the recent games row, and add a readiness check for API configuration.
+
 ## 0.24.0
 
 ### Minor Changes
