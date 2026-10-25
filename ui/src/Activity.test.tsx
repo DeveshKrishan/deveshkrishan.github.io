@@ -360,7 +360,7 @@ describe('Activity', () => {
     expect(thumbnail).toHaveAttribute('src', 'https://i.ytimg.com/vi/abc12345678/mqdefault.jpg');
     expect(screen.getByRole('link', { name: 'YouTube' })).toHaveAttribute(
       'href',
-      'https://www.youtube.com/@devaliskedits3290',
+      'https://www.youtube.com/@devaliskedits',
     );
   });
 

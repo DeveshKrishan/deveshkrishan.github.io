@@ -642,7 +642,7 @@ const ACTIVITY_SOURCES: Record<string, ActivitySource> = {
   },
   youtube: {
     name: 'YouTube',
-    href: 'https://www.youtube.com/@devaliskedits3290',
+    href: 'https://www.youtube.com/@devaliskedits',
     color: '#ff0000',
     Icon: SiYoutube,
   },

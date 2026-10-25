@@ -1,4 +1,5 @@
 {
+  "ignoreCommand": "echo Git deployments are skipped. GitHub Actions deploys after tests.",
   "installCommand": "pnpm install",
   "buildCommand": "pnpm --filter ./ui build",
   "outputDirectory": "ui/dist",

@@ -12,8 +12,9 @@
     "test": "pnpm test:ui && pnpm test:api",
     "test:ui": "pnpm --filter ./ui test",
     "test:api": "pnpm --filter ./api test",
+    "test:e2e": "playwright test",
     "preview": "pnpm --filter ./ui preview",
-    "format:fix": "prettier \"ui/src/**/*.{ts,tsx,js,jsx,css,md}\" \"api/**/*.{ts,js}\" --write",
+    "format:fix": "prettier \"ui/src/**/*.{ts,tsx,js,jsx,css,md}\" \"api/**/*.{ts,js}\" \"e2e/**/*.ts\" \"playwright.config.ts\" --write",
     "beli:refresh": "npx --yes tsx scripts/beli-fetch-visits.js",
     "changeset": "changeset",
     "version-packages": "changeset version",
@@ -26,6 +27,7 @@
     "@changesets/cli": "^2.30.0",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
+    "@playwright/test": "^1.64.1",
     "husky": "^9.0.0",
     "prettier": "^3.8.1"
   }

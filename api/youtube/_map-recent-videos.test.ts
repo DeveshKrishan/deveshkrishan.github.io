@@ -47,7 +47,7 @@ function makeVideo(
 
 describe('normalizeYouTubeHandle', () => {
   it('strips a leading @ and whitespace', () => {
-    expect(normalizeYouTubeHandle(' @devaliskedits3290 ')).toBe('devaliskedits3290');
+    expect(normalizeYouTubeHandle(' @devaliskedits ')).toBe('devaliskedits');
   });
 });
 
