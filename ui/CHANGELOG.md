@@ -1,5 +1,11 @@
 # my-project
 
+## 0.24.2
+
+### Patch Changes
+
+- ac47d6d: Point the YouTube credit at @devaliskedits, and deploy only after end-to-end tests pass.
+
 ## 0.24.1
 
 ### Patch Changes
