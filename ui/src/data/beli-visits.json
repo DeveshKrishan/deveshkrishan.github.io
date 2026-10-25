@@ -1,6 +1,22 @@
 {
-  "generatedAt": "2026-10-21T19:04:52.833Z",
+  "generatedAt": "2026-10-25T18:02:31.322Z",
   "visits": [
+    {
+      "id": 2861843,
+      "name": "Em Coffee House - San Jose",
+      "city": "San Jose, CA",
+      "neighborhood": "Little Saigon and Spring Brook",
+      "cuisines": [
+        "Coffee",
+        "Vietnamese",
+        "Matcha"
+      ],
+      "score": 7.9,
+      "category": "cof",
+      "visitedAt": "2026-10-24T19:29:31.287220Z",
+      "placeId": "ChIJRTulA-zNj4AR3G6TK5fk0II",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJRTulA-zNj4AR3G6TK5fk0II"
+    },
     {
       "id": 282143,
       "name": "Peanuts Deluxe Cafe",
@@ -23,25 +39,11 @@
       "cuisines": [
         "Coffee Shop"
       ],
-      "score": 9.1,
+      "score": 9.2,
       "category": "cof",
       "visitedAt": "2026-10-20T05:46:40.637999Z",
       "placeId": "ChIJWTGPjmaAhYAR6c9cUJ1axtM",
       "url": "https://www.google.com/maps/place/?q=place_id:ChIJWTGPjmaAhYAR6c9cUJ1axtM"
-    },
-    {
-      "id": 90952,
-      "name": "Boudin Bakery Cafe",
-      "city": "San Francisco, CA",
-      "neighborhood": "Fisherman's Wharf",
-      "cuisines": [
-        "Bakery"
-      ],
-      "score": 4.7,
-      "category": "restaurant",
-      "visitedAt": "2026-10-20T05:41:14.675020Z",
-      "placeId": "ChIJ1y_042CBhYAR1CgB07Gjk0A",
-      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ1y_042CBhYAR1CgB07Gjk0A"
     }
   ]
 }
