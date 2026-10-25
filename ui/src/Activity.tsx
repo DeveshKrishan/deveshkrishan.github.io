@@ -452,7 +452,13 @@ function Activity() {
                     className="activity-game-row"
                   >
                     <a href={game.storeUrl} target="_blank" rel="noreferrer noopener">
-                      {game.iconUrl ? (
+                      {game.source === 'valorant' ? (
+                        <SiValorant
+                          className="activity-game-icon activity-valorant-logo"
+                          aria-hidden="true"
+                          focusable="false"
+                        />
+                      ) : game.iconUrl ? (
                         <img
                           src={game.iconUrl}
                           alt=""

@@ -183,7 +183,7 @@ export function mapValorantGame(
   return {
     name: 'VALORANT',
     storeUrl: buildValorantProfileUrl(name, tag),
-    iconUrl: account?.card?.small || null,
+    iconUrl: null,
     lastPlayedAt: resolveLastPlayedAt(matches, account),
     playtimeMinutes: sumRecentPlaytimeMinutes(matches, now),
     playtimeWindow: '2weeks',

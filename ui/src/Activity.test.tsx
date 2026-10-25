@@ -284,13 +284,14 @@ describe('Activity', () => {
     expect(document.querySelector('.activity-rank-icon')).toBeNull();
 
     const valorantLinks = screen.getAllByRole('link', { name: 'VALORANT' });
-    expect(
-      valorantLinks.some(
-        (link) =>
-          link.getAttribute('href') ===
-          'https://tracker.gg/valorant/profile/riot/Solo%23NA1/overview',
-      ),
-    ).toBe(true);
+    const valorantGameLink = valorantLinks.find(
+      (link) =>
+        link.getAttribute('href') ===
+        'https://tracker.gg/valorant/profile/riot/Solo%23NA1/overview',
+    );
+    expect(valorantGameLink).toBeTruthy();
+    expect(valorantGameLink?.querySelector('.activity-valorant-logo')).toBeInTheDocument();
+    expect(valorantGameLink?.querySelector('img')).toBeNull();
     expect(
       valorantLinks.some((link) => link.getAttribute('href') === 'https://playvalorant.com'),
     ).toBe(true);

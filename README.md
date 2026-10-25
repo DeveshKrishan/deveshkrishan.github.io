@@ -29,6 +29,7 @@ flowchart TB
     GithubCommits["/api/github/recent-commits"]
     VisitorsAPI["/api/analytics/visitors"]
     PlacesAPI["/api/places/photo"]
+    HealthAPI["/api/health"]
   end
 
   BeliJSON["ui/src/data/beli-visits.json"]
@@ -46,7 +47,7 @@ flowchart TB
   Speed --> VercelSpeed[Vercel Speed Insights]
 ```
 
-`/api/github/recent-commits` exists but the Activity column is off (`SHOW_RECENT_COMMITS`). Helpers and tests under `api/` start with `_` so they do not count as Hobby functions.
+`/api/github/recent-commits` exists but the Activity column is off (`SHOW_RECENT_COMMITS`). Helpers and tests under `api/` start with `_` so they do not count as Hobby functions. `/api/health` is the one readiness route: it reports missing env vars and does not call upstream APIs. A test keeps the function count under the Hobby limit of 12.
 
 | Surface            | Source                                | Runtime path                                  | Secrets                                                                                        |
 | ------------------ | ------------------------------------- | --------------------------------------------- | ---------------------------------------------------------------------------------------------- |
@@ -58,6 +59,7 @@ flowchart TB
 | Restaurant photos  | Google Places                         | `/api/places/photo`                           | `GOOGLE_PLACES_API_KEY`                                                                        |
 | Unique visitors    | Vercel Web Analytics                  | `/api/analytics/visitors`                     | `VERCEL_TOKEN`, plus injected project/team ids                                                 |
 | Page views / CWV   | Vercel                                | `@vercel/analytics`, `@vercel/speed-insights` | none                                                                                           |
+| Readiness          | Env config                            | `/api/health`                                 | none; reports whether the secrets above are set                                                |
 
 ### Live widget request
 

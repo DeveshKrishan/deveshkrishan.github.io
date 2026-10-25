@@ -171,7 +171,7 @@ describe('mapValorantGame', () => {
     ).toEqual({
       name: 'VALORANT',
       storeUrl: 'https://tracker.gg/valorant/profile/riot/Solo%23NA1/overview',
-      iconUrl: 'https://media.valorant-api.com/playercards/abc/smallart.png',
+      iconUrl: null,
       lastPlayedAt: '2026-10-22T12:30:00.000Z',
       playtimeMinutes: 40,
       playtimeWindow: '2weeks',
