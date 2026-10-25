@@ -798,12 +798,7 @@ img {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    hsla(0, 0%, 98%, 0.28) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent 0%, hsla(0, 0%, 98%, 0.28) 50%, transparent 100%);
   transform: translateX(-100%);
   animation: activity-skeleton-shimmer 1.25s linear infinite;
 }
@@ -848,7 +843,8 @@ img {
 
 .activity-song-row,
 .activity-game-row,
-.activity-visit-row {
+.activity-visit-row,
+.activity-video-row {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
@@ -878,7 +874,8 @@ img {
 }
 
 .activity-song-title-row,
-.activity-visit-title-row {
+.activity-visit-title-row,
+.activity-video-title-row {
   display: flex;
   align-items: center;
   gap: 0.65rem;
@@ -887,8 +884,10 @@ img {
 .activity-song-title-row a,
 .activity-game-row a,
 .activity-visit-title-row a,
+.activity-video-title-row a,
 .activity-song-row .activity-sub a,
-.activity-visit-row .activity-sub a {
+.activity-visit-row .activity-sub a,
+.activity-video-row .activity-sub a {
   color: inherit;
   text-decoration: none;
 }
@@ -896,15 +895,18 @@ img {
 .activity-song-title-row a:hover .activity-main,
 .activity-game-row a:hover .activity-main,
 .activity-visit-title-row a:hover .activity-main,
+.activity-video-title-row a:hover .activity-main,
 .activity-song-row .activity-sub a:hover,
-.activity-visit-row .activity-sub a:hover {
+.activity-visit-row .activity-sub a:hover,
+.activity-video-row .activity-sub a:hover {
   text-decoration: underline;
   text-underline-offset: 0.15em;
 }
 
 .activity-song-icon,
 .activity-game-icon,
-.activity-visit-icon {
+.activity-visit-icon,
+.activity-video-icon {
   width: 40px;
   height: 40px;
   border-radius: 0;
@@ -917,7 +919,8 @@ img {
 @media (hover: hover) {
   .activity-song-title-row:hover .activity-song-icon,
   .activity-game-row a:hover .activity-game-icon,
-  .activity-visit-title-row:hover .activity-visit-icon {
+  .activity-visit-title-row:hover .activity-visit-icon,
+  .activity-video-title-row:hover .activity-video-icon {
     transform: scale(1.08);
   }
 }
@@ -970,6 +973,10 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
+}
+
+.activity-valorant-logo {
+  color: #ff4655;
 }
 
 .photos-section {
@@ -1488,6 +1495,7 @@ img {
   .activity-song-icon,
   .activity-game-icon,
   .activity-visit-icon,
+  .activity-video-icon,
   .activity-skeleton-icon,
   .activity-skeleton-line,
   .activity-skeleton-icon::after,
@@ -1515,7 +1523,8 @@ img {
   .photos-thumb img,
   .activity-song-icon,
   .activity-game-icon,
-  .activity-visit-icon {
+  .activity-visit-icon,
+  .activity-video-icon {
     transform: none;
   }
 }

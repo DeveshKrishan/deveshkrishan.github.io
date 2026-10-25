@@ -1,6 +1,6 @@
 # React + Vite
 
-This project is a Vite + React + TypeScript personal site with Spotify, GitHub, Steam (+ optional VALORANT via HenrikDev), and Beli activity widgets, Google Places thumbnails, a footer visitor count from Vercel Web Analytics, and Vercel Speed Insights.
+This project is a Vite + React + TypeScript personal site with Spotify, YouTube, GitHub, Steam (+ optional VALORANT via HenrikDev), and Beli activity widgets, Google Places thumbnails, a footer visitor count from Vercel Web Analytics, and Vercel Speed Insights.
 
 The repo is a pnpm workspace:
 
@@ -23,16 +23,19 @@ flowchart TB
 
   subgraph vercelFns [Vercel functions]
     SpotifyAPI["/api/spotify/recently-played"]
+    YoutubeAPI["/api/youtube/recent-videos"]
     SteamAPI["/api/steam/recent-games"]
     GithubHeatmap["/api/github/contributions"]
     GithubCommits["/api/github/recent-commits"]
     VisitorsAPI["/api/analytics/visitors"]
     PlacesAPI["/api/places/photo"]
+    HealthAPI["/api/health"]
   end
 
   BeliJSON["ui/src/data/beli-visits.json"]
 
   UI --> SpotifyAPI --> Spotify[Spotify Web API]
+  UI --> YoutubeAPI --> YouTube[YouTube Data API]
   UI --> SteamAPI --> Steam[Steam Web API]
   SteamAPI -.-> HenrikDev[HenrikDev Valorant API]
   UI --> GithubHeatmap --> GitHub[GitHub GraphQL]
@@ -44,21 +47,23 @@ flowchart TB
   Speed --> VercelSpeed[Vercel Speed Insights]
 ```
 
-`/api/github/recent-commits` exists but the Activity column is off (`SHOW_RECENT_COMMITS`). Helpers and tests under `api/` start with `_` so they do not count as Hobby functions.
+`/api/github/recent-commits` exists but the Activity column is off (`SHOW_RECENT_COMMITS`). Helpers and tests under `api/` start with `_` so they do not count as Hobby functions. `/api/health` is the one readiness route: it reports missing env vars and does not call upstream APIs. A test keeps the function count under the Hobby limit of 12.
 
-| Surface | Source | Runtime path | Secrets |
-| --- | --- | --- | --- |
-| Recent songs | Spotify | `/api/spotify/recently-played` | `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN` |
-| GitHub heatmap | GitHub GraphQL | `/api/github/contributions` | `GITHUB_TOKEN`, optional `GITHUB_USERNAME` |
-| Recent games | Steam + optional VALORANT (HenrikDev) | `/api/steam/recent-games` | `STEAM_WEB_API_KEY`, `STEAM_ID`; optional `HENRIKDEV_API_KEY`, `VALORANT_NAME`, `VALORANT_TAG` |
-| Recent restaurants | Beli feed, committed daily | `beli-visits.json` | `BELI_EMAIL`, `BELI_PASSWORD` in GitHub Actions only |
-| Restaurant photos | Google Places | `/api/places/photo` | `GOOGLE_PLACES_API_KEY` |
-| Unique visitors | Vercel Web Analytics | `/api/analytics/visitors` | `VERCEL_TOKEN`, plus injected project/team ids |
-| Page views / CWV | Vercel | `@vercel/analytics`, `@vercel/speed-insights` | none |
+| Surface            | Source                                | Runtime path                                  | Secrets                                                                                        |
+| ------------------ | ------------------------------------- | --------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Recent songs       | Spotify                               | `/api/spotify/recently-played`                | `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN`                          |
+| Recent videos      | YouTube                               | `/api/youtube/recent-videos`                  | `YOUTUBE_API_KEY`; optional `YOUTUBE_CHANNEL_ID`, `YOUTUBE_CHANNEL_HANDLE`                     |
+| GitHub heatmap     | GitHub GraphQL                        | `/api/github/contributions`                   | `GITHUB_TOKEN`, optional `GITHUB_USERNAME`                                                     |
+| Recent games       | Steam + optional VALORANT (HenrikDev) | `/api/steam/recent-games`                     | `STEAM_WEB_API_KEY`, `STEAM_ID`; optional `HENRIKDEV_API_KEY`, `VALORANT_NAME`, `VALORANT_TAG` |
+| Recent restaurants | Beli feed, committed daily            | `beli-visits.json`                            | `BELI_EMAIL`, `BELI_PASSWORD` in GitHub Actions only                                           |
+| Restaurant photos  | Google Places                         | `/api/places/photo`                           | `GOOGLE_PLACES_API_KEY`                                                                        |
+| Unique visitors    | Vercel Web Analytics                  | `/api/analytics/visitors`                     | `VERCEL_TOKEN`, plus injected project/team ids                                                 |
+| Page views / CWV   | Vercel                                | `@vercel/analytics`, `@vercel/speed-insights` | none                                                                                           |
+| Readiness          | Env config                            | `/api/health`                                 | none; reports whether the secrets above are set                                                |
 
 ### Live widget request
 
-Spotify, Steam, GitHub, visitors, and Places all follow the same pattern: the browser calls `/api/*`, the function holds the secret, and the response is cached on Vercel.
+Spotify, YouTube, Steam, GitHub, visitors, and Places all follow the same pattern: the browser calls `/api/*`, the function holds the secret, and the response is cached on Vercel.
 
 ```mermaid
 sequenceDiagram
@@ -110,7 +115,7 @@ This starts the Vite dev server for `ui/`, usually at `http://localhost:5173/`.
 
 ## Run with API routes
 
-The activity section calls serverless API routes for Spotify, GitHub, and Steam.
+The activity section calls serverless API routes for Spotify, YouTube, GitHub, and Steam.
 To test those locally, use the Vercel dev server:
 
 ```bash
@@ -123,6 +128,11 @@ This expects the following env vars in `.env` or `.env.local`:
 SPOTIFY_CLIENT_ID=...
 SPOTIFY_CLIENT_SECRET=...
 SPOTIFY_REFRESH_TOKEN=...
+# YouTube Data API v3 key. See scripts/youtube-api-key.md.
+YOUTUBE_API_KEY=...
+# Optional overrides; defaults to @devaliskedits3290
+# YOUTUBE_CHANNEL_ID=UCqN3hQCQMaNG2lroc3uhfCQ
+# YOUTUBE_CHANNEL_HANDLE=devaliskedits3290
 GITHUB_USERNAME=DeveshKrishan
 # Optional, helps with GitHub rate limits. Private repos are never included.
 GITHUB_TOKEN=...
@@ -160,9 +170,16 @@ The footer shows unique visitors from [Vercel Web Analytics](https://vercel.com/
    ```
 
    Also put `VERCEL_TOKEN=...` in local `.env`.
+
 4. `VERCEL_PROJECT_ID` and `VERCEL_TEAM_ID` can be added with `vercel env add`. On Vercel, `VERCEL_PROJECT_ID` and a `team_` `VERCEL_ORG_ID` are also injected automatically.
 
 The site sends page views with `@vercel/analytics`. Counts stay at zero until Web Analytics is enabled and production traffic arrives after the tracking script is deployed.
+
+## YouTube setup
+
+See [`scripts/youtube-api-key.md`](scripts/youtube-api-key.md). Enable **YouTube Data API v3** in Google Cloud, create an API key, and set `YOUTUBE_API_KEY` locally and on Vercel. The widget shows the **3 most recently published** public uploads with view counts.
+
+Do not reuse `GOOGLE_PLACES_API_KEY` unless that key is also allowed to call YouTube Data API.
 
 ## Steam setup
 
