@@ -41,6 +41,16 @@ export interface Game {
   riotId?: string | null;
 }
 
+export interface Video {
+  id: string;
+  title: string;
+  url: string;
+  thumbnailUrl?: string | null;
+  viewCount?: number | null;
+  durationSeconds?: number | null;
+  publishedAt?: string | null;
+}
+
 export interface Visit {
   id: string | number;
   name: string;

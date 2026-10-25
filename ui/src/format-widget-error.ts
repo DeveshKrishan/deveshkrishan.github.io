@@ -6,13 +6,14 @@ export const WIDGET_ERROR_CODES = {
 
 export type WidgetErrorCode = (typeof WIDGET_ERROR_CODES)[keyof typeof WIDGET_ERROR_CODES];
 
-export type WidgetSource = 'spotify' | 'steam' | 'github' | 'commits';
+export type WidgetSource = 'spotify' | 'steam' | 'github' | 'commits' | 'youtube';
 
 const SOURCE_LABELS = {
   spotify: 'recent songs',
   steam: 'recent games',
   github: 'github activity',
   commits: 'recent commits',
+  youtube: 'recent videos',
 } as const satisfies Record<WidgetSource, string>;
 
 const SOURCE_NAMES = {
@@ -20,6 +21,7 @@ const SOURCE_NAMES = {
   steam: 'steam',
   github: 'github',
   commits: 'github',
+  youtube: 'youtube',
 } as const satisfies Record<WidgetSource, string>;
 
 interface WidgetErrorInput {
@@ -35,12 +37,7 @@ function resolveErrorKind(status?: number, code?: string | null) {
   if (code === WIDGET_ERROR_CODES.notFound || status === 404) {
     return WIDGET_ERROR_CODES.notFound;
   }
-  if (
-    code === WIDGET_ERROR_CODES.upstream ||
-    status === 502 ||
-    status === 503 ||
-    status === 504
-  ) {
+  if (code === WIDGET_ERROR_CODES.upstream || status === 502 || status === 503 || status === 504) {
     return WIDGET_ERROR_CODES.upstream;
   }
   return null;

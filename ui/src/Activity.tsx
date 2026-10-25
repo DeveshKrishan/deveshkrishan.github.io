@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type { IconType } from 'react-icons';
-import { SiGithub, SiGoogle, SiSpotify, SiSteam, SiValorant } from 'react-icons/si';
+import { SiGithub, SiGoogle, SiSpotify, SiSteam, SiValorant, SiYoutube } from 'react-icons/si';
 
 import beliLogo from './assets/beli_logo.webp';
 import beliVisitsData from './data/beli-visits.json';
 import { getPlacePhotoUrl } from './data/map-beli-visits';
 import { formatWidgetError, formatWidgetResponseError } from './format-widget-error';
 import { Photos } from './Photos';
-import type { BeliVisitsFile, Commit, Game, Song, Visit } from './types';
+import type { BeliVisitsFile, Commit, Game, Song, Video, Visit } from './types';
 
 const SHOW_RECENT_COMMITS = false;
 const ACTIVITY_SKELETON_ROWS = 3;
@@ -42,6 +42,9 @@ function Activity() {
   const [gamesNote, setGamesNote] = useState<string | null>(null);
   const [gamesSources, setGamesSources] = useState<string[]>(['steam']);
   const [isGamesLoading, setIsGamesLoading] = useState(true);
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [videosError, setVideosError] = useState<string | null>(null);
+  const [isVideosLoading, setIsVideosLoading] = useState(true);
 
   useEffect(() => {
     let isActive = true;
@@ -77,6 +80,7 @@ function Activity() {
   const songsToShow = useMemo(() => songs.slice(0, 3), [songs]);
   const commitsToShow = useMemo(() => commits.slice(0, 3), [commits]);
   const gamesToShow = useMemo(() => games.slice(0, 3), [games]);
+  const videosToShow = useMemo(() => videos.slice(0, 3), [videos]);
   const visitsToShow = useMemo(
     () => ((beliVisitsData as BeliVisitsFile).visits ?? []).slice(0, 3),
     [],
@@ -112,8 +116,37 @@ function Activity() {
     }).format(date);
   };
 
+  const formatPublishedDate = (value?: string | null) => {
+    if (!value) return null;
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return null;
+
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    }).format(date);
+  };
+
   const formatVisitPlace = (visit: Visit) =>
     [visit.neighborhood, visit.city].filter(Boolean).join(', ') || null;
+
+  const formatViewCount = (count?: number | null) => {
+    if (count == null || !Number.isFinite(count) || count < 0) return null;
+    const formatted = new Intl.NumberFormat('en-US').format(Math.floor(count));
+    return count === 1 ? '1 view' : `${formatted} views`;
+  };
+
+  const formatVideoDuration = (seconds?: number | null) => {
+    if (seconds == null || !Number.isFinite(seconds) || seconds < 0) return null;
+    const total = Math.floor(seconds);
+    const hours = Math.floor(total / 3600);
+    const minutes = Math.floor((total % 3600) / 60);
+    const secs = total % 60;
+    const pad = (value: number) => String(value).padStart(2, '0');
+    if (hours > 0) return `${hours}:${pad(minutes)}:${pad(secs)}`;
+    return `${minutes}:${pad(secs)}`;
+  };
 
   const formatCommitDate = (value?: string | null) => {
     if (!value) return null;
@@ -205,10 +238,41 @@ function Activity() {
     };
   }, []);
 
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadVideos() {
+      try {
+        setIsVideosLoading(true);
+        setVideosError(null);
+
+        const res = await fetch('/api/youtube/recent-videos?limit=3');
+        const data = await res.json().catch(() => null);
+
+        if (!res.ok) {
+          if (isActive) setVideosError(formatWidgetResponseError('youtube', res, data));
+          return;
+        }
+
+        const nextVideos = Array.isArray(data?.videos) ? data.videos : [];
+        if (isActive) setVideos(nextVideos);
+      } catch {
+        if (isActive) setVideosError(formatWidgetError({ source: 'youtube' }));
+      } finally {
+        if (isActive) setIsVideosLoading(false);
+      }
+    }
+
+    loadVideos();
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
   return (
     <section className="activity-section" id="about" data-reveal>
       <h2 className="activity-heading">what i&apos;ve been up to</h2>
-      <div className={SHOW_RECENT_COMMITS ? 'activity-grid' : 'activity-grid activity-grid--three'}>
+      <div className="activity-grid">
         <div className="activity-column">
           <h3>recent songs listened to</h3>
           {songsError ? <p className="activity-error">{songsError}</p> : null}
@@ -268,16 +332,67 @@ function Activity() {
               ))}
             </ul>
           ) : null}
-          <p className="activity-attribution">
-            {renderSourceCredit('spotify')}
-          </p>
+          <p className="activity-attribution">{renderSourceCredit('spotify')}</p>
+        </div>
+        <div className="activity-column">
+          <h3>recent videos published</h3>
+          {videosError ? <p className="activity-error">{videosError}</p> : null}
+          {isVideosLoading ? <ActivitySkeleton /> : null}
+          {!isVideosLoading && !videosError && videosToShow.length === 0 ? (
+            <p className="activity-loading">no recent videos yet.</p>
+          ) : null}
+          {videosToShow.length > 0 ? (
+            <ul>
+              {videosToShow.map((video) => {
+                const views = formatViewCount(video.viewCount);
+                const duration = formatVideoDuration(video.durationSeconds);
+                const videoMeta = [views, duration].filter(Boolean).join(' · ');
+                const published = formatPublishedDate(video.publishedAt);
+
+                return (
+                  <li
+                    key={video.id || `${video.title}-${video.publishedAt}`}
+                    className="activity-video-row"
+                  >
+                    <div className="activity-video-title-row">
+                      {video.thumbnailUrl ? (
+                        <img
+                          src={video.thumbnailUrl}
+                          alt=""
+                          className="activity-video-icon"
+                          width={40}
+                          height={40}
+                          loading="lazy"
+                          onError={(event) => {
+                            event.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      ) : null}
+                      {video.url ? (
+                        <a href={video.url} target="_blank" rel="noreferrer noopener">
+                          <span className="activity-main">{video.title}</span>
+                        </a>
+                      ) : (
+                        <span className="activity-main">{video.title}</span>
+                      )}
+                    </div>
+                    {videoMeta ? <div className="activity-sub">{videoMeta}</div> : null}
+                    {published ? <div className="activity-sub">published {published}</div> : null}
+                  </li>
+                );
+              })}
+            </ul>
+          ) : null}
+          <p className="activity-attribution">{renderSourceCredit('youtube')}</p>
         </div>
         {SHOW_RECENT_COMMITS ? (
           <div className="activity-column">
             <h3>recent commits pushed</h3>
             {commitsError ? <p className="activity-error">{commitsError}</p> : null}
             {isCommitsLoading ? <p className="activity-loading">loading…</p> : null}
-            {!isCommitsLoading && commitsNote ? <p className="activity-loading">{commitsNote}</p> : null}
+            {!isCommitsLoading && commitsNote ? (
+              <p className="activity-loading">{commitsNote}</p>
+            ) : null}
             {!isCommitsLoading && !commitsError && commitsToShow.length === 0 ? (
               <p className="activity-loading">no recent commits yet.</p>
             ) : null}
@@ -312,9 +427,7 @@ function Activity() {
                 ))}
               </ul>
             ) : null}
-            <p className="activity-attribution">
-              {renderSourceCredit('github')}
-            </p>
+            <p className="activity-attribution">{renderSourceCredit('github')}</p>
           </div>
         ) : null}
         <div className="activity-column">
@@ -334,7 +447,10 @@ function Activity() {
                 const fillPercent = getAchievementFillPercent(game.achievements);
 
                 return (
-                  <li key={`${game.source || 'game'}-${game.name}-${index}`} className="activity-game-row">
+                  <li
+                    key={`${game.source || 'game'}-${game.name}-${index}`}
+                    className="activity-game-row"
+                  >
                     <a href={game.storeUrl} target="_blank" rel="noreferrer noopener">
                       {game.iconUrl ? (
                         <img
@@ -453,7 +569,14 @@ function Activity() {
           )}
           <p className="activity-attribution">
             {renderSourceCredit('beli')}
-            {visitsToShow.some((visit) => visit.placeId) ? renderSourceCredit('google') : null}
+            {visitsToShow.some((visit) => visit.placeId) ? (
+              <>
+                <span className="activity-attribution-sep" aria-hidden="true">
+                  {' · '}
+                </span>
+                {renderSourceCredit('google')}
+              </>
+            ) : null}
           </p>
         </div>
       </div>
@@ -510,6 +633,12 @@ const ACTIVITY_SOURCES: Record<string, ActivitySource> = {
     href: 'https://developers.google.com/maps/documentation/places/web-service/policies',
     color: '#4285f4',
     Icon: SiGoogle,
+  },
+  youtube: {
+    name: 'YouTube',
+    href: 'https://www.youtube.com/@devaliskedits3290',
+    color: '#ff0000',
+    Icon: SiYoutube,
   },
 };
 

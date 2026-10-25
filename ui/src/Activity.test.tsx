@@ -48,6 +48,10 @@ describe('Activity', () => {
           return Promise.resolve(mockJsonResponse({ games: [] }));
         }
 
+        if (String(url).includes('/api/youtube/recent-videos')) {
+          return Promise.resolve(mockJsonResponse({ videos: [] }));
+        }
+
         return Promise.reject(new Error(`Unexpected fetch: ${url}`));
       }),
     );
@@ -81,7 +85,7 @@ describe('Activity', () => {
     expect(screen.getByText(/played Aug 13/i)).toBeInTheDocument();
   });
 
-  it('shows skeletons while spotify and steam are loading', () => {
+  it('shows skeletons while spotify, youtube, and steam are loading', () => {
     vi.stubGlobal(
       'fetch',
       vi.fn(() => new Promise(() => {})),
@@ -89,8 +93,8 @@ describe('Activity', () => {
 
     render(<Activity />);
 
-    expect(screen.getAllByRole('status', { name: 'loading' })).toHaveLength(2);
-    expect(document.querySelectorAll('.activity-skeleton-row')).toHaveLength(6);
+    expect(screen.getAllByRole('status', { name: 'loading' })).toHaveLength(3);
+    expect(document.querySelectorAll('.activity-skeleton-row')).toHaveLength(9);
   });
 
   it('shows a friendly spotify error instead of the raw API message', async () => {
@@ -117,15 +121,17 @@ describe('Activity', () => {
           });
         }
 
+        if (String(url).includes('/api/youtube/recent-videos')) {
+          return Promise.resolve(mockJsonResponse({ videos: [] }));
+        }
+
         return Promise.reject(new Error(`Unexpected fetch: ${url}`));
       }),
     );
 
     render(<Activity />);
 
-    expect(
-      await screen.findByText("couldn't load recent songs right now."),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("couldn't load recent songs right now.")).toBeInTheDocument();
     expect(screen.getByText('steam is rate-limited. try again soon.')).toBeInTheDocument();
     expect(screen.queryByText(/SPOTIFY_CLIENT_ID/)).not.toBeInTheDocument();
   });
@@ -146,6 +152,10 @@ describe('Activity', () => {
       'href',
       'https://developers.google.com/maps/documentation/places/web-service/policies',
     );
+    const restaurantAttribution = screen.getByRole('link', { name: 'Beli' }).closest(
+      '.activity-attribution',
+    );
+    expect(restaurantAttribution?.querySelector('.activity-attribution-sep')).toHaveTextContent('·');
     const visitPhoto = screen
       .getAllByAltText('')
       .find((img) => img.classList.contains('activity-visit-icon'));
@@ -171,7 +181,8 @@ describe('Activity', () => {
                 {
                   name: 'Dota 2',
                   storeUrl: 'https://store.steampowered.com/app/570',
-                  iconUrl: 'https://media.steampowered.com/steamcommunity/public/images/apps/570/abc.jpg',
+                  iconUrl:
+                    'https://media.steampowered.com/steamcommunity/public/images/apps/570/abc.jpg',
                   lastPlayedAt: '2026-10-15T17:00:00.000Z',
                   playtimeMinutes: 90,
                   playtimeWindow: '2weeks',
@@ -184,6 +195,10 @@ describe('Activity', () => {
           );
         }
 
+        if (String(url).includes('/api/youtube/recent-videos')) {
+          return Promise.resolve(mockJsonResponse({ videos: [] }));
+        }
+
         return Promise.reject(new Error(`Unexpected fetch: ${url}`));
       }),
     );
@@ -194,7 +209,9 @@ describe('Activity', () => {
       'href',
       'https://store.steampowered.com/app/570',
     );
-    expect(screen.getByRole('heading', { name: 'recent games played in last 2 weeks' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'recent games played in last 2 weeks' }),
+    ).toBeInTheDocument();
     expect(screen.getByText(/1h 30m/)).toBeInTheDocument();
     expect(screen.queryByText(/1h 30m in last 2 weeks/)).not.toBeInTheDocument();
     expect(screen.getByText('12 / 47 achievements')).toBeInTheDocument();
@@ -236,7 +253,8 @@ describe('Activity', () => {
                 {
                   name: 'Dota 2',
                   storeUrl: 'https://store.steampowered.com/app/570',
-                  iconUrl: 'https://media.steampowered.com/steamcommunity/public/images/apps/570/abc.jpg',
+                  iconUrl:
+                    'https://media.steampowered.com/steamcommunity/public/images/apps/570/abc.jpg',
                   lastPlayedAt: '2026-10-15T17:00:00.000Z',
                   playtimeMinutes: 90,
                   source: 'steam',
@@ -246,6 +264,10 @@ describe('Activity', () => {
               sources: ['steam', 'valorant'],
             }),
           );
+        }
+
+        if (String(url).includes('/api/youtube/recent-videos')) {
+          return Promise.resolve(mockJsonResponse({ videos: [] }));
         }
 
         return Promise.reject(new Error(`Unexpected fetch: ${url}`));
@@ -276,6 +298,71 @@ describe('Activity', () => {
     expect(screen.getByRole('link', { name: 'Steam' })).toBeInTheDocument();
   });
 
+  it('renders recent youtube videos with thumbnails, links, and view counts', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url) => {
+        if (String(url).includes('/api/spotify/recently-played')) {
+          return Promise.resolve(mockJsonResponse({ songs: [] }));
+        }
+
+        if (String(url).includes('/api/steam/recent-games')) {
+          return Promise.resolve(mockJsonResponse({ games: [] }));
+        }
+
+        if (String(url).includes('/api/youtube/recent-videos')) {
+          return Promise.resolve(
+            mockJsonResponse({
+              videos: [
+                {
+                  id: 'abc12345678',
+                  title: 'My Latest Edit',
+                  url: 'https://www.youtube.com/watch?v=abc12345678',
+                  thumbnailUrl: 'https://i.ytimg.com/vi/abc12345678/mqdefault.jpg',
+                  viewCount: 2048,
+                  durationSeconds: 358,
+                  publishedAt: '2026-10-20T17:00:00.000Z',
+                },
+                {
+                  id: 'def12345678',
+                  title: 'Second Edit',
+                  url: 'https://www.youtube.com/watch?v=def12345678',
+                  thumbnailUrl: 'https://i.ytimg.com/vi/def12345678/mqdefault.jpg',
+                  viewCount: 1,
+                  durationSeconds: 45,
+                  publishedAt: '2026-10-18T12:00:00.000Z',
+                },
+              ],
+            }),
+          );
+        }
+
+        return Promise.reject(new Error(`Unexpected fetch: ${url}`));
+      }),
+    );
+
+    render(<Activity />);
+
+    expect(
+      await screen.findByRole('heading', { name: 'recent videos published' }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'My Latest Edit' })).toHaveAttribute(
+      'href',
+      'https://www.youtube.com/watch?v=abc12345678',
+    );
+    expect(screen.getByText('2,048 views · 5:58')).toBeInTheDocument();
+    expect(screen.getByText('1 view · 0:45')).toBeInTheDocument();
+    expect(screen.getByText(/published Oct 20, 2026/i)).toBeInTheDocument();
+    const thumbnail = screen
+      .getAllByAltText('')
+      .find((img) => img.classList.contains('activity-video-icon'));
+    expect(thumbnail).toHaveAttribute('src', 'https://i.ytimg.com/vi/abc12345678/mqdefault.jpg');
+    expect(screen.getByRole('link', { name: 'YouTube' })).toHaveAttribute(
+      'href',
+      'https://www.youtube.com/@devaliskedits3290',
+    );
+  });
+
   it('nests recent shots under what i have been up to', async () => {
     render(<Activity />);
 
@@ -286,6 +373,8 @@ describe('Activity', () => {
     const about = document.getElementById('about');
     const photos = document.getElementById('photos');
     expect(about?.contains(photos)).toBe(true);
-    expect(within(about as HTMLElement).getByRole('heading', { name: 'recent shots' })).toBeInTheDocument();
+    expect(
+      within(about as HTMLElement).getByRole('heading', { name: 'recent shots' }),
+    ).toBeInTheDocument();
   });
 });

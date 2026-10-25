@@ -1,19 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  formatWidgetError,
-  readWidgetErrorCode,
-  WIDGET_ERROR_CODES,
-} from './format-widget-error';
+import { formatWidgetError, readWidgetErrorCode, WIDGET_ERROR_CODES } from './format-widget-error';
 
 describe('formatWidgetError', () => {
   it('maps rate limits from status or code', () => {
     expect(formatWidgetError({ source: 'spotify', status: 429 })).toBe(
       'spotify is rate-limited. try again soon.',
     );
-    expect(
-      formatWidgetError({ source: 'steam', code: WIDGET_ERROR_CODES.rateLimited }),
-    ).toBe('steam is rate-limited. try again soon.');
+    expect(formatWidgetError({ source: 'steam', code: WIDGET_ERROR_CODES.rateLimited })).toBe(
+      'steam is rate-limited. try again soon.',
+    );
   });
 
   it('maps missing remotes and not-found responses', () => {
@@ -29,8 +25,9 @@ describe('formatWidgetError', () => {
     expect(formatWidgetError({ source: 'spotify', status: 500 })).toBe(
       "couldn't load recent songs right now.",
     );
-    expect(formatWidgetError({ source: 'steam' })).toBe(
-      "couldn't load recent games right now.",
+    expect(formatWidgetError({ source: 'steam' })).toBe("couldn't load recent games right now.");
+    expect(formatWidgetError({ source: 'youtube', status: 500 })).toBe(
+      "couldn't load recent videos right now.",
     );
   });
 });
