@@ -1,5 +1,11 @@
 # my-project
 
+## 0.24.3
+
+### Patch Changes
+
+- 2980e74: Keep a crashing widget from taking down the rest of the page, and send basic security headers.
+
 ## 0.24.2
 
 ### Patch Changes
