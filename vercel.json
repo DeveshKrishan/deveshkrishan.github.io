@@ -4,6 +4,16 @@
   "buildCommand": "pnpm --filter ./ui build",
   "outputDirectory": "ui/dist",
   "devCommand": "pnpm --filter ./ui exec vite --port $PORT",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "DENY" }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/",

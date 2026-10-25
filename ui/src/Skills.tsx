@@ -1,4 +1,5 @@
 import GithubHeatmap from './GithubHeatmap';
+import { WidgetBoundary } from './WidgetBoundary';
 
 /**
  * Grouped skills — edit `SKILL_GROUPS` to match your experience.
@@ -49,7 +50,9 @@ function Skills() {
         ))}
       </div>
       <div className="intro-heatmap-slot">
-        <GithubHeatmap />
+        <WidgetBoundary label="github activity">
+          <GithubHeatmap />
+        </WidgetBoundary>
       </div>
     </section>
   );

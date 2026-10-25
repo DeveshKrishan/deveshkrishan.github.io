@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 import Activity from './Activity';
 import Footer from './Footer';
 import { useReveal } from './useReveal';
+import { WidgetBoundary } from './WidgetBoundary';
 
 function App() {
   useReveal();
@@ -16,8 +17,12 @@ function App() {
       <Navbar />
       <div className="main-layout">
         <Welcome />
-        <Activity />
-        <Footer />
+        <WidgetBoundary label="activity">
+          <Activity />
+        </WidgetBoundary>
+        <WidgetBoundary label="the footer">
+          <Footer />
+        </WidgetBoundary>
       </div>
       <Analytics />
       <SpeedInsights />

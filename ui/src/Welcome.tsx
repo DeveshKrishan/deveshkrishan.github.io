@@ -3,6 +3,7 @@ import { HiOutlineMail } from 'react-icons/hi';
 
 import { CONTACT_EMAIL } from './constants';
 import Skills from './Skills';
+import { WidgetBoundary } from './WidgetBoundary';
 
 const profilePhoto = '/devesh-krishan.jpg';
 
@@ -19,7 +20,12 @@ function Welcome() {
       </h1>
       <div className="intro">
         <div className="intro-photo" data-reveal data-reveal-delay="1">
-          <img src={profilePhoto} alt="Devesh Krishan, software engineer" width="2048" height="1536" />
+          <img
+            src={profilePhoto}
+            alt="Devesh Krishan, software engineer"
+            width="2048"
+            height="1536"
+          />
         </div>
         <div className="intro-details">
           <div className="intro-copy" data-reveal data-reveal-delay="2">
@@ -33,7 +39,11 @@ function Welcome() {
               francisco bay area and am an alumni from the university of california, irvine.
             </h2>
             <div className="icon-list">
-              <a href="https://www.linkedin.com/in/deveshkrishan/" target="_blank" rel="me noreferrer">
+              <a
+                href="https://www.linkedin.com/in/deveshkrishan/"
+                target="_blank"
+                rel="me noreferrer"
+              >
                 <FaLinkedin className="icon" aria-hidden="true" focusable="false" />
                 LinkedIn →
               </a>
@@ -47,7 +57,9 @@ function Welcome() {
               </a>
             </div>
           </div>
-          <Skills />
+          <WidgetBoundary label="skills">
+            <Skills />
+          </WidgetBoundary>
         </div>
       </div>
     </div>
