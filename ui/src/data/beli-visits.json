@@ -1,6 +1,20 @@
 {
-  "generatedAt": "2026-10-25T18:02:31.322Z",
+  "generatedAt": "2026-10-27T19:47:06.988Z",
   "visits": [
+    {
+      "id": 1907964,
+      "name": "Pho Station",
+      "city": "Rocklin, CA",
+      "neighborhood": null,
+      "cuisines": [
+        "Vietnamese"
+      ],
+      "score": 8.3,
+      "category": "restaurant",
+      "visitedAt": "2026-10-27T06:16:17.059034Z",
+      "placeId": "ChIJTc4MfNUhm4ARn6biTLFYvcg",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJTc4MfNUhm4ARn6biTLFYvcg"
+    },
     {
       "id": 2861843,
       "name": "Em Coffee House - San Jose",
@@ -30,20 +44,6 @@
       "visitedAt": "2026-10-20T21:25:09.547165Z",
       "placeId": "ChIJHbsXub7Mj4ARzT2JS7SkjH4",
       "url": "https://www.google.com/maps/place/?q=place_id:ChIJHbsXub7Mj4ARzT2JS7SkjH4"
-    },
-    {
-      "id": 357628,
-      "name": "Blue Bottle Coffee",
-      "city": "San Francisco, CA",
-      "neighborhood": "Embarcadero",
-      "cuisines": [
-        "Coffee Shop"
-      ],
-      "score": 9.2,
-      "category": "cof",
-      "visitedAt": "2026-10-20T05:46:40.637999Z",
-      "placeId": "ChIJWTGPjmaAhYAR6c9cUJ1axtM",
-      "url": "https://www.google.com/maps/place/?q=place_id:ChIJWTGPjmaAhYAR6c9cUJ1axtM"
     }
   ]
 }
