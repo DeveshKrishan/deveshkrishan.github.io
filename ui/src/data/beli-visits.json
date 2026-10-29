@@ -1,6 +1,21 @@
 {
-  "generatedAt": "2026-10-27T19:47:06.988Z",
+  "generatedAt": "2026-10-29T20:01:35.296Z",
   "visits": [
+    {
+      "id": 89800,
+      "name": "Sumiya",
+      "city": "Santa Clara, CA",
+      "neighborhood": null,
+      "cuisines": [
+        "Japanese",
+        "Yakitori"
+      ],
+      "score": 4.9,
+      "category": "restaurant",
+      "visitedAt": "2026-10-29T19:07:46.338031Z",
+      "placeId": "ChIJYblqPWC1j4ARyLKXlQgGaJ0",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJYblqPWC1j4ARyLKXlQgGaJ0"
+    },
     {
       "id": 1907964,
       "name": "Pho Station",
@@ -30,20 +45,6 @@
       "visitedAt": "2026-10-24T19:29:31.287220Z",
       "placeId": "ChIJRTulA-zNj4AR3G6TK5fk0II",
       "url": "https://www.google.com/maps/place/?q=place_id:ChIJRTulA-zNj4AR3G6TK5fk0II"
-    },
-    {
-      "id": 282143,
-      "name": "Peanuts Deluxe Cafe",
-      "city": "San Jose, CA",
-      "neighborhood": "Downtown San Jose",
-      "cuisines": [
-        "American"
-      ],
-      "score": 4.3,
-      "category": "restaurant",
-      "visitedAt": "2026-10-20T21:25:09.547165Z",
-      "placeId": "ChIJHbsXub7Mj4ARzT2JS7SkjH4",
-      "url": "https://www.google.com/maps/place/?q=place_id:ChIJHbsXub7Mj4ARzT2JS7SkjH4"
     }
   ]
 }
