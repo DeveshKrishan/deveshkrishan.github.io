@@ -1,6 +1,21 @@
 {
-  "generatedAt": "2026-10-29T20:01:35.296Z",
+  "generatedAt": "2026-11-01T19:19:53.481Z",
   "visits": [
+    {
+      "id": 27257,
+      "name": "The Cheesecake Factory",
+      "city": "Santa Clara, CA",
+      "neighborhood": "Central San Jose",
+      "cuisines": [
+        "American",
+        "Italian"
+      ],
+      "score": 7.2,
+      "category": "restaurant",
+      "visitedAt": "2026-11-01T12:15:38.126920Z",
+      "placeId": "ChIJYRO4KeDKj4ARo2J7yilWcRI",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJYRO4KeDKj4ARo2J7yilWcRI"
+    },
     {
       "id": 89800,
       "name": "Sumiya",
@@ -29,22 +44,6 @@
       "visitedAt": "2026-10-27T06:16:17.059034Z",
       "placeId": "ChIJTc4MfNUhm4ARn6biTLFYvcg",
       "url": "https://www.google.com/maps/place/?q=place_id:ChIJTc4MfNUhm4ARn6biTLFYvcg"
-    },
-    {
-      "id": 2861843,
-      "name": "Em Coffee House - San Jose",
-      "city": "San Jose, CA",
-      "neighborhood": "Little Saigon and Spring Brook",
-      "cuisines": [
-        "Coffee",
-        "Vietnamese",
-        "Matcha"
-      ],
-      "score": 7.9,
-      "category": "cof",
-      "visitedAt": "2026-10-24T19:29:31.287220Z",
-      "placeId": "ChIJRTulA-zNj4AR3G6TK5fk0II",
-      "url": "https://www.google.com/maps/place/?q=place_id:ChIJRTulA-zNj4AR3G6TK5fk0II"
     }
   ]
 }
