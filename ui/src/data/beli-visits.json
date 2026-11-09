@@ -1,6 +1,22 @@
 {
-  "generatedAt": "2026-11-01T19:19:53.481Z",
+  "generatedAt": "2026-11-09T23:40:18.788Z",
   "visits": [
+    {
+      "id": 1120286,
+      "name": "Pho Duoi Bo",
+      "city": "San Jose, CA",
+      "neighborhood": "Evergreen",
+      "cuisines": [
+        "Vietnamese",
+        "Pho",
+        "Noodles"
+      ],
+      "score": 7.9,
+      "category": "restaurant",
+      "visitedAt": "2026-11-08T19:52:13.331068Z",
+      "placeId": "ChIJhf2imRwzjoAR3D8wPuFeTKg",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJhf2imRwzjoAR3D8wPuFeTKg"
+    },
     {
       "id": 27257,
       "name": "The Cheesecake Factory",
@@ -30,20 +46,6 @@
       "visitedAt": "2026-10-29T19:07:46.338031Z",
       "placeId": "ChIJYblqPWC1j4ARyLKXlQgGaJ0",
       "url": "https://www.google.com/maps/place/?q=place_id:ChIJYblqPWC1j4ARyLKXlQgGaJ0"
-    },
-    {
-      "id": 1907964,
-      "name": "Pho Station",
-      "city": "Rocklin, CA",
-      "neighborhood": null,
-      "cuisines": [
-        "Vietnamese"
-      ],
-      "score": 8.3,
-      "category": "restaurant",
-      "visitedAt": "2026-10-27T06:16:17.059034Z",
-      "placeId": "ChIJTc4MfNUhm4ARn6biTLFYvcg",
-      "url": "https://www.google.com/maps/place/?q=place_id:ChIJTc4MfNUhm4ARn6biTLFYvcg"
     }
   ]
 }
