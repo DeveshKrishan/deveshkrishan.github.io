@@ -1,6 +1,21 @@
 {
-  "generatedAt": "2026-11-09T23:40:18.788Z",
+  "generatedAt": "2026-11-15T20:06:24.140Z",
   "visits": [
+    {
+      "id": 3274,
+      "name": "Pizzeria Delfina - Palo Alto",
+      "city": "Palo Alto, CA",
+      "neighborhood": "University South",
+      "cuisines": [
+        "Italian",
+        "Pizza"
+      ],
+      "score": 7.2,
+      "category": "restaurant",
+      "visitedAt": "2026-11-15T05:12:44.570566Z",
+      "placeId": "ChIJCS_HTDq7j4ARskXdL5usfsU",
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJCS_HTDq7j4ARskXdL5usfsU"
+    },
     {
       "id": 1120286,
       "name": "Pho Duoi Bo",
@@ -11,7 +26,7 @@
         "Pho",
         "Noodles"
       ],
-      "score": 7.9,
+      "score": 8,
       "category": "restaurant",
       "visitedAt": "2026-11-08T19:52:13.331068Z",
       "placeId": "ChIJhf2imRwzjoAR3D8wPuFeTKg",
@@ -26,26 +41,11 @@
         "American",
         "Italian"
       ],
-      "score": 7.2,
+      "score": 7.3,
       "category": "restaurant",
       "visitedAt": "2026-11-01T12:15:38.126920Z",
       "placeId": "ChIJYRO4KeDKj4ARo2J7yilWcRI",
       "url": "https://www.google.com/maps/place/?q=place_id:ChIJYRO4KeDKj4ARo2J7yilWcRI"
-    },
-    {
-      "id": 89800,
-      "name": "Sumiya",
-      "city": "Santa Clara, CA",
-      "neighborhood": null,
-      "cuisines": [
-        "Japanese",
-        "Yakitori"
-      ],
-      "score": 4.9,
-      "category": "restaurant",
-      "visitedAt": "2026-10-29T19:07:46.338031Z",
-      "placeId": "ChIJYblqPWC1j4ARyLKXlQgGaJ0",
-      "url": "https://www.google.com/maps/place/?q=place_id:ChIJYblqPWC1j4ARyLKXlQgGaJ0"
     }
   ]
 }
