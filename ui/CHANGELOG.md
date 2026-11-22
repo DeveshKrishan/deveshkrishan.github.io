@@ -1,5 +1,11 @@
 # my-project
 
+## 0.24.4
+
+### Patch Changes
+
+- Fix the daily Beli visits refresh after the private API started rejecting the old Safari/`https://localhost` client fingerprint, and harden the Activity Beli test against shared cuisine labels across visits.
+
 ## 0.24.3
 
 ### Patch Changes

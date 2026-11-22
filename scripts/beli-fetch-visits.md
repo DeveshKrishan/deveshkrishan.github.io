@@ -81,8 +81,10 @@ deployed site still only reads the committed JSON.
 
 ## Troubleshooting
 
-- **403** — the backend rejects requests without an `Origin` header. The script sends one;
-  if this starts failing, Beli likely changed its checks.
+- **403** (`You do not have permission to perform this action.`) — the backend rejects
+  clients that do not look like the app or a browser. The script sends a `capacitor://localhost`
+  `Origin` and a realistic `User-Agent` (same contract as [beli-api](https://github.com/ProjectBarks/beli-api)).
+  If this starts failing again, Beli likely tightened those checks further.
 - **401 on login** — wrong credentials, or Beli throttled repeated logins. Wait and retry.
 - **"No rating events found"** — the feed returned only bookmarks or other event types.
   Run with `--raw` to inspect what came back.

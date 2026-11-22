@@ -146,7 +146,10 @@ describe('Activity', () => {
     );
     expect(firstVisit?.cuisines?.[0]).toBeTruthy();
     expect(firstVisit?.placeId).toBeTruthy();
-    const cuisineChip = screen.getByText(firstVisit.cuisines[0]);
+    expect(firstVisit?.name).toBeTruthy();
+    const firstVisitRow = screen.getByText(firstVisit.name).closest('.activity-visit-row');
+    expect(firstVisitRow).toBeTruthy();
+    const cuisineChip = within(firstVisitRow as HTMLElement).getByText(firstVisit.cuisines[0]);
     expect(cuisineChip).toHaveClass('activity-cuisine-chip');
     expect(screen.getByRole('link', { name: 'Google Places' })).toHaveAttribute(
       'href',
@@ -156,7 +159,7 @@ describe('Activity', () => {
       '.activity-attribution',
     );
     expect(restaurantAttribution?.querySelector('.activity-attribution-sep')).toHaveTextContent('·');
-    const visitPhoto = screen
+    const visitPhoto = within(firstVisitRow as HTMLElement)
       .getAllByAltText('')
       .find((img) => img.classList.contains('activity-visit-icon'));
     expect(visitPhoto).toHaveAttribute(

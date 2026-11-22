@@ -34,11 +34,19 @@ const OUTPUT_PATH = path.join(ROOT, 'ui/src/data/beli-visits.json');
 const ONBOARD_HOST = 'https://backoffice-service-onboarding-t57o3dxfca-nn.a.run.app';
 const API_HOST = 'https://backoffice-service-t57o3dxfca-nn.a.run.app';
 
-// The backend 403s any request without an Origin, and throttles bursts.
-const ORIGIN = 'https://localhost';
+// The backend 403s clients that do not look like the mobile app / a browser
+// (`{"detail":"You do not have permission to perform this action."}`). Match the
+// community contract at ProjectBarks/beli-api: Capacitor origin + a realistic UA.
+// Pinning the old Safari 17.4 + https://localhost pair started failing in Nov 2026.
+const ORIGIN = 'capacitor://localhost';
 const REQUEST_SPACING_MS = 350;
-const USER_AGENT =
-  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15';
+const USER_AGENTS = [
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148',
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Safari/605.1.15',
+];
+const USER_AGENT = USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)];
 
 function parseArgs(argv) {
   const limitFlag = argv.indexOf('--limit');
@@ -67,7 +75,6 @@ async function request(url, { token, method = 'GET', body } = {}) {
   const headers = {
     Accept: 'application/json',
     Origin: ORIGIN,
-    Referer: `${ORIGIN}/`,
     'User-Agent': USER_AGENT,
   };
   if (token) headers.Authorization = `Bearer ${token}`;
