@@ -55,7 +55,7 @@ flowchart TB
 | Recent videos      | YouTube                               | `/api/youtube/recent-videos`                  | `YOUTUBE_API_KEY`; optional `YOUTUBE_CHANNEL_ID`, `YOUTUBE_CHANNEL_HANDLE`                     |
 | GitHub heatmap     | GitHub GraphQL                        | `/api/github/contributions`                   | `GITHUB_TOKEN`, optional `GITHUB_USERNAME`                                                     |
 | Recent games       | Steam + optional VALORANT (HenrikDev) | `/api/steam/recent-games`                     | `STEAM_WEB_API_KEY`, `STEAM_ID`; optional `HENRIKDEV_API_KEY`, `VALORANT_NAME`, `VALORANT_TAG` |
-| Recent restaurants | Beli feed, committed daily            | `beli-visits.json`                            | `BELI_EMAIL`, `BELI_PASSWORD` in GitHub Actions only                                           |
+| Recent restaurants | Hand-edited Beli visits JSON          | `beli-visits.json`                            | none                                                                                           |
 | Restaurant photos  | Google Places                         | `/api/places/photo`                           | `GOOGLE_PLACES_API_KEY`                                                                        |
 | Unique visitors    | Vercel Web Analytics                  | `/api/analytics/visitors`                     | `VERCEL_TOKEN`, plus injected project/team ids                                                 |
 | Page views / CWV   | Vercel                                | `@vercel/analytics`, `@vercel/speed-insights` | none                                                                                           |
@@ -79,20 +79,15 @@ sequenceDiagram
 
 ### Beli visits and Place photos
 
-Beli has no public API, so credentials never go on Vercel. A daily GitHub Action logs in, writes the latest rating events to `ui/src/data/beli-visits.json`, and commits only when the list changes. Photo resource names expire, so thumbnails are fetched later from the stored `placeId`.
+Restaurant visits are hand-edited in `ui/src/data/beli-visits.json` and committed with the site. Nothing calls Beli at build or runtime. Photo resource names expire, so thumbnails are fetched later from the stored Google `placeId`.
 
 ```mermaid
 sequenceDiagram
-  participant GHA as GitHub Action
-  participant Beli as Beli private API
   participant Repo as beli-visits.json
   participant UI as Homepage
   participant PlacesFn as /api/places/photo
   participant Google as Google Places
 
-  GHA->>Beli: login and profile feed
-  Beli-->>GHA: rating events plus placeId
-  GHA->>Repo: commit latest visits
   UI->>Repo: read committed JSON
   UI->>PlacesFn: GET ?placeId=
   PlacesFn->>Google: Place Details then Place Photos
@@ -100,7 +95,7 @@ sequenceDiagram
   PlacesFn-->>UI: 302 to image
 ```
 
-See [`scripts/beli-fetch-visits.md`](scripts/beli-fetch-visits.md) for the refresh command and Action secrets.
+To update the widget, edit `visits` in that JSON (keep `placeId` and a Google Maps `url` when you have them), then commit.
 
 ## Run locally
 

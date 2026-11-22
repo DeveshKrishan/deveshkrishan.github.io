@@ -1,5 +1,11 @@
 # my-project
 
+## 0.24.4
+
+### Patch Changes
+
+- Stop scraping Beli; serve restaurant visits from the committed JSON only and drop the daily refresh Action.
+
 ## 0.24.3
 
 ### Patch Changes
