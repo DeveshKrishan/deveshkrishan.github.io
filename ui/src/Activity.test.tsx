@@ -146,7 +146,8 @@ describe('Activity', () => {
     );
     expect(firstVisit?.cuisines?.[0]).toBeTruthy();
     expect(firstVisit?.placeId).toBeTruthy();
-    const cuisineChip = screen.getByText(firstVisit.cuisines[0]);
+    // Cuisine labels can repeat across visits; assert at least one chip matches.
+    const cuisineChip = screen.getAllByText(firstVisit.cuisines[0])[0];
     expect(cuisineChip).toHaveClass('activity-cuisine-chip');
     expect(screen.getByRole('link', { name: 'Google Places' })).toHaveAttribute(
       'href',

@@ -15,7 +15,6 @@
     "test:e2e": "playwright test",
     "preview": "pnpm --filter ./ui preview",
     "format:fix": "prettier \"ui/src/**/*.{ts,tsx,js,jsx,css,md}\" \"api/**/*.{ts,js}\" \"e2e/**/*.ts\" \"playwright.config.ts\" --write",
-    "beli:refresh": "npx --yes tsx scripts/beli-fetch-visits.js",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "cs:prepare": "changeset",
